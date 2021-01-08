@@ -1,0 +1,10 @@
+setup.py
+njietcheu_livre/__init__.py
+njietcheu_livre/settings.py
+njietcheu_livre/urls.py
+njietcheu_livre/wsgi.py
+njietcheu_livre.egg-info/PKG-INFO
+njietcheu_livre.egg-info/SOURCES.txt
+njietcheu_livre.egg-info/dependency_links.txt
+njietcheu_livre.egg-info/requires.txt
+njietcheu_livre.egg-info/top_level.txt
