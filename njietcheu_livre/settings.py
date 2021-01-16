@@ -29,7 +29,7 @@ SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrkxppy_zee'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com"]
+ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework', 
     'core',
 ]
 
@@ -56,6 +57,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'njietcheu_livre.urls'
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+)
+sc
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -123,3 +128,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ['/frontend/build']

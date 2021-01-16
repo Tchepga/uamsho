@@ -6,7 +6,7 @@ from django.db import models
 
 class Book(models.Model):
     name = models.CharField(max_length=100)
-    titre = models.CharField(max_length=250)
+    title = models.CharField(max_length=250)
     date_edition = models.DateField(_("date d'édition"))
     bibliography = models.TextField(_("Bibliographie"))
     illustration = models.ImageField(
