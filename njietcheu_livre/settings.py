@@ -29,7 +29,7 @@ SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrkxppy_zee'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com"]
+ALLOWED_HOSTS = ["https://njitcheu-app.herokuapp.com"]
 
 
 # Application definition
