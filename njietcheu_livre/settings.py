@@ -29,7 +29,7 @@ SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrkxppy_zee'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com", "127.0.0.1","localhost"]
 
 
 # Application definition
@@ -60,11 +60,11 @@ ROOT_URLCONF = 'njietcheu_livre.urls'
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000/'
 )
-sc
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,4 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ['/frontend/build']
+MEDIA_URL = '/media/'
+
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend/build"), os.path.join(BASE_DIR, "frontend/build/static")]

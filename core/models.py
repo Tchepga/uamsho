@@ -10,7 +10,7 @@ class Book(models.Model):
     date_edition = models.DateField(_("date d'édition"))
     bibliography = models.TextField(_("Bibliographie"))
     illustration = models.ImageField(
-       _("illustration"),
+        _("illustration"),
         upload_to=None,
         height_field=None,
         width_field=None,
@@ -19,4 +19,3 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
-    
