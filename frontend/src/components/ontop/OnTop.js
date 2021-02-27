@@ -1,29 +1,65 @@
 import React, { Component } from 'react'
 import './OnTop.css'
 import '../../scss/custom.css'
+import OnTopDetails from './OnTopDetails'
 
 export default class OnTop extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            choice: 'Nouveautés',
+            links: [
+                {
+                    'id': 1,
+                    'name': 'Nouveautés',
+                },
+                {
+                    'id': 2,
+                    'name': 'Best seller'
+                },
+                {
+                    'id': 3,
+                    'name': 'Entreprenariat'
+                },
+                {
+                    'id': 4,
+                    'name': 'Jeunesse'
+                }
+            ]
+        }
+
+        this.onTopDetailsChoice = this.onTopDetailsChoice.bind(this);
+    }
+
+    onTopDetailsChoice = event => {
+        event.preventDefault()
+        console.log(event.target)
+        // // const { choice } = event.target.elements
+        this.setState(state => ({ choice: event.target.textContent }))
+
+    }
     render() {
+        const { choice, links } = this.state
+        let items = []
+        for(let i=0; i<links.length; i++) {
+            items.push(
+                <li className="nav-item col-3" role="presentation" key={links[i].id}>
+                    <a  
+                        className={links[i].name === choice ? 'nav-link active' : 'nav-link'}
+                        href="#"
+                        aria-current="page"
+                        onClick={this.onTopDetailsChoice} >
+                        {links[i].name}
+                    </a>
+                </li>    
+            )
+        }
         return (
             <div id="ontop" className="container">
-                <nav>
-                    <ul className="nav nav-tabs mb-3" role="tablist">
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link active" id="nav-new-tab" aria-current="page" href="#nav-new" role="tab">A la une</a>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link" href="#nav-selection" id="nav-selection-tab" role="tab">La sélection</a>
-                        </li>
-                        <li className="nav-item" role="presentation">
-                            <a className="nav-link" id="nav-debat-tab" href="#nav-debat" role="tab">Débâts en cours</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div className="tab-content" id="nav-tabContent">
-                    <div className="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab"><p>Consequat occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. Fugiat velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. Irure magna elit commodo anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. Eiusmod consequat eu adipisicing minim anim aliquip cupidatat culpa excepteur quis. Occaecat sit eu exercitation irure Lorem incididunt nostrud.</p></div>
-                    <div className="tab-pane fade" id="nav-selection" role="tabpanel" aria-labelledby="nav-selection-tab"><p>Test2</p></div>
-                    <div className="tab-pane fade" id="nav-debat" role="tabpanel" aria-labelledby="nav-debat-tab"><p>Test3</p></div>
-                </div>
+                <ul className="nav nav-tabs" id="menuTop" role="tablist">
+                   {items}
+                </ul>
+                <OnTopDetails choice={this.state.choice} />
             </div>
         )
     }
