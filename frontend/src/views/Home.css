@@ -6,7 +6,28 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
+#home {
+  z-index: 10;
+}
   #carousel-header {
     height: 500px;
+  }
+
+  #services{
+    background-color: whitesmoke;
+    height: 150px;
+    position: relative;
+    bottom: -600px;
+
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+  }
+
+  #services div div {
+    height: 60%;
+    background-color: bisque;
+    border-radius: 50%;
+    width: 30%;
+    margin: auto;
   }
