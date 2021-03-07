@@ -1,0 +1,50 @@
+#ontoparticle {
+    position: relative;
+    bottom: -780px;
+    overflow: hidden;
+}
+
+.horizontal-scroll ul {
+    /* position: relative;
+    width: 300%;
+    display: inline-flex;
+    animation: 200s slidy infinite; */
+    list-style-type: none;
+    position: relative;
+    display: inline-flex;
+    animation: 30s scroll-horizontal infinite;
+}
+
+.horizontal-scroll ul li {
+    float: left;
+}
+
+@keyframes scroll-horizontal {
+    0% {
+        left: 0%;
+    }
+    20% {
+        left: 0%;
+    }
+    25% {
+        left: -80%;
+    }
+    45% {
+        left: -90%;
+    }
+    50% {
+        left: -140%;
+    }
+    70% {
+        left: -140%;
+    }
+    75% {
+        left: -140%;
+    }
+    95% {
+        left: -140%;
+    }
+    100% {
+        left: -140%;
+    }
+}

@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 
 class cardBook extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            titre: "Titre du Livre",
-            likes: 5,
-            author: "Auteur du livre",
-            category: "Catégorie",
-            price: "prix€"
-
-        }
-    }
+   
     render() {
 
         let likesNode = []
