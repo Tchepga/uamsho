@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
+import CardBook from "../components/utilities/CardBook";
 import "./Book.css";
 
 export default class Book extends Component {
@@ -126,8 +128,8 @@ export default class Book extends Component {
         likes.push(<i className="fas fa-heart mr-1"></i>);
       }
       listBooksBalises.push(
-        <Link to="/books/detai">
-          <div
+        <Link to="/books/details" className="col-4" key={i} >
+          {/* <div
             className="card ml-4 mr-3 mb-3"
             style={{ width: "12rem" }}
             key={i}
@@ -143,7 +145,15 @@ export default class Book extends Component {
               <li className="list-group-item text-center">{books[i].author}</li>
               <li className="list-group-item text-center">{books[i].prix}</li>
             </ul>
-          </div>
+          </div> */}
+            <CardBook
+              title={books[i].title}
+              likes={books[i].likes}
+              author={books[i].author}
+              price={books[i].prix}
+              category={books[i].category}
+              image={books[i].image}
+            />
         </Link>
       );
     }
@@ -151,7 +161,7 @@ export default class Book extends Component {
     return (
       <div>
         <Fragment>
-          <Menu />
+          <Menu color="gray" />
           <div className="container">
             <div className="row mt-5">
               <div className="col-3">
@@ -170,7 +180,7 @@ export default class Book extends Component {
                   aria-label="Disabled input example"
                   disabled
                 />
-                <div className="row">{listBooksBalises}</div>
+                <div className="row neutral">{listBooksBalises}</div>
                 <nav aria-label="...">
                   <ul className="pagination">
                     <li className="page-item disabled">
@@ -213,6 +223,7 @@ export default class Book extends Component {
               </div>
             </div>
           </div>
+          <Footer />
         </Fragment>
       </div>
     );

@@ -1,12 +1,12 @@
 import "./Menu.css";
 import React, { Component } from "react";
-//import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 class Menu extends Component {
   render() {
     return (
-      <div className="container" id="Menu">
+      <div  id="Menu" style={{backgroundColor: this.props.color }}>
         <ul className="nav justify-content-end mb-3 ">
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -36,15 +36,14 @@ class Menu extends Component {
         <ul className="nav justify-content-center">
           <li className="nav-item">
             {/* eslint-disable-next-line */}
-            <a className="nav-link active" aria-current="page" href="#">
+            <Link className="nav-link active" aria-current="page" to="/">
               <i className="fas fa-book-open fa-lg"></i>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to="/books">
               Livres
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -81,8 +80,7 @@ class Menu extends Component {
     );
   }
 }
-
+Menu.defaultProps = {
+  color: ''
+}
 export default Menu;
-// export default connect(
-//     mapStateToProps,
-// )(Menu);

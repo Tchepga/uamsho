@@ -1,0 +1,13 @@
+footer {
+    position: relative;
+    bottom: auto;
+}
+
+.neutral a {
+    color: black;
+}
+
+.neutral a:hover {
+    color:gray;
+    text-decoration: none;
+}

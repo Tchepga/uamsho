@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CartBook from '../utilities/CardBook';
+import CardBook from '../utilities/CardBook';
 
 class OnTopDetails extends Component {
     constructor(props) {
@@ -79,7 +79,7 @@ class OnTopDetails extends Component {
         for(let i = 0; i<bookData.length; i++) {
             booksNodes.push(
                 <div className="col-4" key={i} >
-                    <CartBook
+                    <CardBook
                         title={bookData[i].title}
                         likes={bookData[i].likes}
                         author={bookData[i].author}
