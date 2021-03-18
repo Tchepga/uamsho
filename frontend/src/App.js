@@ -3,6 +3,7 @@ import Home from './views/Home'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import Book from './views/Book';
 import DetailsBook from './views/DetailsBook'
+import Panier from './components/panier/Panier';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route exact path="/books/details">
             <DetailsBook />
+          </Route>
+          <Route exact path="/panier">
+            <Panier />
           </Route>
         </Router>
       </div>

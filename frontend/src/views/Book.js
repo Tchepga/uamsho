@@ -20,6 +20,7 @@ export default class Book extends Component {
       ],
       books: [
         {
+          id: 1,
           title: "Mon Afrique à moi",
           author: "Patrick Tchepga",
           likes: 2,
@@ -27,6 +28,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Père et Mère",
           author: "Paul Martin",
           likes: 3,
@@ -34,6 +36,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "La vallée perdue",
           author: "Paul Martin",
           likes: 4,
@@ -41,6 +44,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Retour aux source",
           author: "Paul Martin",
           likes: 3,
@@ -48,6 +52,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Mon avenir",
           author: "Ange Mougoue",
           likes: 3,
@@ -55,6 +60,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "L'Afrique demain",
           author: "Ruben Njietcheu",
           likes: 3,
@@ -62,6 +68,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Develeppement africain",
           author: "Aime cesar",
           likes: 5,
@@ -69,6 +76,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "A la conquête du monde",
           author: "Ahmadou Ahidjo",
           likes: 3,
@@ -76,6 +84,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Je suis fier de toi",
           author: "Paul Biya",
           likes: 3,
@@ -83,6 +92,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Je vais changer le monde",
           author: "Patrick Tchepga",
           likes: 3,
@@ -90,6 +100,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "Mes ancètres",
           author: "Nelly Kenne",
           likes: 2,
@@ -97,6 +108,7 @@ export default class Book extends Component {
           image: "",
         },
         {
+          id: 1,
           title: "La vie",
           author: "Pascal Njamo",
           likes: 1,
@@ -128,24 +140,7 @@ export default class Book extends Component {
         likes.push(<i className="fas fa-heart mr-1"></i>);
       }
       listBooksBalises.push(
-        <Link to="/books/details" className="col-4" key={i} >
-          {/* <div
-            className="card ml-4 mr-3 mb-3"
-            style={{ width: "12rem" }}
-            key={i}
-          >
-            <img
-              src="img/open-book-clipart-03.png"
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body text-center">{likes}</div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item text-center">{books[i].title}</li>
-              <li className="list-group-item text-center">{books[i].author}</li>
-              <li className="list-group-item text-center">{books[i].prix}</li>
-            </ul>
-          </div> */}
+        <Link to="/books/details" className="col-4 px-0" key={i} >
             <CardBook
               title={books[i].title}
               likes={books[i].likes}
