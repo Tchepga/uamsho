@@ -11,12 +11,12 @@ body {
   bottom: -800px;
 }
 
-footer {
+.home footer {
  position: relative;
  bottom: -800px;
 }
 
-#home {
+.home {
   z-index: 10;
 }
 

@@ -57,7 +57,7 @@ class Panier extends Component {
         <div className="container mt-5">
           <div className="row">
             <div className="card col-8">
-              <div class="card-header">
+              <div className="card-header">
                 <b>Panier</b>
               </div>
               <ul className="list-group list-group-flush">{itemsBalises}</ul>

@@ -35,15 +35,15 @@ class DetailsBook extends Component {
                 j'espère que ca pourra servir à quelque chose.
               </p>
               <span>XXX FCFA/€ TTC</span>
-              <div class="mb-3 row">
-                <label for="quantity" class="col-sm-2 col-form-label">
+              <div className="mb-3 row">
+                <label for="quantity" className="col-sm-2 col-form-label">
                   Quantité
                 </label>
-                <div class="col-sm-10">
+                <div className="col-sm-10">
                   <input
                     type="number"
                     readonly
-                    class="form-control col-2"
+                    className="form-control col-2"
                     id="quantity"
                   />
                 </div>

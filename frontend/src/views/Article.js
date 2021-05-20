@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
-import Footer from "../components/footer/Footer";
+import GenericCard from "../components/utilities/GenericCard";
 import Menu from "../components/menu/Menu";
-import CardBook from "../components/utilities/CardBook";
-import "./Book.css";
+import Footer from "../components/footer/Footer";
 
-export default class Book extends Component {
+class Article extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,113 +16,46 @@ export default class Book extends Component {
         "JEUNESSE",
         "ENTREPRISE",
       ],
-      books: [
+      articles: [
         {
           id: 1,
-          title: "Mon Afrique à moi",
-          author: "Patrick Tchepga",
-          likes: 2,
-          prix: 50,
-          image: "",
+          titre: "L'Afrique de demain",
+          description:
+            "Ceci est une description qui devrait être troncé, texte troncé",
         },
         {
-          id: 1,
-          title: "Père et Mère",
-          author: "Paul Martin",
-          likes: 3,
-          prix: 20,
-          image: "",
+          id: 2,
+          titre: "Le savoir",
+          description:
+            "Ceci est une description qui devrait être troncé, texte troncé",
         },
         {
-          id: 1,
-          title: "La vallée perdue",
-          author: "Paul Martin",
-          likes: 4,
-          prix: 52,
-          image: "",
+          id: 3,
+          titre: "La philosophie africaine",
+          description:
+            "Ceci est une description qui devrait être troncé, texte troncé",
         },
         {
-          id: 1,
-          title: "Retour aux source",
-          author: "Paul Martin",
-          likes: 3,
-          prix: 30,
-          image: "",
+          id: 4,
+          titre: "Moi et toi",
+          description:
+            "Ceci est une description qui devrait être troncé, texte troncé",
         },
         {
-          id: 1,
-          title: "Mon avenir",
-          author: "Ange Mougoue",
-          likes: 3,
-          prix: 20,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "L'Afrique demain",
-          author: "Ruben Njietcheu",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Develeppement africain",
-          author: "Aime cesar",
-          likes: 5,
-          prix: 70,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "A la conquête du monde",
-          author: "Ahmadou Ahidjo",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Je suis fier de toi",
-          author: "Paul Biya",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Je vais changer le monde",
-          author: "Patrick Tchepga",
-          likes: 3,
-          prix: 10,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Mes ancètres",
-          author: "Nelly Kenne",
-          likes: 2,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "La vie",
-          author: "Pascal Njamo",
-          likes: 1,
-          prix: 57,
-          image: "",
+          id: 5,
+          titre: "Vivre ou mourrir",
+          description:
+            "Ceci est une description qui devrait être troncé, texte troncé",
         },
       ],
     };
   }
-
   render() {
-    const { categories, books } = this.state;
+    const articles = this.state.articles;
+    let articlesNode = [];
     let listCategoriesBalises = [];
-    let listBooksBalises = [];
+    const { categories } = this.state;
 
-    // liste catégories
     for (let i = 0; i < categories.length; i++) {
       listCategoriesBalises.push(
         <li key={i} className="list-group-item">
@@ -133,23 +64,20 @@ export default class Book extends Component {
       );
     }
 
-    // liste livres par page (30 par pages)
-    for (let i = 0; i < books.length; i++) {
-      let likes = [];
-      for (let j = 0; j < books[i].likes; j++) {
-        likes.push(<i className="fas fa-heart mr-1"></i>);
-      }
-      listBooksBalises.push(
-        <Link to="/books/details" className="col-4 px-0" key={i}>
-          <CardBook
-            title={books[i].title}
-            likes={books[i].likes}
-            author={books[i].author}
-            price={books[i].prix}
-            category={books[i].category}
-            image={books[i].image}
+    for (let i = 0; i < articles.length; i++) {
+      articlesNode.push(
+        <div
+          className="col-12 px-0"
+          role="presentation"
+          key={articles[i].id}
+        >
+          <GenericCard
+            type="hcard"
+            id={articles[i].id}
+            title={articles[i].titre}
+            description={articles[i].description}
           />
-        </Link>
+        </div>
       );
     }
 
@@ -171,7 +99,10 @@ export default class Book extends Component {
                 </div>
               </div>
               <div className="col-8 ml-4">
-                <span className="d-flex flex-row bg-light text-dark  mb-2" style={{marginLeft: "-5px"}}>
+                <span
+                  className="d-flex flex-row bg-light text-dark  mb-2"
+                  style={{ marginLeft: "-5px" }}
+                >
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
                   <span className="p-3"> il y a 100 produits |</span>
                   <select
@@ -183,7 +114,7 @@ export default class Book extends Component {
                     <option value="2">Par prix croissant</option>
                   </select>
                 </span>
-                <div className="row neutral">{listBooksBalises}</div>
+                <div className="row neutral mb-3">{articlesNode}</div>
                 <nav aria-label="...">
                   <ul className="pagination">
                     <li className="page-item disabled">
@@ -232,3 +163,5 @@ export default class Book extends Component {
     );
   }
 }
+
+export default Article;

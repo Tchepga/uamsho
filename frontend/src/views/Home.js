@@ -9,7 +9,7 @@ import Footer from "../components/footer/Footer";
 export default class Home extends Component {
   render() {
     return (
-      <div id="home">
+      <div className="home">
         <Menu />
         <Carousel />
         <OnTop />
@@ -34,7 +34,7 @@ export default class Home extends Component {
           </div>
           <div className="col-3 text-center mb-2">
             <div className="mt-5">
-              <i class="far fa-question-circle fa-2x mt-3"> </i>
+              <i className="far fa-question-circle fa-2x mt-3"> </i>
             </div>
             <b> Disponible 24 h / 24 h 7 j / 7 j </b>
           </div>

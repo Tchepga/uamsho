@@ -47,7 +47,7 @@ class Menu extends Component {
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/article">
               Articles
             </a>
           </li>
