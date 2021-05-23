@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+#webpack generate files
+/config
+/scripts
+
 # production
 /build
 
