@@ -1,5 +1,7 @@
 """ Book Model's """
 
+from django.db.models.fields.related import ManyToManyField
+from django.db.models.fields.reverse_related import ManyToOneRel
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.db import models
@@ -23,9 +25,13 @@ class Book(models.Model):
         max_length=None,
     )
 
+    #utils field
+    ontop = models.BooleanField(default=False)
+    add_date = models.DateField(default=timezone.now)
+
     # foreign field
-    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"))
-    comments = models.ManyToManyField("core.Comment", verbose_name=_("Comments"))
+    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
+    comments = models.ForeignKey("core.Comment", verbose_name=_("Comments"), blank=True, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -38,11 +44,20 @@ class Likes(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     number_likes = models.IntegerField(_("nombre de like"))
 
+    def __str__(self):
+        return str(self.number_likes)
+
 
 class Comment(models.Model):
     """ Comment's book """
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content =  models.CharField(max_length=200)
+
+    article = models.ForeignKey("core.Article", on_delete=models.SET_NULL, null=True)
+    discussion = models.ForeignKey("core.Discussion", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.content[0:20] 
 
 
 class Category(models.Model):
@@ -56,6 +71,10 @@ class Article(models.Model):
     """ Article """
     title = models.CharField(_("titre"), max_length=50)
     subtitle = models.CharField(_("sous-titre"), null=True, blank=True, max_length=250)
+    description = models.TextField()
+    date_creation = models.DateField( default=timezone.now)
+    ontop = models.BooleanField(default=False)
+    
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -65,7 +84,7 @@ class Article(models.Model):
 class Discussion(models.Model):
     """ Debate Model """
     subject = models.CharField(_("sujet"), max_length=250)
-    comments = models.ManyToManyField("core.Comment", verbose_name=_("Comments"))
+    content = models.TextField()
 
     def __str__(self):
         return self.subject

@@ -1,5 +1,5 @@
 from core.serializers import BookSerializer
-from core.models import Book
+from core.model.models import Book
 # from rest_framework import viewsets
 # from rest_framework.routers import DefaultRouter
 from django.conf.urls import url

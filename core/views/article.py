@@ -1,0 +1,23 @@
+from core.serializers import ArticleSerializer
+from rest_framework import viewsets
+from core.model.models import Book, Article
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+class ArticleViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = Article.objects.all()
+        serializer = ArticleSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Article.objects.all()
+        Article = get_object_or_404(queryset, pk=pk)
+        serializer = ArticleSerializer(Article)
+        return Response(serializer.data)
+    
+    def ontop(self, request):
+        articles = Article.objects.filter(ontop=True).order_by('-date_creation')
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data) 

@@ -13,9 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from core.views.article import ArticleViewSet
+from core.views.book import BookViewSet
+from core.views.utils import ListImageUils
 from django.contrib import admin
 from django.urls import path, include, re_path
-from core.views import urlpatterns as core_routes
+from core.views.pages import urlpatterns as core_routes
+from django.conf import settings
+from django.conf.urls.static import static
 
 # from django.http import HttpResponse
 # from django.shortcuts import render, redirect
@@ -43,8 +48,13 @@ from functools import partial
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(core_routes))
-]
+    path('', include(core_routes)),
+    path('api/utils/images/<str:type>', ListImageUils.as_view()),
+    path('api/book/', BookViewSet.as_view({'get': 'list'})),
+    path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
+    path('api/article/', ArticleViewSet.as_view({'get': 'list'})),
+    path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:
 #     """En production, les fichiers statiques pourraient être distribués différement .
