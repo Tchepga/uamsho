@@ -9,6 +9,9 @@ static/
 # C extensions
 *.so
 
+# dev env
+/dev-env
+
 # Distribution / packaging
 .Python
 build/

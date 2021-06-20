@@ -6,7 +6,9 @@ import OnTop from "../components/ontop/OnTop";
 import OntopArticle from "../components/ontop/OntopArticle";
 import Footer from "../components/footer/Footer";
 
+
 export default class Home extends Component {
+
   render() {
     return (
       <div className="home">

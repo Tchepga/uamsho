@@ -57,7 +57,7 @@ class OnTopDetails extends Component {
     }
     
     render() {
-        let bookData = []
+       /* let bookData = []
         switch (this.props.choice) {
             case "Best seller":
                 bookData = this.state.bestSeller
@@ -74,23 +74,27 @@ class OnTopDetails extends Component {
             default:
                 bookData = this.state.newBook
                 break
-        }
+        }*/
         let booksNodes = []
-        for(let i = 0; i<bookData.length; i++) {
+        const { choice } = this.props;
+        for(let i = 0; i<choice.length; i++) {
             booksNodes.push(
                 <div className="col-4" key={i} >
                     <CardBook
-                        title={bookData[i].title}
-                        likes={bookData[i].likes}
-                        author={bookData[i].author}
-                        price={bookData[i].prix}
-                        category={bookData[i].category}
-                        image={bookData[i].image}
+                        title={choice[i].title}
+                        likes={choice[i].likes}
+                        author={choice[i].author}
+                        price={choice[i].prix}
+                        category={choice[i].category}
+                        image={choice[i].image}
                     />
                 </div>
             )
         }
 
+        if(choice.length === 0)
+            booksNodes ="Aucun livre présent dans le top"
+            
         return (
             <div className="row mt-3">
                 {booksNodes}

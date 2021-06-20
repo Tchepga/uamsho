@@ -17,34 +17,35 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from core.views import urlpatterns as core_routes
 
-# from django.http import HttpResponse
-# from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
-# from django.contrib.auth.decorators import login_required
-# from django.http import Http404
-# from django.views.static import serve
-# from django.conf import settings
-# from django.urls import path
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.views.static import serve
+from django.conf import settings
+from django.urls import path
 from functools import partial
+from django.conf.urls.static import static
 
-# def catch_all(request, path="index.html"):
-#     """Renvoie index.html en cas de 404, uniquement pour DEBUG=True ou TESTING=True.
+def catch_all(request, path="index.html"):
+    """Renvoie index.html en cas de 404, uniquement pour DEBUG=True ou TESTING=True.
 
-#     On ne connaît pas les routes du front. En prod, c'est apache qui envoie l'index.
-#     """
-#     try:
-#         return serve(request, path=path, document_root=settings.STATIC_ROOT)
-#     except Http404:
-#         return serve(request, path="index.html", document_root=settings.STATIC_ROOT)
-#     except OSError:
-#         # Sur windows, on a une erreur lors de l'acces a /connexion/machin:machin
-#         return serve(request, path="index.html", document_root=settings.STATIC_ROOT)
+    On ne connaît pas les routes du front. En prod, c'est apache qui envoie l'index.
+    """
+    try:
+        return serve(request, path=path, document_root=settings.STATIC_ROOT)
+    except Http404:
+        return serve(request, path="index.html", document_root=settings.STATIC_ROOT)
+    except OSError:
+        # Sur windows, on a une erreur lors de l'acces a /connexion/machin:machin
+        return serve(request, path="index.html", document_root=settings.STATIC_ROOT)
     
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(core_routes))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_FRONT_DIR)
 
 # if settings.DEBUG:
 #     """En production, les fichiers statiques pourraient être distribués différement .

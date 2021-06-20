@@ -1,10 +1,16 @@
 #ontop {
     position: relative;
-    top:650px;
-    text-align: center;
-    
+    text-align: center;   
 }
 
 #ontop a {
-   color: whitesmoke; 
+   color: rgb(88, 61, 61); 
+}
+
+#ontop #menuTop li{
+    background-color: #c3e7f1;
+}
+
+#ontop li :hover {
+    background-color: #1eb0d8;
 }
