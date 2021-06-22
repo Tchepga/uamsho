@@ -1,6 +1,6 @@
 import "./Menu.css";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 class Menu extends Component {
@@ -21,10 +21,9 @@ class Menu extends Component {
             </a>
           </li>
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
+            <Link className="nav-link" aria-current="page" to="/connexion">
               Connexion
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}

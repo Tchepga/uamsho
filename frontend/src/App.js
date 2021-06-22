@@ -5,11 +5,15 @@ import Book from './views/Book';
 import DetailsBook from './views/DetailsBook'
 import Panier from './components/panier/Panier';
 import Article from './views/Article';
+import Profil from './views/Profil';
+import {AuthProvider} from './providers/Provider';
+import Authentification from './views/Authentification';
 
 function App() {
   return (
     <div className="App">
       <div className="content-root">
+      <AuthProvider>
         <Router>
           <Route exact path="/">
             <Home />
@@ -26,8 +30,16 @@ function App() {
           <Route exact path="/article">
             <Article />
           </Route>
+          <Route exact path="/connexion">
+            <Authentification />
+          </Route>
+          <Route exact path="/profil">
+            <Profil />
+          </Route>
         </Router>
+        </AuthProvider>
       </div>
+    
     </div>
   );
 }
