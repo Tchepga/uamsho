@@ -29,7 +29,7 @@ SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrkxppy_zee'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["njitcheu-app.herokuapp.com", "127.0.0.1","localhost", "192.168.3.118", "ec2-18-117-89-45.us-east-2.compute.amazonaws.com"]
+ALLOWED_HOSTS =["young-everglades-49813.herokuapp.com", "127.0.0.1","localhost", "192.168.3.118", "ec2-18-117-89-45.us-east-2.compute.amazonaws.com"]
 
 
 # Application definition
