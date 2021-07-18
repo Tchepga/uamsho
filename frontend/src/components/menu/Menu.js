@@ -1,12 +1,12 @@
 import "./Menu.css";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../../providers/Provider";
 
 class Menu extends Component {
   render() {
     return (
-      <div  id="Menu" style={{backgroundColor: this.props.color }}>
+      <div id="Menu" style={{ backgroundColor: this.props.color }}>
         <ul className="nav justify-content-end mb-3 ">
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -21,9 +21,28 @@ class Menu extends Component {
             </a>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" aria-current="page" to="/connexion">
-              Connexion
-            </Link>
+            <AuthContext.Consumer>
+              {(context) =>
+                context.currentUser ? (
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/profil"
+                  >
+                    <i style={{ marginRight : '7px'}} className="far fa-user"></i>
+                    {context.currentUser.first_name}
+                  </Link>
+                ) : (
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/connexion"
+                  >
+                    Connexion
+                  </Link>
+                )
+              }
+            </AuthContext.Consumer>
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -80,6 +99,6 @@ class Menu extends Component {
   }
 }
 Menu.defaultProps = {
-  color: ''
-}
+  color: "",
+};
 export default Menu;

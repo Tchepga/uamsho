@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Fragment } from "react";
+import Utils from "../../utils/Utils";
 
 class GenericCard extends Component {
 
@@ -29,7 +30,7 @@ class GenericCard extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{this.props.title}</h5>
-                  <p className="card-text">{this.truncate(this.props.description)}</p>
+                  <p className="card-text">{Utils.truncate(this.props.description)}</p>
                   <p className="card-text">
                     <small className="text-muted">En savoir plus.</small>
                   </p>

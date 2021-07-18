@@ -8,6 +8,7 @@ import Article from './views/Article';
 import Profil from './views/Profil';
 import {AuthProvider} from './providers/Provider';
 import Authentification from './views/Authentification';
+import PrivateRoute from './providers/PrivateRoute';
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
           <Route exact path="/connexion">
             <Authentification />
           </Route>
-          <Route exact path="/profil">
+          <PrivateRoute exact path="/profil">
             <Profil />
-          </Route>
+          </PrivateRoute>
         </Router>
         </AuthProvider>
       </div>
