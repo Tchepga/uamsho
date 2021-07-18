@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from core.views.user import UserViewset
+from core.views.category import CategoryViewSet
 from core.views.article import ArticleViewSet
 from core.views.book import BookViewSet
 from core.views.utils import ListImageUils
@@ -54,6 +56,8 @@ urlpatterns = [
     path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
     path('api/article/', ArticleViewSet.as_view({'get': 'list'})),
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
+    path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
+    path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:
