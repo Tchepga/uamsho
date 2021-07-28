@@ -22,7 +22,7 @@ const Inscription = ({ history }) => {
               onChange={(e) => setTypeInscription(e.target.value)}
               required
             >
-              <option value="particulier">Particulier</option>
+              <option defaultValue="particulier">Particulier</option>
               <option>Entreprise</option>
             </select>
             <span className="invalid-feedback">

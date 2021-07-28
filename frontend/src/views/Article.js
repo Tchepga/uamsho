@@ -2,10 +2,13 @@ import React, { Component, Fragment } from "react";
 import GenericCard from "../components/utilities/GenericCard";
 import Menu from "../components/menu/Menu";
 import Footer from "../components/footer/Footer";
+import axios from 'axios';
+import Utils from "../utils/Utils";
 
 class Article extends Component {
   constructor(props) {
     super(props);
+    this.sortByCriteria = this.sortByCriteria.bind(this);
     this.state = {
       categories: [
         "ANTHROPOLOGIE",
@@ -50,26 +53,65 @@ class Article extends Component {
       ],
     };
   }
+
+  componentDidMount(){
+    this.getCategories();
+    this.getArticles();
+  }
+
+  sortByCriteria(event){
+    event.preventDefault();
+    console.log(event)
+    const sortType = event.target.element;
+    console.log(sortType);
+    
+    if(sortType==="PRICE"){
+        this.setState({articles : this.state.articles.sort(Utils.compareArticlesByPrice)})
+    }
+    if(sortType === "CHAR"){
+        this.setState({articles : this.state.articles.sort()})
+     }
+  }
+
+  getCategories() {
+    axios.get(process.env.REACT_APP_API_URL+ '/api/categories')
+      .then(res => {
+        this.setState({ categories: res.data });
+      })
+      .catch(error => console.log(error))
+  }
+
+  getArticles() {
+    axios.get(process.env.REACT_APP_API_URL+ '/api/articles')
+      .then(res => {
+        this.setState({ articles: res.data });
+      })
+      .catch(error => console.log(error))
+  }
+
   render() {
     const articles = this.state.articles;
     let articlesNode = [];
     let listCategoriesBalises = [];
     const { categories } = this.state;
 
-    for (let i = 0; i < categories.length; i++) {
-      listCategoriesBalises.push(
-        <li key={i} className="list-group-item">
-          {categories[i]}
-        </li>
-      );
-    }
+    if(categories.length > 0 )
+      for (let i = 0; i < categories.length; i++) {
+        listCategoriesBalises.push(
+          <li key={i} className="list-group-item">
+            {categories[i].type_category}
+          </li>
+        );
+      }
+    else
+      listCategoriesBalises.push("Un problème est subvenue à " + (new Date()) + " Contactez votre administrateur.");
 
     for (let i = 0; i < articles.length; i++) {
       articlesNode.push(
         <div
           className="col-12 px-0"
           role="presentation"
-          key={articles[i].id}
+          key={i}
         >
           <GenericCard
             type="hcard"
@@ -104,14 +146,15 @@ class Article extends Component {
                   style={{ marginLeft: "-5px" }}
                 >
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
-                  <span className="p-3"> il y a 100 produits |</span>
+                  <span className="p-3"> il y a {this.state.articles.length} produits |</span>
                   <select
                     className="form-select "
                     aria-label="Default select example"
+                    onChange={this.sortByCriteria}
                   >
-                    <option selected>Par pertinence</option>
-                    <option value="1">Par ordre alphabétique</option>
-                    <option value="2">Par prix croissant</option>
+                    <option defaultValue>Par date d'ajout</option>
+                    <option value="CHAR">Par ordre alphabétique</option>
+                    <option value="PRICE">Par prix croissant</option>
                   </select>
                 </span>
                 <div className="row neutral mb-3">{articlesNode}</div>
@@ -122,7 +165,7 @@ class Article extends Component {
                       <a
                         className="page-link"
                         href="#"
-                        tabindex="-1"
+                        tabIndex="-1"
                         aria-disabled="true"
                       >
                         Previous

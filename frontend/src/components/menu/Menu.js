@@ -24,12 +24,11 @@ class Menu extends Component {
             <AuthContext.Consumer>
               {(context) =>
                 context.currentUser ? (
-                  <Link
-                    className="nav-link"
-                    aria-current="page"
-                    to="/profil"
-                  >
-                    <i style={{ marginRight : '7px'}} className="far fa-user"></i>
+                  <Link className="nav-link" aria-current="page" to="/profil">
+                    <i
+                      style={{ marginRight: "7px" }}
+                      className="far fa-user"
+                    ></i>
                     {context.currentUser.first_name}
                   </Link>
                 ) : (
@@ -44,12 +43,23 @@ class Menu extends Component {
               }
             </AuthContext.Consumer>
           </li>
-          <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link disabled" href="#">
-              Créer un compte
-            </a>
-          </li>
+          <AuthContext.Consumer>
+              {(context) =>
+                context.currentUser ? (
+                  <Link className="nav-link" aria-current="page" to="/profil">
+                    Déconnexion
+                  </Link>
+                ) : (
+                  <Link
+                    className="nav-link"
+                    aria-current="page"
+                    to="/connexion"
+                  >
+                    Créer un compte
+                  </Link>
+                )
+              }
+            </AuthContext.Consumer>
         </ul>
         <ul className="nav justify-content-center">
           <li className="nav-item">

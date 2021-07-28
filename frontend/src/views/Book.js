@@ -178,7 +178,7 @@ export default class Book extends Component {
                     className="form-select "
                     aria-label="Default select example"
                   >
-                    <option selected>Par pertinence</option>
+                    <option defaultValue>Par pertinence</option>
                     <option value="1">Par ordre alphabétique</option>
                     <option value="2">Par prix croissant</option>
                   </select>
@@ -191,7 +191,7 @@ export default class Book extends Component {
                       <a
                         className="page-link"
                         href="#"
-                        tabindex="-1"
+                        tabIndex="-1"
                         aria-disabled="true"
                       >
                         Previous

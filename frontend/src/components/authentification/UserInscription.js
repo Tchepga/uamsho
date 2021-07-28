@@ -275,7 +275,7 @@ const UserInscription = ({ history }) => {
                     id="country"
                     required
                   >
-                    <option value="Cameroun">Cameroun</option>
+                    <option defaultValue="Cameroun">Cameroun</option>
                     <option>France</option>
                   </select>
                   <div className="invalid-feedback">
