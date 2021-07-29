@@ -4,119 +4,63 @@ import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
 import CardBook from "../components/utilities/CardBook";
 import "./Book.css";
+import axios from "axios";
+import Utils from "../utils/Utils";
 
 export default class Book extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [
-        "ANTHROPOLOGIE",
-        "ART",
-        "DROIT",
-        "BIOLOGIE",
-        "NATURE",
-        "JEUNESSE",
-        "ENTREPRISE",
-      ],
-      books: [
-        {
-          id: 1,
-          title: "Mon Afrique à moi",
-          author: "Patrick Tchepga",
-          likes: 2,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Père et Mère",
-          author: "Paul Martin",
-          likes: 3,
-          prix: 20,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "La vallée perdue",
-          author: "Paul Martin",
-          likes: 4,
-          prix: 52,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Retour aux source",
-          author: "Paul Martin",
-          likes: 3,
-          prix: 30,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Mon avenir",
-          author: "Ange Mougoue",
-          likes: 3,
-          prix: 20,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "L'Afrique demain",
-          author: "Ruben Njietcheu",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Develeppement africain",
-          author: "Aime cesar",
-          likes: 5,
-          prix: 70,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "A la conquête du monde",
-          author: "Ahmadou Ahidjo",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Je suis fier de toi",
-          author: "Paul Biya",
-          likes: 3,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Je vais changer le monde",
-          author: "Patrick Tchepga",
-          likes: 3,
-          prix: 10,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "Mes ancètres",
-          author: "Nelly Kenne",
-          likes: 2,
-          prix: 50,
-          image: "",
-        },
-        {
-          id: 1,
-          title: "La vie",
-          author: "Pascal Njamo",
-          likes: 1,
-          prix: 57,
-          image: "",
-        },
-      ],
+      categories: [],
+      books: [],
     };
+    this.sortByCriteria = this.sortByCriteria.bind(this);
+    this.sortByCategories = this.sortByCategories.bind(this);
+  }
+
+  componentDidMount(){
+    this.getCategories();
+    this.getBooks();
+  }
+
+  sortByCriteria(event){
+    event.preventDefault();
+    const sortType = event.target.value;
+    switch(sortType){
+      case "PRICE":
+        this.setState({books : this.state.books.sort(Utils.compareBookByPrice).reverse()})
+        break;
+      case "CHAR":
+        this.setState({books : this.state.books.sort(Utils.compareEntityByTitle)})
+        break;
+      default:
+        this.getBooks();
+    }
+
+  }
+
+  getCategories() {
+    axios.get(process.env.REACT_APP_API_URL+ '/api/categories')
+      .then(res => {
+        this.setState({ categories: res.data });
+      })
+      .catch(error => console.log(error))
+  }
+
+  getBooks() {
+    axios.get(process.env.REACT_APP_API_URL+ '/api/book')
+      .then(res => {
+        this.setState({ books: res.data });
+      })
+      .catch(error => console.log(error))
+  }
+
+  sortByCategories(event){
+    axios.get(process.env.REACT_APP_API_URL+ '/api/book?categorie=' + event.target.innerText)
+    .then(res => {
+      this.setState({ books: res.data });
+    })
+    .catch(error => console.log(error))
   }
 
   render() {
@@ -127,8 +71,8 @@ export default class Book extends Component {
     // liste catégories
     for (let i = 0; i < categories.length; i++) {
       listCategoriesBalises.push(
-        <li key={i} className="list-group-item">
-          {categories[i]}
+        <li key={i} className="list-group-item cursor-pointer" onClick={this.sortByCategories}>
+          {categories[i].type_category}
         </li>
       );
     }
@@ -156,7 +100,7 @@ export default class Book extends Component {
     return (
       <div>
         <Fragment>
-          <Menu color="gray" />
+          <Menu />
           <div className="container">
             <div className="row mt-5">
               <div className="col-3">
@@ -173,14 +117,15 @@ export default class Book extends Component {
               <div className="col-8 ml-4">
                 <span className="d-flex flex-row bg-light text-dark  mb-2" style={{marginLeft: "-5px"}}>
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
-                  <span className="p-3"> il y a 100 produits |</span>
+                  <span className="p-3"> il y a {this.state.books.length} produits |</span>
                   <select
                     className="form-select "
-                    aria-label="Default select example"
+                    aria-label="Type filter"
+                    onChange={this.sortByCriteria}
                   >
                     <option defaultValue>Par pertinence</option>
-                    <option value="1">Par ordre alphabétique</option>
-                    <option value="2">Par prix croissant</option>
+                    <option value="CHAR">Par ordre alphabétique</option>
+                    <option value="PRICE">Par prix décroissant</option>
                   </select>
                 </span>
                 <div className="row neutral">{listBooksBalises}</div>

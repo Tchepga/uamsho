@@ -9,17 +9,34 @@ const Utils = {
         return str.length > 10 ? str.substring(0, 7) + "..." : str;
     },
 
-    compareArticlesByPrice(article1, article2){
-        if(article1 != null && article2 != null){
-            if(article1.price > article2.price){
+    compareBookByPrice(book1, book2){
+        if(book1 != null && book2 != null){
+            if(book1.price > book2.price){
                 return 1;
             }
 
-            if(article1.price < article2.price){
+            if(book1.price < book2.price){
                 return -1;
             }
 
-            if(article1.price === article2.price){
+            if(book1.price === book2.price){
+                return 0;
+            }
+            
+        }
+    },
+
+    compareEntityByTitle(entity1, entity2){
+        if(entity1 != null && entity2 != null){
+            if(entity1.title > entity2.title){
+                return 1;
+            }
+
+            if(entity1.title < entity2.title){
+                return -1;
+            }
+
+            if(entity1.title === entity2.title){
                 return 0;
             }
             

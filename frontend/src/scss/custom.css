@@ -3,3 +3,7 @@
     background-color: #696d6e !important;
     box-shadow: 0px 0px 3px #bcb8b1;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

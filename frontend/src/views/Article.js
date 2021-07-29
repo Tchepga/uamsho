@@ -8,50 +8,13 @@ import Utils from "../utils/Utils";
 class Article extends Component {
   constructor(props) {
     super(props);
-    this.sortByCriteria = this.sortByCriteria.bind(this);
     this.state = {
-      categories: [
-        "ANTHROPOLOGIE",
-        "ART",
-        "DROIT",
-        "BIOLOGIE",
-        "NATURE",
-        "JEUNESSE",
-        "ENTREPRISE",
-      ],
-      articles: [
-        {
-          id: 1,
-          titre: "L'Afrique de demain",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 2,
-          titre: "Le savoir",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 3,
-          titre: "La philosophie africaine",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 4,
-          titre: "Moi et toi",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 5,
-          titre: "Vivre ou mourrir",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-      ],
+      categories: [],
+      articles: [],
     };
+    
+    this.sortByCriteria = this.sortByCriteria.bind(this);
+    this.sortByCategories = this.sortByCategories.bind(this);
   }
 
   componentDidMount(){
@@ -61,16 +24,19 @@ class Article extends Component {
 
   sortByCriteria(event){
     event.preventDefault();
-    console.log(event)
-    const sortType = event.target.element;
-    console.log(sortType);
+    const sortType = event.target.value;
     
-    if(sortType==="PRICE"){
-        this.setState({articles : this.state.articles.sort(Utils.compareArticlesByPrice)})
+    switch(sortType){
+      case "LIKE":
+        console.error("Non-implémenté!")
+        break;
+      case "CHAR":
+        this.setState({articles : this.state.articles.sort(Utils.compareEntityByTitle)})
+        break;
+      default:
+        this.getArticles();
     }
-    if(sortType === "CHAR"){
-        this.setState({articles : this.state.articles.sort()})
-     }
+
   }
 
   getCategories() {
@@ -89,6 +55,15 @@ class Article extends Component {
       .catch(error => console.log(error))
   }
 
+  sortByCategories(event){
+
+    axios.get(process.env.REACT_APP_API_URL+ '/api/articles?categorie=' + event.target.innerText)
+    .then(res => {
+      this.setState({ articles: res.data });
+    })
+    .catch(error => console.log(error))
+  }
+
   render() {
     const articles = this.state.articles;
     let articlesNode = [];
@@ -98,7 +73,7 @@ class Article extends Component {
     if(categories.length > 0 )
       for (let i = 0; i < categories.length; i++) {
         listCategoriesBalises.push(
-          <li key={i} className="list-group-item">
+          <li key={i} className="list-group-item cursor-pointer" onClick={this.sortByCategories}>
             {categories[i].type_category}
           </li>
         );
@@ -146,15 +121,15 @@ class Article extends Component {
                   style={{ marginLeft: "-5px" }}
                 >
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
-                  <span className="p-3"> il y a {this.state.articles.length} produits |</span>
+                  <span className="p-3"> il y a {this.state.articles.length} produits | </span>
                   <select
-                    className="form-select "
-                    aria-label="Default select example"
+                    className="form-select"
+                    aria-label="Type filter"
                     onChange={this.sortByCriteria}
                   >
                     <option defaultValue>Par date d'ajout</option>
+                    <option value="LIKE">Par pertinence</option> {/* TODO à traiter après */}
                     <option value="CHAR">Par ordre alphabétique</option>
-                    <option value="PRICE">Par prix croissant</option>
                   </select>
                 </span>
                 <div className="row neutral mb-3">{articlesNode}</div>
