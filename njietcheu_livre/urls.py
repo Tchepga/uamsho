@@ -54,7 +54,7 @@ urlpatterns = [
     path('api/utils/images/<str:type>', ListImageUils.as_view()),
     path('api/book/', BookViewSet.as_view({'get': 'list'})),
     path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
-    path('api/article/', ArticleViewSet.as_view({'get': 'list'})),
+    path('api/articles', ArticleViewSet.as_view({'get': 'list'})),
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
     path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
     path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),

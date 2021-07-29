@@ -24,6 +24,8 @@ class Book(models.Model):
         width_field=None,
         max_length=None,
     )
+    price = models.IntegerField(default=0)
+    date_creation = models.DateField(default=timezone.now)
 
     #utils field
     ontop = models.BooleanField(default=False)
@@ -88,6 +90,22 @@ class Discussion(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+class Utilisateur(User):
+    """ Model utilisateur """
+    class Meta:
+        verbose_name = 'Utilisateur'
+
+    address = models.CharField(max_length=150)
+    complement_address = models.CharField(max_length=15)
+
+    
+
+    def __str__(self) -> str:
+        return self.username
+   
+        
 
 
 

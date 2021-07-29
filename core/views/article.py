@@ -7,7 +7,12 @@ from django.shortcuts import get_object_or_404
 class ArticleViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        queryset = Article.objects.all()
+        categorie = request.query_params.get('categorie', None)
+        if categorie is None:
+            queryset = Article.objects.all().order_by("-date_creation")
+        else:
+            queryset = Article.objects.filter(category__type_category = categorie).order_by("-date_creation")
+            
         serializer = ArticleSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -16,7 +21,6 @@ class ArticleViewSet(viewsets.ViewSet):
         Article = get_object_or_404(queryset, pk=pk)
         serializer = ArticleSerializer(Article)
         return Response(serializer.data)
-
     
     def ontop(self, request):
         articles = Article.objects.filter(ontop=True).order_by('-date_creation')

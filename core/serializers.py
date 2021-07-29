@@ -1,5 +1,5 @@
 from rest_framework import fields, serializers
-from core.model.models import Article, Book, Category
+from core.model.models import Article, Book, Category, Utilisateur
 from core.model.utils import ImageUtils
 from django.contrib.auth.models import User
 
@@ -28,9 +28,11 @@ class CategorySerializer(serializers.ModelSerializer):
         verbose_name = 'Categorie'
         verbose_name_plural = 'Categories'
 
-class UserSerializer(serializers.ModelSerializer):
+class UtilisateurSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email',]
+        model = Utilisateur
+        verbose_name = 'Utilisateur'
+        verbose_name_plural = 'Utilisateurs'
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'address', 'complement_address']
         

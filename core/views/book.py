@@ -7,7 +7,12 @@ from django.shortcuts import get_object_or_404
 class BookViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        queryset = Book.objects.all()
+        categorie = request.query_params.get('categorie', None)
+        if categorie is None:
+            queryset = Book.objects.all().order_by("-add_date")
+        else:
+            queryset = Book.objects.filter(category__type_category = categorie).order_by("-add_date")
+            
         serializer = BookSerializer(queryset, many=True)
         return Response(serializer.data)
 
