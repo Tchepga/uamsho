@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'njietcheu_livre.wsgi.application'
 env = 'DEV'
 with open('local_settings.py', 'r') as f:
     env =f.readlines()[1].split('=')[1]
-    print(env) 
+
 if env == 'DEV':
     DATABASES = {
         'default': {
