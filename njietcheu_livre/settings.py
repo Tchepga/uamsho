@@ -92,7 +92,7 @@ env = 'DEV'
 with open('local_settings.py', 'r') as f:
     env =f.readlines()[1].split('=')[1]
     print(env) 
-if env:
+if env == 'DEV':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -102,8 +102,12 @@ if env:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'uamsho',
+            'USER': 'postgres',
+            'PASSWORD': 'ptchepga',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
         }
     }
 
