@@ -10,7 +10,7 @@ import base64
 
 class BookSerializer(serializers.ModelSerializer):
     """ Book serializer """
-    #image_book = serializers.SerializerMethodField()
+    
     nbre_stars = serializers.SerializerMethodField()
     category = serializers.StringRelatedField()
 
@@ -21,17 +21,6 @@ class BookSerializer(serializers.ModelSerializer):
             'ontop', 'nbre_stars', 'comments', 'category', 'author')
         read_only_fields=('id', 'pk')
 
-    # def get_image_book(self, obj):
-    #     """ get binary form url(illustration attr) image """
-
-    #     illustration = obj.illustration
-    #     if illustration is not None:
-    #         with open(illustration.url[1:], 'rb') as f:
-    #             img = f.read()
-
-    #         return base64.b64encode(img)
-    #     else:
-    #         return None
 
     def get_nbre_stars(self, obj):
 

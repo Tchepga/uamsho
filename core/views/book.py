@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from core.views.utils import Utils
+from django.conf import settings
 
 class BookViewSet(viewsets.ViewSet):
 
@@ -16,7 +17,10 @@ class BookViewSet(viewsets.ViewSet):
             queryset = Book.objects.filter(category__type_category = categorie).order_by("-add_date")
             
         serializer = BookSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        number_page=round(len(queryset)/settings.NUMBER_ELEMENT_BY_PAGE)
+
+        return Response(data={'number_page':number_page , 'books': serializer.data})
 
     def retrieve(self, request, pk=None):
         queryset = Book.objects.all()
