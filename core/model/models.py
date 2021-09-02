@@ -35,7 +35,7 @@ class Book(models.Model):
     likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
     comments = models.ForeignKey("core.Comment", verbose_name=_("Comments"), blank=True, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.CharField(max_length=150, null=False)
 
     def __str__(self):
         return self.title
@@ -78,6 +78,9 @@ class Article(models.Model):
     ontop = models.BooleanField(default=False)
     
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
+    
+    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title

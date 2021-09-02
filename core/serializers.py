@@ -1,13 +1,55 @@
+import inspect
 from rest_framework import fields, serializers
 from core.model.models import Article, Book, Category, Utilisateur
 from core.model.utils import ImageUtils
 from django.contrib.auth.models import User
+#from rest_framework.utils import json
+import json
+import base64
+    
 
 class BookSerializer(serializers.ModelSerializer):
+    """ Book serializer """
+    #image_book = serializers.SerializerMethodField()
+    nbre_stars = serializers.SerializerMethodField()
+    category = serializers.StringRelatedField()
+
     class Meta:
         model = Book
-        fields = "__all__"
-        # fields = ('pk', 'name', 'email', 'document', 'phone', 'registrationDate')
+        fields = ('id', 'pk', 'title', 'edition', 'subtitle', 'description', 'number_page',
+            'date_edition', 'bibliography', 'illustration', 'price', 'date_creation',
+            'ontop', 'nbre_stars', 'comments', 'category', 'author')
+        read_only_fields=('id', 'pk')
+
+    # def get_image_book(self, obj):
+    #     """ get binary form url(illustration attr) image """
+
+    #     illustration = obj.illustration
+    #     if illustration is not None:
+    #         with open(illustration.url[1:], 'rb') as f:
+    #             img = f.read()
+
+    #         return base64.b64encode(img)
+    #     else:
+    #         return None
+
+    def get_nbre_stars(self, obj):
+
+        """
+            compute number star from likes
+        """
+
+        moyen=0
+        likes = obj.likes
+        
+       
+        if likes is not None:
+            likes =[ like.number_likes for like in likes.all()]
+            if len(likes) != 0:
+                moyen = sum(likes)/len(likes)      
+
+        return moyen
+       
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:

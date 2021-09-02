@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrkxppy_zee'
+SECRET_KEY = 'fwe)guznky^k_(a$7&ffe0u2gehb8n@1*ep#niimrdfppy_zeeazaza'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', 
-    'corsheaders',
     'core',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders',
 ]
 
 ROOT_URLCONF = 'njietcheu_livre.urls'
@@ -88,28 +87,28 @@ WSGI_APPLICATION = 'njietcheu_livre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-env = 'DEV'
-with open('local_settings.py', 'r') as f:
-    env =f.readlines()[1].split('=')[1]
+# from local_settings import env
+# environnement = env
 
-if env == 'DEV':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+
+#if environnement == 'DEV':
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'uamsho',
-            'USER': 'postgres',
-            'PASSWORD': 'ptchepga',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
-    }
+}
+# else:
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'NAME': 'uamsho',
+    #         'USER': 'postgres',
+    #         'PASSWORD': 'ptchepga',
+    #         'HOST': '127.0.0.1',
+    #         'PORT': '5432',
+    #     }
+    # }
 
 
 # Password validation

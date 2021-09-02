@@ -1,13 +1,13 @@
+from core.model.models import Book
 from core.serializers import ImageUtilsSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from core.model.utils import *
+from PIL import Image
 
 class ListImageUils(APIView):
     """
-    View to list all image utils.
-
-    * Requires category.
+    View to list all image .
     """
 
     def get(self, request, type=None):
@@ -23,3 +23,24 @@ class ListImageUils(APIView):
         urls = [img.image.url for img in images]
         
         return Response(urls)
+
+class Utils(object):
+    """
+    Likes Utility
+    """
+    # Le nombre de likes pour 5 etoiles
+    LIKES_ON_TOP = 100
+
+    """
+        compute number star from likes
+    """
+    @staticmethod
+    def computed_nb_stars(nbr_likes):
+        part = Utils.LIKES_ON_TOP / 5
+
+        return int(nbr_likes/part)
+
+
+    
+
+    
