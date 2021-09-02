@@ -50,7 +50,7 @@ class Profil extends React.Component {
   render() {
     return (
       <AuthContext.Consumer>
-        {(context) => (
+        {(context) => ( context.currentUser !==null &&
           <Fragment>
             <Menu color="#696d6e" />
             <div className="container">

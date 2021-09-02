@@ -102,7 +102,7 @@ export default class OnTop extends Component {
     
     return (
       <div id="ontop" className="container">
-        <ul className="nav nav-tabs" id="menuTop" role="tablist">
+        <ul className="nav nav-tabs" id="menuTop" role="tablist" >
           {items}
         </ul>
         <OnTopDetails choice={this.state.choice} />

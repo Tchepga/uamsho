@@ -11,13 +11,15 @@ export const AuthProvider = ({ children }) => {
     firebase
       .auth()
       firebase.auth().onAuthStateChanged((user) => {
-        if(user)
+        if(user){
+          console.log(user)
         fetch(process.env.REACT_APP_API_URL + "/api/user?email=" + user.email)
           .then((response) => response.json())
           .then((data) => {
             setCurrentUser(data);
           })
           .catch((error) => console.error(error));
+        }
       });
   }, []);
 

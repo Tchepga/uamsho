@@ -31,3 +31,7 @@ yarn-error.log*
 
 # fichier de cache
 .eslintcache
+
+#env
+.vscode
+.vs

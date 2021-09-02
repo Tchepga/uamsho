@@ -8,38 +8,7 @@ class OntopArticle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [
-        {
-          id: 1,
-          titre: "L'Afrique de demain",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 2,
-          titre: "Le savoir",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 3,
-          titre: "La philosophie africaine",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 4,
-          titre: "Moi et toi",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-        {
-          id: 5,
-          titre: "Vivre ou mourrir",
-          description:
-            "Ceci est une description qui devrait être troncé, texte troncé",
-        },
-      ],
+      books: [],
     };
   }
 

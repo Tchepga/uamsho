@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import GenericCard from "../components/utilities/GenericCard";
 import Menu from "../components/menu/Menu";
 import Footer from "../components/footer/Footer";
@@ -48,7 +49,7 @@ class Article extends Component {
   }
 
   getArticles() {
-    axios.get(process.env.REACT_APP_API_URL+ '/api/articles')
+    axios.get(process.env.REACT_APP_API_URL+ '/api/article  ')
       .then(res => {
         this.setState({ articles: res.data });
       })
@@ -83,18 +84,18 @@ class Article extends Component {
 
     for (let i = 0; i < articles.length; i++) {
       articlesNode.push(
-        <div
-          className="col-12 px-0"
-          role="presentation"
-          key={i}
-        >
-          <GenericCard
-            type="hcard"
-            id={articles[i].id}
-            title={articles[i].titre}
-            description={articles[i].description}
-          />
-        </div>
+          <Link to={{
+            pathname: `/article/${articles[i].id}`,
+            params:{ "id": articles[i].id }
+          }}
+           className="col-12 px-0" key={i}>
+            <GenericCard
+              type="hcard"
+              id={articles[i].id}
+              title={articles[i].title}
+              description={articles[i].description}
+            />
+          </Link>
       );
     }
 

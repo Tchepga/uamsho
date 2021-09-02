@@ -18,49 +18,60 @@ export default class Book extends Component {
     this.sortByCategories = this.sortByCategories.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getCategories();
     this.getBooks();
   }
 
-  sortByCriteria(event){
+  sortByCriteria(event) {
     event.preventDefault();
     const sortType = event.target.value;
-    switch(sortType){
+    switch (sortType) {
       case "PRICE":
-        this.setState({books : this.state.books.sort(Utils.compareBookByPrice).reverse()})
+        this.setState({
+          books: this.state.books.sort(Utils.compareBookByPrice).reverse(),
+        });
         break;
       case "CHAR":
-        this.setState({books : this.state.books.sort(Utils.compareEntityByTitle)})
+        this.setState({
+          books: this.state.books.sort(Utils.compareEntityByTitle),
+        });
         break;
       default:
         this.getBooks();
     }
-
   }
 
   getCategories() {
-    axios.get(process.env.REACT_APP_API_URL+ '/api/categories')
-      .then(res => {
+    axios
+      .get(process.env.REACT_APP_API_URL + "/api/categories")
+      .then((res) => {
         this.setState({ categories: res.data });
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error));
   }
 
   getBooks() {
-    axios.get(process.env.REACT_APP_API_URL+ '/api/book')
-      .then(res => {
+    console.log(this.props);
+    axios
+      .get(process.env.REACT_APP_API_URL + "/api/book")
+      .then((res) => {
         this.setState({ books: res.data });
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error));
   }
 
-  sortByCategories(event){
-    axios.get(process.env.REACT_APP_API_URL+ '/api/book?categorie=' + event.target.innerText)
-    .then(res => {
-      this.setState({ books: res.data });
-    })
-    .catch(error => console.log(error))
+  sortByCategories(event) {
+    axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          "/api/book?categorie=" +
+          event.target.innerText
+      )
+      .then((res) => {
+        this.setState({ books: res.data });
+      })
+      .catch((error) => console.log(error));
   }
 
   render() {
@@ -71,7 +82,11 @@ export default class Book extends Component {
     // liste catégories
     for (let i = 0; i < categories.length; i++) {
       listCategoriesBalises.push(
-        <li key={i} className="list-group-item cursor-pointer" onClick={this.sortByCategories}>
+        <li
+          key={i}
+          className="list-group-item cursor-pointer"
+          onClick={this.sortByCategories}
+        >
           {categories[i].type_category}
         </li>
       );
@@ -83,16 +98,18 @@ export default class Book extends Component {
       for (let j = 0; j < books[i].likes; j++) {
         likes.push(<i className="fas fa-heart mr-1"></i>);
       }
+      
       listBooksBalises.push(
-        <Link to="/books/details" className="col-4 px-0" key={i}>
-          <CardBook
-            title={books[i].title}
-            likes={books[i].likes}
-            author={books[i].author}
-            price={books[i].prix}
-            category={books[i].category}
-            image={books[i].image}
-          />
+        
+        <Link
+          to={{
+            pathname: `/books/${books[i].id}`,
+            params:{ "id": books[i].id }
+          }}
+          className="col-4 px-0 my-2"
+          key={i}
+        >
+          <CardBook addClass={Utils.H_100} book={books[i]} />
         </Link>
       );
     }
@@ -115,9 +132,15 @@ export default class Book extends Component {
                 </div>
               </div>
               <div className="col-8 ml-4">
-                <span className="d-flex flex-row bg-light text-dark  mb-2" style={{marginLeft: "-5px"}}>
+                <span
+                  className="d-flex flex-row bg-light text-dark  mb-2"
+                  style={{ marginLeft: "-5px" }}
+                >
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
-                  <span className="p-3"> il y a {this.state.books.length} produits |</span>
+                  <span className="p-3">
+                    {" "}
+                    il y a {this.state.books.length} produits |
+                  </span>
                   <select
                     className="form-select "
                     aria-label="Type filter"
