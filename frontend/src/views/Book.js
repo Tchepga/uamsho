@@ -6,6 +6,7 @@ import CardBook from "../components/utilities/CardBook";
 import "./Book.css";
 import axios from "axios";
 import Utils from "../utils/Utils";
+import Pagination, {NBRE_ELEMENT_PAGE} from "../components/utilities/Pagination";
 
 export default class Book extends Component {
   constructor(props) {
@@ -13,6 +14,9 @@ export default class Book extends Component {
     this.state = {
       categories: [],
       books: [],
+      currentPage: 1,
+      numberPage:1,
+      currentCateg: null
     };
     this.sortByCriteria = this.sortByCriteria.bind(this);
     this.sortByCategories = this.sortByCategories.bind(this);
@@ -56,26 +60,21 @@ export default class Book extends Component {
     axios
       .get(process.env.REACT_APP_API_URL + "/api/book")
       .then((res) => {
-        this.setState({ books: res.data });
+        this.setState({ books: res.data.books, numberPage : res.data.number_page });
       })
       .catch((error) => console.log(error));
   }
 
   sortByCategories(event) {
-    axios
-      .get(
-        process.env.REACT_APP_API_URL +
-          "/api/book?categorie=" +
-          event.target.innerText
-      )
-      .then((res) => {
-        this.setState({ books: res.data });
-      })
-      .catch((error) => console.log(error));
+    this.setState({currentCateg  : event.target.innerText})
   }
 
+  currentBook = (currentPage) => {
+    this.setState({ currentPage: currentPage });
+  };
+
   render() {
-    const { categories, books } = this.state;
+    const { categories, books, currentPage, currentCateg } = this.state;
     let listCategoriesBalises = [];
     let listBooksBalises = [];
 
@@ -92,24 +91,25 @@ export default class Book extends Component {
       );
     }
 
-    // liste livres par page (30 par pages)
-    for (let i = 0; i < books.length; i++) {
+    // balise book
+    let currentBooks = books.slice((currentPage-1)*NBRE_ELEMENT_PAGE,  currentPage * NBRE_ELEMENT_PAGE)
+    currentBooks = currentCateg === null ? currentBooks : currentBooks.filter((book) => book.category === currentCateg)
+    for (let i = 0; i < currentBooks.length; i++) {
       let likes = [];
-      for (let j = 0; j < books[i].likes; j++) {
+      for (let j = 0; j < currentBooks[i].likes; j++) {
         likes.push(<i className="fas fa-heart mr-1"></i>);
       }
-      
+
       listBooksBalises.push(
-        
         <Link
           to={{
-            pathname: `/books/${books[i].id}`,
-            params:{ "id": books[i].id }
+            pathname: `/books/${currentBooks[i].id}`,
+            params: { id: currentBooks[i].id },
           }}
           className="col-4 px-0 my-2"
           key={i}
         >
-          <CardBook addClass={Utils.H_100} book={books[i]} />
+          <CardBook addClass={Utils.H_100} book={currentBooks[i]} />
         </Link>
       );
     }
@@ -139,7 +139,7 @@ export default class Book extends Component {
                   <p className="mr-auto px-2 pt-3">Listes disponibles</p>
                   <span className="p-3">
                     {" "}
-                    il y a {this.state.books.length} produits |
+                    il y a {currentBooks.length} produits |
                   </span>
                   <select
                     className="form-select "
@@ -152,45 +152,13 @@ export default class Book extends Component {
                   </select>
                 </span>
                 <div className="row neutral">{listBooksBalises}</div>
-                <nav aria-label="...">
-                  <ul className="pagination">
-                    <li className="page-item disabled">
-                      {/* eslint-disable-next-line */}
-                      <a
-                        className="page-link"
-                        href="#"
-                        tabIndex="-1"
-                        aria-disabled="true"
-                      >
-                        Previous
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item active" aria-current="page">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div className="row-cols-12 text-center">
+                  <Pagination
+                    currentBook={this.currentBook}
+                    books={this.state.books}
+                    numberPage = {this.state.numberPage}
+                  />
+                </div>
               </div>
             </div>
           </div>
