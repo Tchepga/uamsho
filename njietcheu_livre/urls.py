@@ -18,6 +18,7 @@ from core.views.category import CategoryViewSet
 from core.views.article import ArticleViewSet
 from core.views.book import BookViewSet
 from core.views.utils import ListImageUils
+from core.views.search import ListSearch
 from django.contrib import admin
 from django.urls import path, include, re_path
 from core.views.pages import urlpatterns as core_routes
@@ -60,6 +61,7 @@ urlpatterns = [
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
     path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
     path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),
+    path('api/search', ListSearch.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:

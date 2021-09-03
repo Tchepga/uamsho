@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework import viewsets
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from core.serializers import UtilisateurSerializer
+from core.serializers import UtilisateurCompleteSerializer
 
 class UserViewset(viewsets.ViewSet):
     """viewsets pour utilisateurs. Pas d'authenfication, il est géré par firebase"""
@@ -16,5 +16,5 @@ class UserViewset(viewsets.ViewSet):
             users=None
         else :
             users=users[0]
-        serializer = UtilisateurSerializer(users)
+        serializer = UtilisateurCompleteSerializer(users)
         return Response(serializer.data)

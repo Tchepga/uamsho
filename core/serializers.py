@@ -3,9 +3,21 @@ from rest_framework import fields, serializers
 from core.model.models import Article, Book, Category, Utilisateur
 from core.model.utils import ImageUtils
 from django.contrib.auth.models import User
-#from rest_framework.utils import json
 import json
 import base64
+
+class UtilisateurBasicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Utilisateur
+        verbose_name = 'Utilisateur'
+        verbose_name_plural = 'Utilisateurs'    
+        fields=('id', 'username','first_name', 'last_name')
+
+class UtilisateurCompleteSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        fields = UtilisateurBasicSerializer.Meta.fields +   ('email', 'address', 'complement_address')
     
 
 class BookSerializer(serializers.ModelSerializer):
@@ -41,9 +53,35 @@ class BookSerializer(serializers.ModelSerializer):
        
 
 class ArticleSerializer(serializers.ModelSerializer):
+
+    category = serializers.StringRelatedField()
+    nbre_stars = serializers.SerializerMethodField()
+    author = UtilisateurBasicSerializer(read_only=True)
+
+
     class Meta:
         model = Article
-        fields = "__all__"
+        fields = ('id', 'pk', 'title', 'subtitle', 'description', 'date_creation',
+            'ontop', 'category', 'nbre_stars','author')
+        read_only_fields=('id', 'pk')
+
+    
+    def get_nbre_stars(self, obj):
+    
+        """
+            compute number star from likes
+        """
+
+        moyen=0
+        likes = obj.likes
+        
+       
+        if likes is not None:
+            likes =[ like.number_likes for like in likes.all()]
+            if len(likes) != 0:
+                moyen = sum(likes)/len(likes)      
+
+        return moyen
 
 class ImageUtilsSerializer(serializers.ModelSerializer):
     
@@ -59,11 +97,4 @@ class CategorySerializer(serializers.ModelSerializer):
         verbose_name = 'Categorie'
         verbose_name_plural = 'Categories'
 
-class UtilisateurSerializer(serializers.ModelSerializer):
     
-    class Meta:
-        model = Utilisateur
-        verbose_name = 'Utilisateur'
-        verbose_name_plural = 'Utilisateurs'
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'address', 'complement_address']
-        

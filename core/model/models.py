@@ -8,6 +8,19 @@ from django.db import models
 from datetime import datetime
 from django.utils import timezone
 
+class Utilisateur(User):
+    """ Model utilisateur """
+    class Meta:
+        verbose_name = 'Utilisateur'
+
+    address = models.CharField(max_length=150)
+    complement_address = models.CharField(max_length=15)
+
+    
+
+    def __str__(self) -> str:
+        return self.username
+
 class Book(models.Model):
     """ Book model """
     title = models.CharField(_("titre") ,max_length=250)
@@ -80,7 +93,7 @@ class Article(models.Model):
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     
     likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title
@@ -95,18 +108,7 @@ class Discussion(models.Model):
         return self.subject
 
 
-class Utilisateur(User):
-    """ Model utilisateur """
-    class Meta:
-        verbose_name = 'Utilisateur'
 
-    address = models.CharField(max_length=150)
-    complement_address = models.CharField(max_length=15)
-
-    
-
-    def __str__(self) -> str:
-        return self.username
    
         
 

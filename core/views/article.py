@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from core.model.models import Book, Article, Category
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 
 class ArticleViewSet(viewsets.ViewSet):
 
@@ -14,16 +15,15 @@ class ArticleViewSet(viewsets.ViewSet):
             queryset = Article.objects.filter(category__type_category = categorie).order_by("-date_creation")
             
         serializer = ArticleSerializer(queryset, many=True)
-        return Response(serializer.data)
+        number_page=round(len(queryset)/settings.NUMBER_ELEMENT_BY_PAGE)
+        
+        return Response({'articles' :serializer.data, 'numberPage': number_page})
 
     def retrieve(self, request, pk=None):
-        article = Article.objects.filter(id=pk).values('author__first_name', 'author__last_name', 'category', 
-        'comment', 'date_creation', 'description', 'id', 'likes', 'ontop', 'subtitle', 'title')
-        
-        if article is not None:
-            return Response(article.first())
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        queryset = Article.objects.all()
+        articles = get_object_or_404(queryset, pk=pk)
+        serializer = ArticleSerializer(articles)
+        return Response(serializer.data)
     
     def ontop(self, request):
         articles = Article.objects.filter(ontop=True).order_by('-date_creation')

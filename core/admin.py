@@ -13,9 +13,12 @@ class BookAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'date_creation',  'ontop')
 
+
 @admin.register(Utilisateur)
 class UtilisateurAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name', 'last_name')
+    
+    fields = (('username','password'), ('first_name', 'last_name', 'email'), 'address', 'complement_address')
 
 admin.site.register(Comment)
 admin.site.register(Likes)
