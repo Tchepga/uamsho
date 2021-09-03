@@ -1,9 +1,11 @@
 
-import axios from "axios";
 /**
  * Utilities function
  */
 const Utils = {
+
+    // character
+    SPACE : "\xa0",
     
     H_80: "h-80",
 

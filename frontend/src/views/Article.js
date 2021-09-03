@@ -5,6 +5,7 @@ import Menu from "../components/menu/Menu";
 import Footer from "../components/footer/Footer";
 import axios from 'axios';
 import Utils from "../utils/Utils";
+import Pagination, {NBRE_ELEMENT_PAGE} from "../components/utilities/Pagination";
 
 class Article extends Component {
   constructor(props) {
@@ -12,6 +13,9 @@ class Article extends Component {
     this.state = {
       categories: [],
       articles: [],
+      currentPage: 1,
+      numberPage:1,
+      currentCateg: null
     };
     
     this.sortByCriteria = this.sortByCriteria.bind(this);
@@ -51,25 +55,23 @@ class Article extends Component {
   getArticles() {
     axios.get(process.env.REACT_APP_API_URL+ '/api/article  ')
       .then(res => {
-        this.setState({ articles: res.data });
+        this.setState({ articles: res.data.articles, numberPage: res.data.numberPage });
       })
       .catch(error => console.log(error))
   }
 
   sortByCategories(event){
-
-    axios.get(process.env.REACT_APP_API_URL+ '/api/articles?categorie=' + event.target.innerText)
-    .then(res => {
-      this.setState({ articles: res.data });
-    })
-    .catch(error => console.log(error))
+    this.setState({currentCateg  : event.target.innerText})
   }
 
+  currentArticle = (currentPage) => {
+    this.setState({ currentPage: currentPage });
+  };
+
   render() {
-    const articles = this.state.articles;
+    const {articles, currentCateg, currentPage, categories} = this.state;
     let articlesNode = [];
     let listCategoriesBalises = [];
-    const { categories } = this.state;
 
     if(categories.length > 0 )
       for (let i = 0; i < categories.length; i++) {
@@ -82,18 +84,21 @@ class Article extends Component {
     else
       listCategoriesBalises.push("Un problème est subvenue à " + (new Date()) + " Contactez votre administrateur.");
 
-    for (let i = 0; i < articles.length; i++) {
+    // process balise of article
+    let currentArticles = articles.slice((currentPage-1)*NBRE_ELEMENT_PAGE,  currentPage * NBRE_ELEMENT_PAGE)
+    currentArticles = currentCateg === null ? currentArticles : currentArticles.filter((art) => art.category === currentCateg)
+    for (let i = 0; i < currentArticles.length; i++) {
       articlesNode.push(
           <Link to={{
-            pathname: `/article/${articles[i].id}`,
-            params:{ "id": articles[i].id }
+            pathname: `/article/${currentArticles[i].id}`,
+            params:{ "id": currentArticles[i].id }
           }}
            className="col-12 px-0" key={i}>
             <GenericCard
               type="hcard"
-              id={articles[i].id}
-              title={articles[i].title}
-              description={articles[i].description}
+              id={currentArticles[i].id}
+              title={currentArticles[i].title}
+              description={currentArticles[i].description}
             />
           </Link>
       );
@@ -134,45 +139,13 @@ class Article extends Component {
                   </select>
                 </span>
                 <div className="row neutral mb-3">{articlesNode}</div>
-                <nav aria-label="...">
-                  <ul className="pagination">
-                    <li className="page-item disabled">
-                      {/* eslint-disable-next-line */}
-                      <a
-                        className="page-link"
-                        href="#"
-                        tabIndex="-1"
-                        aria-disabled="true"
-                      >
-                        Previous
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item active" aria-current="page">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      {/* eslint-disable-next-line */}
-                      <a className="page-link" href="#">
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div className="row-cols-12 text-center">
+                  <Pagination
+                    currentBook={this.currentArticle}
+                    books={this.state.articles}
+                    numberPage = {this.state.numberPage}
+                  />
+                </div>
               </div>
             </div>
           </div>

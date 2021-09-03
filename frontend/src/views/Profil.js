@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import DetailsProfil from "../components/profil/DetailsProfil";
-import firebase from "../components/authentification/firebase";
 import Menu from "../components/menu/Menu";
 import PassOrder from "../components/profil/PassOrder";
 import CurrentArticle from "../components/profil/CurrentArticle";
