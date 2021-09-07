@@ -14,8 +14,8 @@ class Pagination extends Component {
     
     for (let i = 1; i <= this.props.numberPage; i++) {
       numeroPageBalise.push(
-        <li className="page-item">
-          <button className="page-link" key={i} onClick={this.switchPage}>
+        <li className="page-item"  key={i}>
+          <button className="page-link" onClick={this.switchPage}>
             {i}
           </button>
         </li>

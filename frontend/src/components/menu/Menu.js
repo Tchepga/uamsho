@@ -3,37 +3,47 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
-import axios from "axios";
+import { withRouter } from "react-router";
 
 class Menu extends Component {
+  state = {
+    scopesLabel: ["Livre", "Article", "Débats"],
+  };
 
-  
   search = (event) => {
-   
-    const inputSearch = this.refs.searchInput.value; // TODO fix me
+    event.preventDefault();
+    
+    this.props.history.push({
+      pathname: "/search",
+      search: "?scope=" + this.state.scopesLabel + "&inputSearch=" + this.inputSearch.value,
+      params:{scope: this.state.scopesLabel, inputSearch: this.inputSearch.value}
+    });
+  };
 
-    // TODO get scope
-    let scope = ["book", "article", "debat"]
-    axios.get(process.env.REACT_APP_API_URL+ "/api/search?scope=" + scope + "&inputSearch=" + inputSearch)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(error => console.log(error))
+  removeScope = (event) => {
+    const scopeName = event.target.innerText;
+    let { scopesLabel } = this.state;
+    const index = scopesLabel.indexOf(scopeName.trim());
+
+    if (index > -1) {
+      this.setState({ scopesLabel: scopesLabel.splice(index, 1) });
+    }
   };
 
   render() {
     let searchScopeBalise = [];
-    const scopesLabel = ["Livre", "Article", "Débats"];
-    scopesLabel.forEach((scopeLabel) => {
+
+    this.state.scopesLabel.forEach((scopeLabel, index) => {
       searchScopeBalise.push(
-        <div className="input-group-prepend">
+        <div className="input-group-prepend" key={index}>
           <div
             className="input-group-text cursor-pointer"
             id="btnGroupAddonSearch"
             style={{ background: "#fafafa" }}
+            onClick={this.removeScope}
           >
             {scopeLabel + Utils.SPACE}
-            <i className="fas fa-times mt-1" style={{ color: "#a1887f" }}></i>
+            <i className="fas fa-times mt-1" style={{ color: "#a1887f" }} />
           </div>
         </div>
       );
@@ -140,7 +150,7 @@ class Menu extends Component {
 
         <div
           className="modal fade bd-search-modal-lg"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="searchInputModal"
           aria-hidden="true"
@@ -152,21 +162,21 @@ class Menu extends Component {
                   {searchScopeBalise}
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Que recherchez vous?"
                     aria-label="search-input"
                     aria-describedby="btnGroupAddonSearch"
                     name="searchInput"
-                    ref="searchInput"
+                    ref={(elm) => (this.inputSearch = elm)}
                   />
-                  <div class="input-group-prepend">
+                  <div className="input-group-prepend">
                     <div
-                      class="input-group-text cursor-pointer"
+                      className="input-group-text cursor-pointer"
                       id="btnGroupAddonSearch"
                       style={{ background: "#FFC300" }}
                       onClick={this.search}
                     >
-                      <i class="fas fa-search"></i>
+                      <i className="fas fa-search"></i>
                     </div>
                   </div>
                 </div>
@@ -181,4 +191,4 @@ class Menu extends Component {
 Menu.defaultProps = {
   color: "",
 };
-export default Menu;
+export default withRouter(Menu);

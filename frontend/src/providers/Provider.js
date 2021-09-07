@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
       .auth()
       firebase.auth().onAuthStateChanged((user) => {
         if(user){
-          console.log(user)
         fetch(process.env.REACT_APP_API_URL + "/api/user?email=" + user.email)
           .then((response) => response.json())
           .then((data) => {
