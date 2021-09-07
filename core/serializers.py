@@ -17,7 +17,8 @@ class UtilisateurBasicSerializer(serializers.ModelSerializer):
 class UtilisateurCompleteSerializer(serializers.ModelSerializer):
     
     class Meta:
-        fields = UtilisateurBasicSerializer.Meta.fields +   ('email', 'address', 'complement_address')
+        model = UtilisateurBasicSerializer.Meta.model
+        fields = UtilisateurBasicSerializer.Meta.fields + ('email', 'address', 'complement_address')
     
 
 class BookSerializer(serializers.ModelSerializer):

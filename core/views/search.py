@@ -15,12 +15,11 @@ class ListSearch(APIView):
         books = []
         articles = []
 
-        if "book" in scope:
-            books = BookSerializer(Book.objects.filter(title__contains=input_search), many=True)
+        if "Livre" in scope:
+            books = BookSerializer(Book.objects.filter(title__contains=input_search), many=True).data
         
-        if "article" in scope:
-            articles = ArticleSerializer(Article.objects.filter(title__contains=input_search), many=True)
+        if "Article" in scope:
+            articles = ArticleSerializer(Article.objects.filter(title__contains=input_search), many=True).data
 
 
-
-        return Response({ "books" : books.data, "articles": articles.data})
+        return Response({ "books" : books, "articles": articles})
