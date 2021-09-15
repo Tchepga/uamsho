@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { ChangeEvent, Component, Fragment, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
@@ -7,29 +7,36 @@ import "./Book.css";
 import axios from "axios";
 import Utils from "../utils/Utils";
 import Pagination, {NBRE_ELEMENT_PAGE} from "../components/utilities/Pagination";
+import { book } from "../model/book";
+import { category } from "../model/category";
 
-export default class Book extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+export interface BookState {
+  categories: Array<category>;
+  books: Array<book>;
+  currentPage: number;
+  numberPage: number;
+  currentCateg: String | null;
+}
+
+export default class Book extends Component<any, BookState> {
+  
+    state :BookState = {
       categories: [],
       books: [],
       currentPage: 1,
       numberPage:1,
       currentCateg: null
     };
-    this.sortByCriteria = this.sortByCriteria.bind(this);
-    this.sortByCategories = this.sortByCategories.bind(this);
-  }
+   
 
   componentDidMount() {
     this.getCategories();
     this.getBooks();
   }
 
-  sortByCriteria(event) {
+  sortByCriteria(event: ChangeEvent<HTMLSelectElement>) {
     event.preventDefault();
-    const sortType = event.target.value;
+    const sortType = event.currentTarget.value;
     switch (sortType) {
       case "PRICE":
         this.setState({
@@ -56,22 +63,23 @@ export default class Book extends Component {
   }
 
   getBooks() {
-    console.log(this.props);
+    
     axios
       .get(process.env.REACT_APP_API_URL + "/api/book")
       .then((res) => {
         this.setState({ books: res.data.books, numberPage : res.data.number_page });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }
 
-  sortByCategories(event) {
-    this.setState({currentCateg  : event.target.innerText})
+  sortByCategories(event: MouseEvent<HTMLElement>) {
+    if(event.currentTarget != null)
+    this.setState({currentCateg  : event.currentTarget.innerText})
   }
 
-  currentBook = (currentPage) => {
+  currentBook = (currentPage: number) => {
     this.setState({ currentPage: currentPage });
-  };
+  }
 
   render() {
     const { categories, books, currentPage, currentCateg } = this.state;
@@ -96,7 +104,7 @@ export default class Book extends Component {
     currentBooks = currentCateg === null ? currentBooks : currentBooks.filter((book) => book.category === currentCateg)
     for (let i = 0; i < currentBooks.length; i++) {
       let likes = [];
-      for (let j = 0; j < currentBooks[i].likes; j++) {
+      for (let j = 0; j < currentBooks[i].nbre_stars; j++) {
         likes.push(<i className="fas fa-heart mr-1"></i>);
       }
 
@@ -104,6 +112,7 @@ export default class Book extends Component {
         <Link
           to={{
             pathname: `/books/${currentBooks[i].id}`,
+            //@ts-ignore
             params: { id: currentBooks[i].id },
           }}
           className="col-4 px-0 my-2"
@@ -146,7 +155,7 @@ export default class Book extends Component {
                     aria-label="Type filter"
                     onChange={this.sortByCriteria}
                   >
-                    <option defaultValue>Par pertinence</option>
+                    <option defaultValue="true">Par pertinence</option>
                     <option value="CHAR">Par ordre alphabétique</option>
                     <option value="PRICE">Par prix décroissant</option>
                   </select>

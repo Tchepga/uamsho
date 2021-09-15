@@ -1,4 +1,6 @@
 
+import { article } from "../model/article";
+import { book } from "../model/book";
 /**
  * Utilities function
  */
@@ -15,24 +17,25 @@ const Utils = {
 
     defaultBookIllustration : "img/open-book-clipart-03.png",
 
-    capitalizeFirstLetter(string) {
+    capitalizeFirstLetter(string:string ){
         
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
 
-    truncate(str) {
+    truncate(str :String) {
         return str!=null && str.length > 40 ? str.substring(0, 40) + "..." : str;
     },
 
-    dateFromString(dateString){
+    dateFromString(dateString : string){
         if(dateString !== null || dateString !== undefined){
-            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            
+            let options:object ={ year: 'numeric', month: 'long', day: 'numeric' };
             let date = new Date(dateString);
             return date.toLocaleDateString("fr-FR",options);
         }
     },
     
-    compareBookByPrice(book1, book2){
+    compareBookByPrice(book1: book, book2: book){
         if(book1 != null && book2 != null){
             if(book1.price > book2.price){
                 return 1;
@@ -47,9 +50,12 @@ const Utils = {
             }
             
         }
+
+        return 0;
     },
 
-    compareEntityByTitle(entity1, entity2){
+    compareEntityByTitle(entity1 : book|article, entity2 : book|article){
+
         if(entity1 != null && entity2 != null){
             if(entity1.title > entity2.title){
                 return 1;
@@ -64,9 +70,16 @@ const Utils = {
             }
             
         }
+
+        return 0;
     },
 
-    getIllustration(book){
+    /**
+     * get illustration of image book
+     * @param book 
+     * @returns string url
+     */
+    getIllustration(book: book){
 
         if(this.isNotNullObject(book) && book.illustration !== null){
             return process.env.REACT_APP_API_URL + book.illustration
@@ -75,7 +88,7 @@ const Utils = {
         return this.defaultBookIllustration;
     },
 
-    isNotNullObject(object){
+    isNotNullObject(object : object){
 
         if(object=== null || object === undefined){
             return false;
