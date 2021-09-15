@@ -17,7 +17,7 @@ from core.views.user import UserViewset
 from core.views.category import CategoryViewSet
 from core.views.article import ArticleViewSet
 from core.views.book import BookViewSet
-from core.views.utils import ListImageUils
+from core.views.utils import ListImageUils, upload_ckeditor_image
 from core.views.search import ListSearch
 from django.contrib import admin
 from django.urls import path, include, re_path
@@ -56,12 +56,13 @@ urlpatterns = [
     path('api/book/', BookViewSet.as_view({'get': 'list'})),
     path('api/book/<int:pk>', BookViewSet.as_view({'get': 'retrieve'})),
     path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
-    path('api/article', ArticleViewSet.as_view({'get': 'list'})),
+    path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/article/<int:pk>', ArticleViewSet.as_view({'get': 'retrieve'})),
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
     path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
     path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),
     path('api/search', ListSearch.as_view()),
+    path('api/upload/ckeditor-image', upload_ckeditor_image)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:

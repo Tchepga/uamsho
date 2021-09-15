@@ -1,9 +1,16 @@
+from django.http.response import FileResponse
 from core.model.models import Book
+from core.model.utils import ImageUtils
 from core.serializers import ImageUtilsSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from core.model.utils import *
+from wsgiref.util import FileWrapper
 from PIL import Image
+from rest_framework import status
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+import base64
+
 
 class ListImageUils(APIView):
     """
@@ -14,7 +21,7 @@ class ListImageUils(APIView):
         """
         Return a list of all users.
         """
-        # category = request.GET['type'] or None
+        
         if type is not None:
             images = ImageUtils.objects.filter(category__title= type)
         else:
@@ -23,6 +30,20 @@ class ListImageUils(APIView):
         urls = [img.image.url for img in images]
         
         return Response(urls)
+
+
+@api_view(['POST'])
+@parser_classes([MultiPartParser])
+def upload_ckeditor_image(request, format=None):
+    """
+    manage ckeditor image.
+    """
+
+    file_obj = request.FILES['upload']
+
+    return Response(base64.b64encode(file_obj.read()))
+    
+
 
 class Utils(object):
     """
