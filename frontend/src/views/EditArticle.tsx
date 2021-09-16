@@ -1,10 +1,9 @@
-import React, { Component, FormEvent, Fragment, MouseEvent, SyntheticEvent } from 'react';
+import React, { Component, FormEvent, Fragment} from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Menu from '../components/menu/Menu';
 import axios from 'axios';
 import { category } from '../model/category';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { article } from '../model/article';
 import { AuthContext } from '../providers/Provider';
 import { withRouter } from 'react-router';
 

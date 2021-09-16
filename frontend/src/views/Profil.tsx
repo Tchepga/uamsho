@@ -7,6 +7,8 @@ import CurrentDebate from "../components/profil/CurrentDebate";
 import { AuthContext } from "../providers/Provider";
 import firebase from "firebase";
 import { withRouter } from "react-router";
+import { article } from "../model/article";
+import axios from "axios";
 
 export interface ProfilState {
   isLoading: boolean,
@@ -16,8 +18,13 @@ export interface ProfilState {
   isDebate: boolean,
   isOrders: boolean,
   user: string,
+  articles: Array<article>,
+  favorisArticles: Array<article>
+
 }
 class Profil extends React.Component<any, ProfilState> {
+
+  static contextType = AuthContext;
 
   constructor(props: any) {
     super(props)
@@ -29,15 +36,45 @@ class Profil extends React.Component<any, ProfilState> {
       isDebate: false,
       isOrders: false,
       user: "",
+      articles: [],
+      favorisArticles: []
     };
 
     this.changeDetails = this.changeDetails.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
+
+    // for redirection when article are created
     const location = this.props.location;
-    if(location.state != null ){
-      this.setState({isArticle : location.state.isArticle, isProfil: false})
+    if (location.state != null) {
+      this.setState({ isArticle: location.state.isArticle, isProfil: false })
     }
+
+    this.getFavorisArticles();
+  }
+
+  getArticle = () => {
+
+
+    const currentUser = this.context.currentUser;
+    axios
+      .get(process.env.REACT_APP_API_URL + "/api/article?email=" + currentUser.email + "&username=" + currentUser.username)
+      .then((res) => {
+        this.setState({ articles: res.data.articles });
+      })
+      .catch((error) => console.log(error));
+
+  }
+
+  getFavorisArticles = () => {
+    const currentUser = this.context.currentUser;
+
+    axios
+      .get(process.env.REACT_APP_API_URL + "/api/article?filter=FAVORIS&email=" + currentUser.email + "&username=" + currentUser.username)
+      .then((res) => {
+        this.setState({ articles: res.data });
+      })
+      .catch((error) => console.log(error));
   }
   changeDetails(event: MouseEvent<HTMLButtonElement>) {
     const type = event.currentTarget.value;
@@ -59,8 +96,13 @@ class Profil extends React.Component<any, ProfilState> {
         this.setState({ isOrders: true });
         break;
       case "ARTICLE":
+        this.getArticle();
         this.setState({ isArticle: true });
         break;
+      case "ARTICLE_FAVORITE":
+          this.getFavorisArticles();
+          this.setState({ isArticleFavorite: true });
+          break;
       case "PROFIL":
       default:
         this.setState({ isProfil: true });
@@ -166,10 +208,10 @@ class Profil extends React.Component<any, ProfilState> {
                   )}
                   {this.state.isOrders && <PassOrder user={context.currentUser} />}
                   {this.state.isArticle && (
-                    <CurrentArticle user={context.currentUser} isFavorite={false} />
+                    <CurrentArticle user={context.currentUser} isFavorite={false} data={this.state.articles} />
                   )}
                   {this.state.isArticleFavorite && (
-                    <CurrentArticle user={context.currentUser} isFavorite={true} />
+                    <CurrentArticle user={context.currentUser} isFavorite={true} data={this.state.favorisArticles} />
                   )}
                   {this.state.isDebate && (
                     <CurrentDebate user={context.currentUser} />

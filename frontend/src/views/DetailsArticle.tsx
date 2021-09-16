@@ -52,10 +52,13 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
     let likesNode = [];
     let authorBalise = [];
     let likes = 0;
+
     if (article.nbre_stars === null) likes = article.nbre_stars;
+
     for (let j = 0; j < likes; j++) {
       likesNode.push(<i className="fas fa-heart mr-1" key={j}></i>);
     }
+    
     for (let j = 0; j < 5 - likes; j++) {
       likesNode.push(<i className="far fa-heart mr-1" key={j}></i>);
     }

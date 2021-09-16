@@ -65,12 +65,12 @@ class DetailsBook extends Component {
                   {book.description}
                 </p>
                 <div className="row">
-                  <span class="badge bg-primary ml-3">Edition : {book.edition}</span>
-                  <span class="badge bg-warning ml-2">Edité le : {Utils.dateFromString(book.date_edition)}</span>
-                  <span class="badge bg-light ml-2">Nombre de page : {book.number_page}</span>
+                  <span className="badge bg-primary ml-3">Edition : {book.edition}</span>
+                  <span className="badge bg-warning ml-2">Edité le : {Utils.dateFromString(book.date_edition)}</span>
+                  <span className="badge bg-light ml-2">Nombre de page : {book.number_page}</span>
                 </div>
                 <div className="row mt-3">
-                  <span class="badge bg-info ml-3">Auteur : {book.author}</span>
+                  <span className="badge bg-info ml-3">Auteur : {book.author}</span>
                 </div>
                 <b>{book.price} € TTC</b>
                 <div className="mb-3 row">
