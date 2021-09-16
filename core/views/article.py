@@ -14,12 +14,24 @@ class ArticleViewSet(viewsets.ViewSet):
 
     def list(self, request):
         categorie = request.query_params.get("categorie", None)
+        email = request.query_params.get("email", None)
+        username = request.query_params.get("username", None)
+        filter_param = request.query_params.get("filter", None)
+
         if categorie is None:
             queryset = Article.objects.all().order_by("-date_creation")
         else:
             queryset = Article.objects.filter(
                 category__type_category=categorie
-            ).order_by("-date_creation")
+            ).order_by("-date_creatsion")
+
+        if username is not None and email is not None:
+             # get author
+            author = Utilisateur.objects.get(email=email, username=username)
+            queryset = queryset.filter(author=author)
+            
+        if filter_param == "FAVORIS":
+            queryset = queryset.filter(likes__owner=author)
 
         serializer = ArticleSerializer(queryset, many=True)
         number_page = round(len(queryset) / settings.NUMBER_ELEMENT_BY_PAGE)
