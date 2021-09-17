@@ -1,27 +1,52 @@
 import "./Menu.css";
-import React, { Component } from "react";
+import React, { Component, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
 import { withRouter } from "react-router";
 
-class Menu extends Component {
+export interface MenuState {
+  scopesLabel: Array<string>;
+  panier : number;
+}
+
+class Menu extends Component<any, MenuState> {
+
+  private inputSearch: React.RefObject<HTMLInputElement> = React.createRef();
+  static defaultProps: { color: string; };
+
+
   state = {
     scopesLabel: ["Livre", "Article", "Débats"],
+    panier : 0
   };
 
-  search = (event) => {
-    event.preventDefault();
+  componentDidMount(){
+    // for( let i=0; i<10; i++){
+    //   if(localStorage.getItem("book" + i) !== null || localStorage.getItem("book" + i) !== undefined){
+    //     console.log(localStorage.getItem("book" + i))
+    //     this.setState({panier : this.state.panier + 1 })
+    //   }
+    // }
     
+  }
+
+  search = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
     this.props.history.push({
       pathname: "/search",
-      search: "?scope=" + this.state.scopesLabel + "&inputSearch=" + this.inputSearch.value,
-      params:{scope: this.state.scopesLabel, inputSearch: this.inputSearch.value}
+      search: "?scope=" + this.state.scopesLabel + "&inputSearch=" + this.inputSearch.current?.value,
+      params: { scope: this.state.scopesLabel, inputSearch: this.inputSearch.current?.value }
     });
   };
 
-  removeScope = (event) => {
-    const scopeName = event.target.innerText;
+  /**
+   *  remove scope of search
+   * @param event on Div element
+   */
+  removeScope = (event: MouseEvent<HTMLDivElement>) => {
+    const scopeName = event.currentTarget.innerText;
     let { scopesLabel } = this.state;
     const index = scopesLabel.indexOf(scopeName.trim());
 
@@ -31,23 +56,19 @@ class Menu extends Component {
   };
 
   render() {
-    let searchScopeBalise = [];
-
-    this.state.scopesLabel.forEach((scopeLabel, index) => {
-      searchScopeBalise.push(
-        <div className="input-group-prepend" key={index}>
-          <div
-            className="input-group-text cursor-pointer"
-            id="btnGroupAddonSearch"
-            style={{ background: "#fafafa" }}
-            onClick={this.removeScope}
-          >
-            {scopeLabel + Utils.SPACE}
-            <i className="fas fa-times mt-1" style={{ color: "#a1887f" }} />
-          </div>
+    const searchScopeBalise = this.state.scopesLabel.map((scopeLabel, index) => (
+      <div className="input-group-prepend" key={index}>
+        <div
+          className="input-group-text cursor-pointer"
+          id="btnGroupAddonSearch"
+          style={{ background: "#fafafa" }}
+          onClick={this.removeScope}
+        >
+          {scopeLabel + Utils.SPACE}
+          <i className="fas fa-times mt-1" style={{ color: "#a1887f" }} />
         </div>
-      );
-    });
+      </div>
+    ));
 
     return (
       <div id="Menu" style={{ backgroundColor: this.props.color }}>
@@ -141,16 +162,21 @@ class Menu extends Component {
             </button>
           </li>
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/panier">
               <i className="fas fa-shopping-basket"></i>
+              {this.state.panier >0 && 
+                <span 
+                  className="badge badge-pill badge-danger" 
+                  style={{ transform: "translate(0px, -5px)"}}>
+                    {this.state.panier}
+                </span>}
             </a>
           </li>
         </ul>
 
         <div
           className="modal fade bd-search-modal-lg"
-          tabIndex="-1"
+          tabIndex={-1}
           role="dialog"
           aria-labelledby="searchInputModal"
           aria-hidden="true"
@@ -167,7 +193,7 @@ class Menu extends Component {
                     aria-label="search-input"
                     aria-describedby="btnGroupAddonSearch"
                     name="searchInput"
-                    ref={(elm) => (this.inputSearch = elm)}
+                    ref={this.inputSearch}
                   />
                   <div className="input-group-prepend">
                     <div

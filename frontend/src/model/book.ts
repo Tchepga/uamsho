@@ -18,4 +18,6 @@ export interface book {
     comments : any;
     category : string;
     author : string;
+    quantity : number;
+    choiceQuantity: number;
 }

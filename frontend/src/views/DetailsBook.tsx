@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, MouseEvent } from "react";
 import { Fragment } from "react";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
@@ -6,20 +6,28 @@ import "./DetailsBook.css";
 import { withRouter } from "react-router";
 import axios from "axios"
 import Utils from "../utils/Utils";
-class DetailsBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      book: {},
-    };
+import { book } from "../model/book";
+import { AuthContext } from "../providers/Provider";
+
+export interface DetailsBookState {
+  book: book;
+  choiceQuantity: number;
+}
+class DetailsBook extends Component<any, DetailsBookState> {
+
+  static contextType = AuthContext;
+
+  state = {
+    book: {} as book,
+    choiceQuantity: 0
   }
 
   componentDidMount() {
-  
+
     this.getBook(this.props.match.params.id);
   }
 
-  getBook(id) {
+  getBook(id: number) {
     axios
       .get(process.env.REACT_APP_API_URL + "/api/book/" + id)
       .then((res) => {
@@ -28,12 +36,23 @@ class DetailsBook extends Component {
       .catch((error) => console.log(error));
   }
 
+  addToPanier = (event: MouseEvent<HTMLButtonElement>) => {
+
+    const data = this.state;
+    // axios.post(process.env.REACT_APP_API_URL + "/api/panier", { data })
+    //   .then((resp)=> console.log(resp)) //() => this.props.location.push("/panier")
+    //   .catch(error => console.error(error))
+
+    Utils.setCookie("book"+data.book.id.toString(), data.book.id.toString() + "_" + data.choiceQuantity, 1);
+
+  }
+
   render() {
     const book = this.state.book;
 
     if (book != null) {
       let likesNode = [];
-      let likes = this.state.book.likes;
+      let likes = this.state.book.nbre_stars;
       if (likes !== null) {
         // à gérer après
         for (let j = 0; j < 5; j++) {
@@ -72,7 +91,7 @@ class DetailsBook extends Component {
                 <div className="row mt-3">
                   <span className="badge bg-info ml-3">Auteur : {book.author}</span>
                 </div>
-                <b>{book.price} € TTC</b>
+                <b style={{ color: "#ff1744", fontSize: "30px" }}>{book.price} € TTC</b>
                 <div className="mb-3 row">
                   <label htmlFor="quantity" className="col-sm-2 col-form-label">
                     Quantité
@@ -82,10 +101,16 @@ class DetailsBook extends Component {
                       type="number"
                       className="form-control col-2"
                       id="quantity"
+                      onChange={(event) => this.setState({ choiceQuantity: parseInt(event.currentTarget.value) })}
                     />
+                    {this.state.book.quantity === 0 &&
+                      <span style={{ color: "#d32f2f" }}>Article indisponible pour l'instant</span>}
                   </div>
                 </div>
-                <button type="submit" className="btn btn-dark">
+                <button type="submit"
+                  className="btn btn-dark"
+                  disabled={this.state.book.quantity === 0 || this.state.choiceQuantity === 0}
+                  onClick={this.addToPanier}>
                   Ajouter au panier
                 </button>
                 <button className="btn btn-dark mr-3 ml-3">

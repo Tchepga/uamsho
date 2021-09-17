@@ -1,6 +1,5 @@
-import React, { Component, Fragment, MouseEvent } from "react";
+import { Component, Fragment, MouseEvent } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Link } from "react-router-dom";
 import { article } from "../../model/article";
 import "./CurrentArticle.css";
 

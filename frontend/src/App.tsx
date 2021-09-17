@@ -48,7 +48,6 @@ class App extends Component<AppState> {
               <Route exact path="/" component={Home} />
               <Route exact path="/books" component={Book} />
               <Route exact path="/books/:id" component={DetailsBook} />
-              <Route exact path="/panier" component={Panier} />
               <Route exact path="/article" component={Article} />
               <Route exact path="/article/:id" component={DetailsArticle} />
               <Route exact path="/search" component={ResultSearch} />
