@@ -49,6 +49,7 @@ class Book(models.Model):
     comments = models.ForeignKey("core.Comment", verbose_name=_("Comments"), blank=True, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     author = models.CharField(max_length=150, null=False)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
