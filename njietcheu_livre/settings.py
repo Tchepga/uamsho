@@ -112,7 +112,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'uamsho',
             'USER': 'postgres',
-            'PASSWORD': 'ptchepga',
+            'PASSWORD': 'postgres',
             'HOST': '127.0.0.1',
             'PORT': '5432',
         }
