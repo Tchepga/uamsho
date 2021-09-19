@@ -68,11 +68,11 @@ class OntopArticle extends Component {
     };
     
     return (
-      <div className="container">
-        <h3 style={{ textAlign: "center" }}> Actualités </h3>
+      <div className="container default-color">
+        <h3 style={{ textAlign: "center" }} className="mt-5"> Actualités </h3>
         <div
           id="multi-item-example"
-          className="carousel slide carousel-multi-item"
+          className="carousel slide carousel-multi-item "
           data-ride="carousel"
           style={carouselStyle}
         >

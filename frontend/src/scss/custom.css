@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+.default-color{
+   background-color: #41B3A3;
+}
+
 .h-100 {
     height: 100px;
 }

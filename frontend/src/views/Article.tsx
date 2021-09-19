@@ -18,22 +18,20 @@ export interface ArticleState{
 }
 class Article extends Component<any, ArticleState> {
   
-  constructor(props: any){
-    super(props)
-    this.state = {
+   state : ArticleState = {
       categories: [],
       articles: [],
       currentPage: 1,
       numberPage:1,
       currentCateg: null
-    } as ArticleState
-  }
+   }
+
   componentDidMount(){
     this.getCategories();
     this.getArticles();
   }
 
-  sortByCriteria(event: ChangeEvent<HTMLSelectElement>){
+  sortByCriteria = (event: ChangeEvent<HTMLSelectElement>) =>{
     event.preventDefault();
     const sortType = event.target.value;
     
@@ -50,23 +48,23 @@ class Article extends Component<any, ArticleState> {
 
   }
 
-  getCategories() {
+  getCategories = () => {
     axios.get(process.env.REACT_APP_API_URL+ '/api/categories')
       .then(res => {
         this.setState({ categories: res.data });
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
-  getArticles() {
+  getArticles = () => {
     axios.get(process.env.REACT_APP_API_URL+ '/api/article')
       .then(res => {
         this.setState({ articles: res.data.articles, numberPage: res.data.numberPage });
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
-  sortByCategories(event:  MouseEvent<HTMLElement>){
+  sortByCategories = (event:  MouseEvent<HTMLElement>) => {
     this.setState({currentCateg  : event.currentTarget.innerText})
   }
 
@@ -113,13 +111,13 @@ class Article extends Component<any, ArticleState> {
     }
 
     return (
-      <div>
+      <div className="default-color">
         <Fragment>
-          <Menu color="gray" />
+          <Menu />
           <div className="container">
             <div className="row mt-5">
               <div className="col-3">
-                <div className="card" style={{ width: "18rem" }}>
+                <div className="card" style={{ width: "18rem", backgroundColor: "#C38D9E" }}>
                   <div className="card-header">
                     <i className="far fa-list-alt"></i>
                     <b className="ml-2">Catégories</b>

@@ -14,35 +14,37 @@ export default class Home extends Component {
       <div className="home">
         <Menu />
         <Carousel />
-        <OnTop />
-        <div id="services" className="row">
-          <div className="col-3 text-center mb-2">
-            <div className="mt-5">
-              <i className="fas fa-truck fa-2x mt-3"> </i>{" "}
+        <div className="default-color">
+          <OnTop />
+          <div id="services" className="row">
+            <div className="col-3 text-center mb-2">
+              <div className="mt-5">
+                <i className="fas fa-truck fa-2x mt-3"> </i>{" "}
+              </div>
+              <b> Livraison dans le monde entier. </b>
             </div>
-            <b> Livraison dans le monde entier. </b>
-          </div>
-          <div className="col-3 text-center mb-2">
-            <div className="mt-5">
-              <i className="fas fa-credit-card fa-2x mt-3"> </i>
+            <div className="col-3 text-center mb-2">
+              <div className="mt-5">
+                <i className="fas fa-credit-card fa-2x mt-3"> </i>
+              </div>
+              <b> Visa - Mastercard - Paypal - Mobile money </b>
             </div>
-            <b> Visa - Mastercard - Paypal - Mobile money </b>
-          </div>
-          <div className="col-3 text-center mb-2">
-            <div className="mt-5">
-              <i className="fas fa-exchange-alt fa-2x mt-3"> </i>
+            <div className="col-3 text-center mb-2">
+              <div className="mt-5">
+                <i className="fas fa-exchange-alt fa-2x mt-3"> </i>
+              </div>
+              <b> Participez aux Discussions / Débâts </b>
             </div>
-            <b> Participez aux Discussions / Débâts </b>
-          </div>
-          <div className="col-3 text-center mb-2">
-            <div className="mt-5">
-              <i className="far fa-question-circle fa-2x mt-3"> </i>
+            <div className="col-3 text-center mb-2">
+              <div className="mt-5">
+                <i className="far fa-question-circle fa-2x mt-3"> </i>
+              </div>
+              <b> Disponible 24 h / 24 h 7 j / 7 j </b>
             </div>
-            <b> Disponible 24 h / 24 h 7 j / 7 j </b>
           </div>
+          <OntopArticle />
+          <Footer />
         </div>
-        <OntopArticle />
-        <Footer />
       </div>
     );
   }

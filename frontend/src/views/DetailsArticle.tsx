@@ -76,7 +76,7 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
               <h2 className="row" >
                 <b className="col-12 text-center" >{article.title}</b>
               </h2>
-              <p>{article.description}</p>
+              <p dangerouslySetInnerHTML={{__html: article.description}}/>
             </div>
             <div className="col-3">
               <div className="card pl-1">

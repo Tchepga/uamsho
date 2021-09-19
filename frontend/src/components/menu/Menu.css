@@ -1,5 +1,9 @@
 #Menu a{
-   color:black;
+   color:rgb(193, 212, 201);
    margin-bottom: 30px;
-   /*background-color: whitesmoke;*/
+}
+
+.logo {
+   color: #05386B;
+   text-shadow: 0px 0px 2px black;
 }

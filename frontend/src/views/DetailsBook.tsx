@@ -1,13 +1,12 @@
-import React, { Component, MouseEvent } from "react";
-import { Fragment } from "react";
+import axios from "axios";
+import { Component, Fragment, MouseEvent } from "react";
+import { withRouter } from "react-router";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
-import "./DetailsBook.css";
-import { withRouter } from "react-router";
-import axios from "axios"
-import Utils from "../utils/Utils";
 import { book } from "../model/book";
 import { AuthContext } from "../providers/Provider";
+import Utils from "../utils/Utils";
+import "./DetailsBook.css";
 
 export interface DetailsBookState {
   book: book;
@@ -40,10 +39,11 @@ class DetailsBook extends Component<any, DetailsBookState> {
 
     const data = this.state;
     // axios.post(process.env.REACT_APP_API_URL + "/api/panier", { data })
-    //   .then((resp)=> console.log(resp)) //() => this.props.location.push("/panier")
+    //   .then((resp)=> console.log(resp)) //() => 
     //   .catch(error => console.error(error))
 
     Utils.setCookie("book"+data.book.id.toString(), data.book.id.toString() + "_" + data.choiceQuantity, 1);
+    this.props.history.push("/panier");
 
   }
 

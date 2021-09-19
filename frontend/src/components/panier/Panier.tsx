@@ -115,9 +115,9 @@ class Panier extends Component<any, PanierState> {
     ));
 
     return (
-      <Fragment>
-        <Menu color="gray" />
-        <div className="container mt-5">
+      <div className="default-color">
+        <Menu/>
+        <div className="container mt-5 mb-2">
           <div className="row">
             <div className="card col-8">
               <div className="card-header">
@@ -156,7 +156,7 @@ class Panier extends Component<any, PanierState> {
           </div>
         </div>
         <Footer />
-      </Fragment>
+      </div>
     );
   }
 }

@@ -34,7 +34,7 @@ export default class Book extends Component<any, BookState> {
     this.getBooks();
   }
 
-  sortByCriteria(event: ChangeEvent<HTMLSelectElement>) {
+  sortByCriteria = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault();
     const sortType = event.currentTarget.value;
     switch (sortType) {
@@ -53,7 +53,7 @@ export default class Book extends Component<any, BookState> {
     }
   }
 
-  getCategories() {
+  getCategories = () => {
     axios
       .get(process.env.REACT_APP_API_URL + "/api/categories")
       .then((res) => {
@@ -62,7 +62,7 @@ export default class Book extends Component<any, BookState> {
       .catch((error) => console.log(error));
   }
 
-  getBooks() {
+  getBooks = () => {
     
     axios
       .get(process.env.REACT_APP_API_URL + "/api/book")
@@ -72,7 +72,7 @@ export default class Book extends Component<any, BookState> {
       .catch((error) => console.error(error));
   }
 
-  sortByCategories(event: MouseEvent<HTMLElement>) {
+  sortByCategories = (event: MouseEvent<HTMLElement>) => {
     if(event.currentTarget != null)
     this.setState({currentCateg  : event.currentTarget.innerText})
   }
@@ -124,13 +124,13 @@ export default class Book extends Component<any, BookState> {
     }
 
     return (
-      <div>
+      <div className="default-color">
         <Fragment>
           <Menu />
           <div className="container">
             <div className="row mt-5">
               <div className="col-3">
-                <div className="card" style={{ width: "18rem" }}>
+                <div className="card" style={{ width: "18rem" , backgroundColor: "#C38D9E"}}>
                   <div className="card-header">
                     <i className="far fa-list-alt"></i>
                     <b className="ml-2">Catégories</b>

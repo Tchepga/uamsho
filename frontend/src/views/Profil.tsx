@@ -9,6 +9,7 @@ import firebase from "firebase";
 import { withRouter } from "react-router";
 import { article } from "../model/article";
 import axios from "axios";
+import Footer from "../components/footer/Footer";
 
 export interface ProfilState {
   isLoading: boolean,
@@ -114,9 +115,9 @@ class Profil extends React.Component<any, ProfilState> {
     return (
       <AuthContext.Consumer>
         {(context) => (context.currentUser !== null &&
-          <Fragment>
+          <div className="default-color">
             <Menu />
-            <div className="container">
+            <div className="container mb-2">
               <div className="row mt-5">
                 <div className="card col-4">
                   <div style={{ textAlign: "center" }}>
@@ -219,7 +220,8 @@ class Profil extends React.Component<any, ProfilState> {
                 </div>
               </div>
             </div>
-          </Fragment>
+            <Footer />
+          </div>
         )}
       </AuthContext.Consumer>
     );

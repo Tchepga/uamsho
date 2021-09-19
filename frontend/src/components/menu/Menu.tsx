@@ -30,7 +30,10 @@ class Menu extends Component<any, MenuState> {
     // }
     
   }
-
+  /**
+   * search on title by scope
+   * @param event Mouse event 
+   */
   search = (event: MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
 
@@ -124,9 +127,9 @@ class Menu extends Component<any, MenuState> {
         </ul>
         <ul className="nav justify-content-center">
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <Link className="nav-link active" aria-current="page" to="/">
-              <i className="fas fa-book-open fa-lg"></i>
+            <Link className="nav-link" aria-current="page" to="/">
+              {/* <i className="fas fa-book-open fa-lg"></i> */}
+              <h3 className="logo"><b>uamsho</b></h3>
             </Link>
           </li>
           <li className="nav-item">

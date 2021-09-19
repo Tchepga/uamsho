@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import CardBook from "../utilities/CardBook";
 
 class OnTopDetails extends Component {
@@ -12,15 +13,15 @@ class OnTopDetails extends Component {
     const { choice } = this.props;
     for (let i = 0; i < choice.length; i++) {
       booksNodes.push(
-        <div className="col-4" key={i}>
+        <Link  to={"/books/" + choice[i].id } className="col-4" key={i}>
           <CardBook book={choice[i]} />
-        </div>
+        </Link >
       );
     }
 
     if (choice.length === 0)
       booksNodes.push(
-        <span style={{ minHeight: "100px", fontSize: "2rem" }}>
+        <span style={{ minHeight: "100px", fontSize: "2rem" }} key={1}>
           Aucun livre présent dans cette catégorie.
         </span>
       );
