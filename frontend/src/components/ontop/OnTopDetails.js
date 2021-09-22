@@ -26,7 +26,7 @@ class OnTopDetails extends Component {
         </span>
       );
 
-    return <div className="row mt-3 ml-3">{booksNodes}</div>;
+    return <div className="row ml-3">{booksNodes}</div>;
   }
 }
 

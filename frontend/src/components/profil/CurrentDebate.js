@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 class CurrentDebate extends Component {
+
+  componentDidMount(){
+    
+  }
   render() {
     let ordersCard = [];
     for (let i = 0; i < 4; i++) {

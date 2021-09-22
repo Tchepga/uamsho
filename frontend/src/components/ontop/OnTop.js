@@ -27,10 +27,12 @@ export default class OnTop extends Component {
         name: "Jeunesse",
       },
     ],
+
+    hoverMenu: "rgba(157, 148, 141, 0.5)"
   };
 
-   getOnTopBook() {
-     axios
+  getOnTopBook() {
+    axios
       .get(process.env.REACT_APP_API_URL + "/api/book/ontop")
       .then((res) => {
         this.setState({ onTopBooks: res.data });
@@ -80,31 +82,27 @@ export default class OnTop extends Component {
   }
 
   render() {
-    const { choice, links } = this.state;
+    const { links } = this.state;
     let items = [];
     for (let i = 0; i < links.length; i++) {
       items.push(
-        <li className="nav-item col-3" role="presentation" key={links[i].id}>
-          {/* eslint-disable-next-line */}
-          <a
-            className={
-              links[i].name === choice ? "nav-link active" : "nav-link"
-            }
-            href="#"
-            aria-current="page"
-            onClick={this.onTopDetailsChoice}
-          >
-            {links[i].name}
-          </a>
-        </li>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          style={{ width: "280px", height: "60px" }}
+          onClick={this.onTopDetailsChoice}
+          key={links[i].id}
+        >
+          {links[i].name}
+        </button>
       );
     }
-    
+
     return (
-      <div id="ontop" className="container">
-        <ul className="nav nav-tabs" id="menuTop" role="tablist" >
+      <div id="ontop" className="container mb-4">
+        <div class="btn-group" role="group" aria-label="first group" id="menuTop" >
           {items}
-        </ul>
+        </div>
         <OnTopDetails choice={this.state.choice} />
       </div>
     );

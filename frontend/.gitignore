@@ -9,8 +9,8 @@
 /coverage
 
 #webpack generate files
-/config
-/scripts
+#/config
+#/scripts
 
 
 # production

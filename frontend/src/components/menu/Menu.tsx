@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
 import { withRouter } from "react-router";
+import { url } from "inspector";
 
 export interface MenuState {
   scopesLabel: Array<string>;
@@ -74,7 +75,7 @@ class Menu extends Component<any, MenuState> {
     ));
 
     return (
-      <div id="Menu" style={{ backgroundColor: this.props.color }}>
+      <div id="Menu" style={{ backgroundColor: this.props.color , backgroundImage: "img/business-world-472556_1920.jpg"}}>
         <ul className="nav justify-content-end mb-3 ">
           <li className="nav-item">
             {/* eslint-disable-next-line */}

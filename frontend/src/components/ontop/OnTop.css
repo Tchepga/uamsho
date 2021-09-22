@@ -1,6 +1,6 @@
 #ontop {
     position: relative;
-    text-align: center;   
+    text-align: center;  
 }
 
 #ontop a {
@@ -11,4 +11,21 @@
 
 #ontop li :hover {
     background-color: #1eb0d8;
+}
+
+#menuTop{
+    transform: translateY(-60px);
+    z-index: 200;
+}
+
+#menuTop button:hover {
+    background-color: rgb(157, 148, 141)
+}
+
+#menuTop button {
+    background-color: rgba(157, 148, 141, 0.5)
+}
+
+#menuTop button:active {
+    background-color: rgb(157, 148, 141)
 }

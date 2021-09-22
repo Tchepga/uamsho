@@ -68,7 +68,7 @@ class OntopArticle extends Component {
     };
     
     return (
-      <div className="container default-color">
+      <div className="container">
         <h3 style={{ textAlign: "center" }} className="mt-5"> Actualités </h3>
         <div
           id="multi-item-example"
