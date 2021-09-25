@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from core.views.debate import DebateViewSet
 from core.views.user import UserViewset
 from core.views.category import CategoryViewSet
 from core.views.article import ArticleViewSet
@@ -59,12 +60,14 @@ urlpatterns = [
     path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/article/<int:pk>', ArticleViewSet.as_view({'get': 'retrieve'})),
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
+    path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
     path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),
-    # path('api/panier', UserViewset.as_view({'post': 'add_panier'})),
-    # path('api/panier', UserViewset.as_view({'get': 'get_panier'})),
     path('api/search', ListSearch.as_view()),
     path('api/upload/ckeditor-image', upload_ckeditor_image),
+    path('api/debate', DebateViewSet.as_view({'get': 'list'})),
+    path('api/debate/<int:pk>', DebateViewSet.as_view({'get': 'retrieve'})),
+    path('api/debate/ontop', DebateViewSet.as_view({'get': 'ontop'})),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:

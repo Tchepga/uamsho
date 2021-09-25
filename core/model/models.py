@@ -103,7 +103,23 @@ class Article(models.Model):
 class Discussion(models.Model):
     """ Debate Model """
     subject = models.CharField(_("sujet"), max_length=250)
+    illustration = models.ImageField(
+        _("illustration"),
+        upload_to=None,
+        height_field=None,
+        width_field=None,
+        max_length=None,
+        null=True,
+        blank=True
+    )
     content = models.TextField()
+    ontop = models.BooleanField(default=False)
+    lien_debate = models.CharField(_("Lien de vision"), null=True, blank=True, max_length=500)
+
+    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
+    author = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
+
+    date_creation = models.DateField( default=timezone.now)
 
     def __str__(self):
         return self.subject

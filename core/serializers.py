@@ -1,6 +1,6 @@
 import inspect
 from rest_framework import fields, serializers
-from core.model.models import Article, Book, Category, Utilisateur
+from core.model.models import Article, Book, Category, Discussion, Utilisateur
 from core.model.utils import ImageUtils
 from django.contrib.auth.models import User
 import json
@@ -98,4 +98,13 @@ class CategorySerializer(serializers.ModelSerializer):
         verbose_name = 'Categorie'
         verbose_name_plural = 'Categories'
 
+class DebateSerializer(serializers.ModelSerializer):
+
+    author = UtilisateurBasicSerializer(read_only=True)
     
+    class Meta:
+        model = Discussion
+        fields = ('author', 'comment', 'content', 'date_creation', 'id', 'illustration', 'lien_debate', 'likes', 'ontop', 'subject')
+        fields = "__all__"
+        verbose_name = 'Debate'
+        verbose_name_plural = 'Debates'
