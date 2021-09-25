@@ -1,4 +1,4 @@
-import React, { Fragment, MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 import DetailsProfil from "../components/profil/DetailsProfil";
 import Menu from "../components/menu/Menu";
 import PassOrder from "../components/profil/PassOrder";

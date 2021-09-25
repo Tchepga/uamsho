@@ -100,7 +100,7 @@ export default class OnTop extends Component {
 
     return (
       <div id="ontop" className="container mb-4">
-        <div class="btn-group" role="group" aria-label="first group" id="menuTop" >
+        <div className="btn-group" role="group" aria-label="first group" id="menuTop" >
           {items}
         </div>
         <OnTopDetails choice={this.state.choice} />

@@ -17,7 +17,7 @@ class CardBook extends Component {
         return (
             <div className={"card mx-2 mb-2" + (this.props.addClass)} 
             style={{ boxShadow: "0px 0px 2px black"}} >
-                <img src={Utils.getIllustration(book)} className="card-img-top" alt="..." style={{height :"150px", width: "100%"}} />
+                <img src={Utils.getIllustration(book.illustration)} className="card-img-top" alt="..." style={{height :"150px", width: "100%"}} />
                 <div className="card-body" >
                     <h6 className="card-title text-center mt-1"><b>{book.title}</b></h6>
                    

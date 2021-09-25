@@ -71,7 +71,7 @@ class DetailsBook extends Component<any, DetailsBookState> {
             <div className="row mt-5">
               <img
                 className="col-3 mr-2"
-                src={Utils.getIllustration(book)}
+                src={Utils.getIllustration(book.illustration)}
                 alt={book.illustration !== null ? "" : "Pas d'image"}
               />
               <div className="col-8 mb-5">

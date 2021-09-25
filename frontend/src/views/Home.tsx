@@ -4,6 +4,7 @@ import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
 import OnTop from "../components/ontop/OnTop";
 import OntopArticle from "../components/ontop/OntopArticle";
+import OnTopDebate from "../components/ontop/OnTopDebate";
 import "./Home.css";
 
 
@@ -15,6 +16,7 @@ export default class Home extends Component {
         <Menu />
         <Carousel />
         <OnTop />
+        <OnTopDebate />
         <div id="services" className="row">
           <div className="col-3 text-center mb-2">
             <div className="mt-5">

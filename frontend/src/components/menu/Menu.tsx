@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
 import { withRouter } from "react-router";
-import { url } from "inspector";
 
 export interface MenuState {
   scopesLabel: Array<string>;

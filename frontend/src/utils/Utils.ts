@@ -76,13 +76,13 @@ const Utils = {
 
     /**
      * get illustration of image book
-     * @param book 
+     * @param url 
      * @returns string url
      */
-    getIllustration(book: book) {
+    getIllustration(urlIllustration : string) {
 
-        if (this.isNotNullObject(book) && book.illustration !== null) {
-            return process.env.REACT_APP_API_URL + book.illustration
+        if (urlIllustration !== null) {
+            return process.env.REACT_APP_API_URL + urlIllustration
         }
 
         return this.defaultBookIllustration;

@@ -6,7 +6,7 @@ import CardBook from "../components/utilities/CardBook";
 import "./Book.css";
 import axios from "axios";
 import Utils from "../utils/Utils";
-import Pagination, {NBRE_ELEMENT_PAGE} from "../components/utilities/Pagination";
+import Pagination, { NBRE_ELEMENT_PAGE } from "../components/utilities/Pagination";
 import { book } from "../model/book";
 import { category } from "../model/category";
 
@@ -19,15 +19,15 @@ export interface BookState {
 }
 
 export default class Book extends Component<any, BookState> {
-  
-    state :BookState = {
-      categories: [],
-      books: [],
-      currentPage: 1,
-      numberPage:1,
-      currentCateg: null
-    };
-   
+
+  state: BookState = {
+    categories: [],
+    books: [],
+    currentPage: 1,
+    numberPage: 1,
+    currentCateg: null
+  };
+
 
   componentDidMount() {
     this.getCategories();
@@ -63,18 +63,22 @@ export default class Book extends Component<any, BookState> {
   }
 
   getBooks = () => {
-    
+
     axios
       .get(process.env.REACT_APP_API_URL + "/api/book")
       .then((res) => {
-        this.setState({ books: res.data.books, numberPage : res.data.number_page });
+        this.setState({ books: res.data.books, numberPage: res.data.number_page });
       })
       .catch((error) => console.error(error));
   }
 
   sortByCategories = (event: MouseEvent<HTMLElement>) => {
-    if(event.currentTarget != null)
-    this.setState({currentCateg  : event.currentTarget.innerText})
+    if (event.currentTarget != null)
+      this.setState({ currentCateg: event.currentTarget.innerText })
+  }
+
+  getAll = (event: MouseEvent<HTMLElement>) => {
+      this.setState({ currentCateg: null })
   }
 
   currentBook = (currentPage: number) => {
@@ -85,13 +89,15 @@ export default class Book extends Component<any, BookState> {
     const { categories, books, currentPage, currentCateg } = this.state;
     let listCategoriesBalises = [];
     let listBooksBalises = [];
+    const listClass = "list-group-item cursor-pointer";
 
     // liste catégories
     for (let i = 0; i < categories.length; i++) {
+
       listCategoriesBalises.push(
         <li
           key={i}
-          className="list-group-item cursor-pointer"
+          className={this.state.currentCateg === categories[i].type_category ? listClass + " active" : listClass }
           onClick={this.sortByCategories}
         >
           {categories[i].type_category}
@@ -100,7 +106,7 @@ export default class Book extends Component<any, BookState> {
     }
 
     // balise book
-    let currentBooks = books.slice((currentPage-1)*NBRE_ELEMENT_PAGE,  currentPage * NBRE_ELEMENT_PAGE)
+    let currentBooks = books.slice((currentPage - 1) * NBRE_ELEMENT_PAGE, currentPage * NBRE_ELEMENT_PAGE)
     currentBooks = currentCateg === null ? currentBooks : currentBooks.filter((book) => book.category === currentCateg)
     for (let i = 0; i < currentBooks.length; i++) {
       let likes = [];
@@ -130,8 +136,8 @@ export default class Book extends Component<any, BookState> {
           <div className="container">
             <div className="row mt-5">
               <div className="col-3">
-                <div className="card" style={{ width: "18rem" , backgroundColor: "#C38D9E"}}>
-                  <div className="card-header">
+                <div className="card" style={{ width: "18rem", backgroundColor: "#C38D9E" }}>
+                  <div className="card-header cursor-pointer" onClick={this.getAll} >
                     <i className="far fa-list-alt"></i>
                     <b className="ml-2">Catégories</b>
                   </div>
@@ -165,7 +171,7 @@ export default class Book extends Component<any, BookState> {
                   <Pagination
                     currentBook={this.currentBook}
                     books={this.state.books}
-                    numberPage = {this.state.numberPage}
+                    numberPage={this.state.numberPage}
                   />
                 </div>
               </div>

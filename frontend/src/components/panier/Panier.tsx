@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ChangeEvent, Component, Fragment } from "react";
+import { ChangeEvent, Component } from "react";
 import { book } from "../../model/book";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
@@ -93,7 +93,7 @@ class Panier extends Component<any, PanierState> {
           <img
             className="col-2"
             style={{ maxHeight: "80px" }}
-            src={Utils.getIllustration(book)}
+            src={Utils.getIllustration(book.illustration)}
             alt="première de couverture"
           />
           <div className="col-5">
