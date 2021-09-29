@@ -5,6 +5,9 @@ import { book } from "../model/book";
  * Utilities function
  */
 const Utils = {
+    
+    // status request
+    CREATED_STATUS: 201,
 
     // character
     SPACE: "\xa0",

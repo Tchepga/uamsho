@@ -24,10 +24,8 @@ body {
 #services {
   background-color: #E27D60;
   height: 200px;
-  position: relative;
-
-  /* display: flex;
-    align-items: center;
+  width: 101%;
+    /*align-items: center;
     justify-content: center; */
 }
 

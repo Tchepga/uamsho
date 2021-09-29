@@ -41,15 +41,15 @@ export default class Carousel extends Component {
     }
     return (
       <div id="carouselControls" className="carousel slide" data-ride="carousel" style={carouselHeader}>
-        <div className="carousel-inner">
+        <div className="carousel-inner w-100 m-0">
           {
             this.state.images.length > 0 ? (
               this.state.images.map((image, index) => (
                 <div key={index} className={this.activeCarousel(index)}>
                   <img
                     src={process.env.REACT_APP_API_URL + image}
-                    className="d-block w-100" alt="no-found"
-                    style={{ maxHeight: "auto", objectFit: "contain" }} />
+                    className="d-block w-100" alt="no-found" 
+                    style={{height: "auto"}}/>
                 </div>
               ))
             ) : (
