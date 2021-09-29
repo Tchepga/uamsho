@@ -10,6 +10,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import base64
+from difflib import SequenceMatcher
 
 
 class ListImageUils(APIView):
@@ -52,14 +53,21 @@ class Utils(object):
     # Le nombre de likes pour 5 etoiles
     LIKES_ON_TOP = 100
 
-    """
-        compute number star from likes
-    """
     @staticmethod
     def computed_nb_stars(nbr_likes):
+        """
+        compute number star from likes
+        """
         part = Utils.LIKES_ON_TOP / 5
 
         return int(nbr_likes/part)
+
+    @staticmethod
+    def similar(a, b):
+        """" get similarity between 2 string"""
+        
+        return SequenceMatcher(None, a, b).ratio()
+
 
 
     

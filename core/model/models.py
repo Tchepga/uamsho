@@ -45,8 +45,6 @@ class Book(models.Model):
     add_date = models.DateField(default=timezone.now)
 
     # foreign field
-    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
-    comments = models.ForeignKey("core.Comment", verbose_name=_("Comments"), blank=True, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     author = models.CharField(max_length=150, null=False)
     quantity = models.IntegerField(default=1)
@@ -60,6 +58,10 @@ class Likes(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     number_likes = models.IntegerField(_("nombre de like"))
 
+    article = models.ForeignKey("core.Article", on_delete=models.SET_NULL, null=True)
+    discussion = models.ForeignKey("core.Discussion", on_delete=models.SET_NULL, null=True)
+    book = models.ForeignKey("core.Book", on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return str(self.number_likes)
 
@@ -69,8 +71,11 @@ class Comment(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content =  models.CharField(max_length=200)
 
-    article = models.ForeignKey("core.Article", on_delete=models.SET_NULL, null=True)
-    discussion = models.ForeignKey("core.Discussion", on_delete=models.SET_NULL, null=True)
+    article = models.ForeignKey("core.Article", on_delete=models.SET_NULL, null=True ,blank=True)
+    discussion = models.ForeignKey("core.Discussion", on_delete=models.SET_NULL, null=True ,blank=True)
+    book = models.ForeignKey("core.Book", on_delete=models.SET_NULL, null=True ,blank=True)
+
+    date_creation = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.content[0:20] 
@@ -93,7 +98,6 @@ class Article(models.Model):
     
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     
-    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
     author = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -115,8 +119,7 @@ class Discussion(models.Model):
     content = models.TextField()
     ontop = models.BooleanField(default=False)
     lien_debate = models.CharField(_("Lien de vision"), null=True, blank=True, max_length=500)
-
-    likes = models.ManyToManyField("core.Likes", verbose_name=_("Likes"), blank=True)
+    
     author = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
 
     date_creation = models.DateField( default=timezone.now)

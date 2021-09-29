@@ -57,6 +57,8 @@ urlpatterns = [
     path('api/book/', BookViewSet.as_view({'get': 'list'})),
     path('api/book/<int:pk>', BookViewSet.as_view({'get': 'retrieve'})),
     path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
+    path('api/book/<int:pk>/similar', BookViewSet.as_view({'get': 'similary_book'})),
+    path('api/book/<int:pk>/add-comment', BookViewSet.as_view({'post': 'add_comment'})),
     path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
     path('api/article/<int:pk>', ArticleViewSet.as_view({'get': 'retrieve'})),
     path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
