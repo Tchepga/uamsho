@@ -78,7 +78,7 @@ export default class Book extends Component<any, BookState> {
   }
 
   getAll = (event: MouseEvent<HTMLElement>) => {
-      this.setState({ currentCateg: null })
+    this.setState({ currentCateg: null })
   }
 
   currentBook = (currentPage: number) => {
@@ -97,7 +97,7 @@ export default class Book extends Component<any, BookState> {
       listCategoriesBalises.push(
         <li
           key={i}
-          className={this.state.currentCateg === categories[i].type_category ? listClass + " active" : listClass }
+          className={this.state.currentCateg === categories[i].type_category ? listClass + " active" : listClass}
           onClick={this.sortByCategories}
         >
           {categories[i].type_category}
@@ -109,11 +109,7 @@ export default class Book extends Component<any, BookState> {
     let currentBooks = books.slice((currentPage - 1) * NBRE_ELEMENT_PAGE, currentPage * NBRE_ELEMENT_PAGE)
     currentBooks = currentCateg === null ? currentBooks : currentBooks.filter((book) => book.category === currentCateg)
     for (let i = 0; i < currentBooks.length; i++) {
-      let likes = [];
-      for (let j = 0; j < currentBooks[i].nbre_stars; j++) {
-        likes.push(<i className="fas fa-heart mr-1"></i>);
-      }
-
+     
       listBooksBalises.push(
         <Link
           to={{

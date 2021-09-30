@@ -97,7 +97,7 @@ const Utils = {
      * @returns 
      */
 
-    isNotNullObject(object: object) {
+    isNotNullObject(object: object|string) {
 
         if (object === null || object === undefined) {
             return false;

@@ -1,13 +1,16 @@
-import axios from "axios";
+import firebase from "firebase";
+import { resolve } from "path";
 import { Component, Fragment, MouseEvent } from "react";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
 import CardBook from "../components/utilities/CardBook";
 import SidebarComments from "../components/utilities/SidebarComments";
 import { book } from "../model/book";
+import { like } from "../model/like";
 import { AuthContext } from "../providers/Provider";
+import BookService from "../service/BookService";
+import LikeService from "../service/LikeService";
 import Utils from "../utils/Utils";
 import "./DetailsBook.css";
 
@@ -17,6 +20,7 @@ export interface DetailsBookState {
   choiceQuantity: number;
   liked: boolean;
   showComment: boolean;
+  likes: Array<like> | null;
 }
 class DetailsBook extends Component<any, DetailsBookState> {
 
@@ -24,39 +28,56 @@ class DetailsBook extends Component<any, DetailsBookState> {
 
   state = {
     book: {} as book,
+    likes: [] as Array<like>,
     similarBooks: [] as Array<book>,
     choiceQuantity: 1,
     liked: false,
     showComment: false
   }
 
-  componentDidMount() {
-    this.getBook(this.props.match.params.id);
-    this.getSimilarBook(this.props.match.params.id);
+  async componentDidMount() {
+
+
+    this.processData();
   }
 
-  getBook(id: number) {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/book/" + id)
-      .then((res) => {
-        const data = res.data;
-        this.setState({ book: data, liked: this.isLiked(data) });
-      })
-      .catch((error) => console.log(error));
-  }
+  isLiked = (likes: Array<like>, currentUser: any): boolean => {
 
-  getSimilarBook = (id: book) => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/book/" + id + "/similar")
-      .then((res) => {
-        this.setState({ similarBooks: res.data });
-      })
-      .catch((error) => console.log(error));
-  }
+    // optimiser plus tard
 
+    for (let i = 0; i < likes.length; i++) {
+      if (likes[i].owner.email === currentUser.email) {
+        return true;
+      }
+    };
 
-  isLiked = (book: book): boolean => {
     return false;
+  }
+
+  processData = () => {
+    firebase
+      .auth()
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+
+
+
+        BookService.getSimilarBook(this.props.match.params.id)
+          .then((books) => this.setState({ similarBooks: books }));
+        LikeService.retrieve(user)
+          .then((likes) => {
+            if (likes !== null) {
+
+              BookService.getBook(this.props.match.params.id)
+                .then((book) => this.setState({ book: book, likes: likes, liked: this.isLiked(likes, user) }));
+            } else {
+              console.log('likes :>> ', likes);
+
+            }
+          });
+      }
+    });
+
   }
 
   addComment = (content: string): void => {
@@ -64,29 +85,34 @@ class DetailsBook extends Component<any, DetailsBookState> {
     const context = this.context
 
     if (Utils.isNotNullObject(context.currentUser)) {
-      axios
-        .post(process.env.REACT_APP_API_URL + "/api/book/" + this.state.book.id + "/add-comment",
-          {content: content, email: context.currentUser.email, id : this.state.book.id })
-        .then((res) => {
-          if(res.status===Utils.CREATED_STATUS){
-            this.getBook(this.state.book.id)
-          };
-        })
-        .catch((error) => console.error(error));
-    }else {
+      BookService.addComment(content, context.currentUser.email, this.state.book.id)
+    } else {
       alert("Vous devez êtes connecté pour ajouter un commentaire");
     }
   }
 
-  deleteComment = () : void =>{
-    console.log("ajout commentaire")
-  }
+
   showComment = () => {
     this.setState({ showComment: !this.state.showComment })
   }
 
-  addLiked = (user: object | null) => {
-    console.log(user);
+  updateLike = (user: any | null) => {
+
+    if (user !== null) {
+      if (!this.state.liked) {
+        LikeService.addLike(this.state.book, "book", user).then(() => this.processData())
+      } else {
+
+        if (Utils.isNotNullObject(this.state.likes)) {
+
+          const like = this.state.likes.find((like) => like.owner.email === user.email);
+          if (like !== undefined) {
+            LikeService.remove(like.id, user).then(() => this.processData());
+          }
+        }
+      }
+
+    }
   }
 
   addToPanier = (event: MouseEvent<HTMLButtonElement>) => {
@@ -108,7 +134,7 @@ class DetailsBook extends Component<any, DetailsBookState> {
     if (book != null) {
       // book likes
       let likesNode = [];
-      let likes = this.state.book.nbre_stars;
+      let likes = this.state.likes;
       if (likes !== null) {
         // à gérer après
         for (let j = 0; j < 5; j++) {
@@ -122,19 +148,15 @@ class DetailsBook extends Component<any, DetailsBookState> {
 
       //similar books
       const similarBooks = this.state.similarBooks;
-      if (similarBooks.length !== 0) {
+      if (similarBooks !== undefined && similarBooks.length !== 0) {
         similarBookBalises = similarBooks.map((book: book) => (
-          <Link
-            to={{
-              pathname: `/books/${book.id}`,
-              //@ts-ignore
-              params: { id: book.id },
-            }}
+          <a
+            href={`/books/${book.id}`}
             className="col-3 px-0 my-2"
             key={book.id}
           >
             <CardBook book={book} />
-          </Link>
+          </a>
         ))
       }
 
@@ -159,8 +181,8 @@ class DetailsBook extends Component<any, DetailsBookState> {
                       {(context) => (
                         <button
                           id="like"
-                          className={this.state.liked ? "btn btn-primary btn-sm btn-sm" : "col-2 btn btn-secondary btn-sm"}
-                          onClick={() => this.addLiked(context.currentUser)}>
+                          className={this.state.liked ? "col-2 btn btn-primary btn-sm btn-sm" : "col-2 btn btn-secondary btn-sm"}
+                          onClick={() => this.updateLike(context.currentUser)}>
                           {this.state.liked ? "J'aime" : "Je n'aime pas"}
                         </button>
                       )}
@@ -208,17 +230,17 @@ class DetailsBook extends Component<any, DetailsBookState> {
                   </button>
                 </div>
               </div>
-              {this.state.similarBooks.length > 0 && <h3 className="row  mt-4">Livres similaires</h3>}
+              {this.state.similarBooks !== undefined && this.state.similarBooks.length > 0 && <h3 className="row  mt-4">Livres similaires</h3>}
               <div className="row">
                 {similarBookBalises}
               </div>
             </div>
-            <SidebarComments 
-              book={this.state.book} 
-              visible={this.state.showComment} 
-              show={this.showComment} 
-              add={this.addComment} 
-              delete={this.deleteComment}/>
+            <SidebarComments
+              book={this.state.book}
+              visible={this.state.showComment}
+              show={this.showComment}
+              add={this.addComment}
+              delete={BookService.deleteComment} />
           </div>
           <Footer />
         </Fragment>

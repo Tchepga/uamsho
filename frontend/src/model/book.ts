@@ -1,3 +1,5 @@
+import { like } from "./like";
+
 export interface book {
     id : number;
     title : string;
@@ -13,8 +15,6 @@ export interface book {
 
     ontop : boolean;
     add_date : string;
-
-    nbre_stars: number;
     comments : any;
     category : string;
     author : string;
