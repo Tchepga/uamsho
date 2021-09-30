@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from core.views.like import LikeViewSet
 from core.views.debate import DebateViewSet
 from core.views.user import UserViewset
 from core.views.category import CategoryViewSet
@@ -70,6 +71,9 @@ urlpatterns = [
     path('api/debate', DebateViewSet.as_view({'get': 'list'})),
     path('api/debate/<int:pk>', DebateViewSet.as_view({'get': 'retrieve'})),
     path('api/debate/ontop', DebateViewSet.as_view({'get': 'ontop'})),
+    path('api/like', LikeViewSet.as_view({'post' : 'create'})),
+    path('api/like/retrieve', LikeViewSet.as_view({'get' : 'retrieve'})),
+    path('api/like/<int:pk>', LikeViewSet.as_view({'delete' : 'delete'})),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
 
 # if settings.DEBUG:

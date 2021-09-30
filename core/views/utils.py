@@ -69,7 +69,6 @@ class Utils(object):
         return SequenceMatcher(None, a, b).ratio()
 
 
-
     
 
     

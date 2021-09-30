@@ -18,7 +18,7 @@ class UtilisateurBasicSerializer(serializers.ModelSerializer):
         model = Utilisateur
         verbose_name = "Utilisateur"
         verbose_name_plural = "Utilisateurs"
-        fields = ("id", "username", "first_name", "last_name")
+        fields = ("id", "username", "first_name", "last_name", "email")
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -33,7 +33,6 @@ class UtilisateurCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UtilisateurBasicSerializer.Meta.model
         fields = UtilisateurBasicSerializer.Meta.fields + (
-            "email",
             "address",
             "complement_address",
         )
@@ -42,7 +41,6 @@ class UtilisateurCompleteSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     """Book serializer"""
 
-    nbre_stars = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
     category = serializers.StringRelatedField()
 
@@ -62,29 +60,12 @@ class BookSerializer(serializers.ModelSerializer):
             "price",
             "date_creation",
             "ontop",
-            "nbre_stars",
             "comments",
             "category",
             "author",
             "quantity",
         )
         read_only_fields = ("id", "pk")
-
-    def get_nbre_stars(self, obj):
-
-        """
-        compute number star from likes
-        """
-
-        moyen = 0
-        likes = Likes.objects.filter(book=obj)
-
-        if likes is not None:
-            likes = [like.number_likes for like in likes.all()]
-            if len(likes) != 0:
-                moyen = sum(likes) / len(likes)
-
-        return moyen
 
     def get_comments(self, obj):
         """get comments of book"""
@@ -95,7 +76,6 @@ class BookSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
 
     category = serializers.StringRelatedField()
-    nbre_stars = serializers.SerializerMethodField()
     author = UtilisateurBasicSerializer(read_only=True)
 
     class Meta:
@@ -109,26 +89,9 @@ class ArticleSerializer(serializers.ModelSerializer):
             "date_creation",
             "ontop",
             "category",
-            "nbre_stars",
             "author",
         )
         read_only_fields = ("id", "pk")
-
-    def get_nbre_stars(self, obj):
-
-        """
-        compute number star from likes
-        """
-
-        moyen = 0
-        likes = Likes.objects.filter(article=obj)
-
-        if likes is not None:
-            likes = [like.number_likes for like in likes.all()]
-            if len(likes) != 0:
-                moyen = sum(likes) / len(likes)
-
-        return moyen
 
 
 class ImageUtilsSerializer(serializers.ModelSerializer):
@@ -159,7 +122,6 @@ class DebateSerializer(serializers.ModelSerializer):
             "id",
             "illustration",
             "lien_debate",
-            "likes",
             "ontop",
             "subject",
         )
@@ -167,4 +129,13 @@ class DebateSerializer(serializers.ModelSerializer):
         verbose_name = "Debate"
         verbose_name_plural = "Debates"
 
+class LikeSerializer(serializers.ModelSerializer):
+    
+    owner = UtilisateurBasicSerializer(read_only=True)
+    book = BookSerializer(read_only=True)
+    article = ArticleSerializer(read_only=True)
+    debate = DebateSerializer(read_only=True)
 
+    class Meta:
+        model = Comment
+        fields = ("id","owner", "book","article", "debate")

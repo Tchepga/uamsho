@@ -56,14 +56,13 @@ class Book(models.Model):
 class Likes(models.Model):
     """ Like's book. The value is between 0-5 """
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    number_likes = models.IntegerField(_("nombre de like"))
 
     article = models.ForeignKey("core.Article", on_delete=models.SET_NULL, null=True)
     discussion = models.ForeignKey("core.Discussion", on_delete=models.SET_NULL, null=True)
     book = models.ForeignKey("core.Book", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return str(self.number_likes)
+        return str(f'{self.owner} - {self.book} - {self.article} - {self.discussion}')
 
 
 class Comment(models.Model):
