@@ -32,7 +32,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class UtilisateurCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UtilisateurBasicSerializer.Meta.model
-        fields = UtilisateurBasicSerializer.Meta.fields + (
+        fields = UtilisateurBasicSerializer.Meta.fields + ( 
             "address",
             "complement_address",
         )

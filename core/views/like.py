@@ -14,11 +14,10 @@ class LikeViewSet(viewsets.ViewSet):
 
     def retrieve(self, request):
 
-        email = request.query_params.get("email", None)
+        book_id = request.query_params.get("bookId", None)
         
-        if email is not None:
-            user = Utilisateur.objects.get(email = email)
-            queryset = Likes.objects.filter(owner_id=user.id).order_by("-id")
+        if book_id is not None:
+            queryset = Likes.objects.filter(book_id = book_id).order_by("-id")
             serializer = LikeSerializer(queryset, many=True)
             return Response(serializer.data)
 
