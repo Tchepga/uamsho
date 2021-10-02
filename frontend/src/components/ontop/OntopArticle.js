@@ -32,7 +32,7 @@ class OntopArticle extends Component {
         activeItems.push(
           <div key={i} className="px-5 mt-5 col-4">
             <GenericCard
-              
+
               id={bookData[i].id}
               title={bookData[i].titre}
               description={Utils.truncate(bookData[i].description)}
@@ -43,7 +43,7 @@ class OntopArticle extends Component {
         itemsSecond.push(
           <div key={i} className="px-5 mt-5 col-4">
             <GenericCard
-              
+
               id={bookData[i].id}
               title={bookData[i].titre}
               description={bookData[i].description}
@@ -53,9 +53,9 @@ class OntopArticle extends Component {
 
       if (i < 9 && i > 6)
         itemsThird.push(
-          <div  key={i} className="col-4px-5 mt-5">
+          <div key={i} className="col-4px-5 mt-5">
             <GenericCard
-             
+
               id={bookData[i].id}
               title={bookData[i].titre}
               description={bookData[i].description}
@@ -66,7 +66,7 @@ class OntopArticle extends Component {
     const carouselStyle = {
       backgroundColor: "white !important",
     };
-    
+
     return (
       <div className="container">
         <h3 style={{ textAlign: "center" }} className="mt-5"> Actualités </h3>
@@ -74,7 +74,6 @@ class OntopArticle extends Component {
           id="multi-item-example"
           className="carousel slide carousel-multi-item "
           data-ride="carousel"
-          style={carouselStyle}
         >
           {/*--Controls--*/}
           <div className="controls-top text-center">
@@ -95,7 +94,7 @@ class OntopArticle extends Component {
           </div>
 
           {/*--Indicators--*/}
-          <ol className="carousel-indicators">
+          <ol className="carousel-indicators bg-white">
             <li
               data-target="#multi-item-example"
               data-slide-to="0"
@@ -105,21 +104,21 @@ class OntopArticle extends Component {
             <li data-target="#multi-item-example" data-slide-to="2"></li>
           </ol>
 
-          <div className="carousel-inner" role="listbox">
+          <div className="carousel-inner bg-white" role="listbox">
             {activeItems.length > 0 && (
-              <div className="carousel-item active">
-                <div className="row mb-5">{activeItems}</div>{" "}
+              <div className="carousel-item active bg-white">
+                <div className="row mb-5 bg-white">{activeItems}</div>{" "}
               </div>
             )}
 
             {itemsSecond.length > 0 && (
-              <div className="carousel-item row">
-                <div className="row">{itemsSecond}</div>
+              <div className="carousel-item row"  >
+                <div className="row bg-white">{itemsSecond}</div>
               </div>
             )}
 
             {itemsThird.length > 0 && (
-              <div className="row">
+              <div className="row bg-white">
                 <div className="carousel-item ">{itemsThird}</div>
               </div>
             )}

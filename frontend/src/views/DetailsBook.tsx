@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { resolve } from "path";
 import { Component, Fragment, MouseEvent } from "react";
 import { withRouter } from "react-router";
 import Footer from "../components/footer/Footer";
@@ -50,21 +49,18 @@ class DetailsBook extends Component<any, DetailsBookState> {
         return true;
       }
     };
-
     return false;
   }
 
   processData = () => {
+
     firebase
       .auth()
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-
-
-
         BookService.getSimilarBook(this.props.match.params.id)
           .then((books) => this.setState({ similarBooks: books }));
-        LikeService.retrieve(user)
+        LikeService.retrieve(this.props.match.params.id)
           .then((likes) => {
             if (likes !== null) {
 
@@ -75,6 +71,12 @@ class DetailsBook extends Component<any, DetailsBookState> {
 
             }
           });
+      } else {
+        BookService.getSimilarBook(this.props.match.params.id)
+          .then((books) => this.setState({ similarBooks: books }));
+
+        BookService.getBook(this.props.match.params.id)
+          .then((book) => this.setState({ book: book }));
       }
     });
 
@@ -97,30 +99,39 @@ class DetailsBook extends Component<any, DetailsBookState> {
   }
 
   updateLike = (user: any | null) => {
-
     if (user !== null) {
       if (!this.state.liked) {
-        LikeService.addLike(this.state.book, "book", user).then(() => this.processData())
+        LikeService.addLike(this.state.book, "book", user).then(() => setTimeout(() => {
+          this.processData();
+        }, 100));
       } else {
 
         if (Utils.isNotNullObject(this.state.likes)) {
 
           const like = this.state.likes.find((like) => like.owner.email === user.email);
           if (like !== undefined) {
-            LikeService.remove(like.id, user).then(() => this.processData());
+            LikeService.remove(like.id, user).then(() => LikeService.retrieve(this.props.match.params.id)
+              .then((likes) => {
+                if (likes !== null) {
+                  this.setState({ likes: likes, liked: this.isLiked(likes, user) });
+                } else {
+                  console.log('likes :>> ', likes);
+
+                }
+              }));
           }
         }
       }
 
+    } else {
+      alert(">>Vous devez être connecté pour liked un article!<<");
     }
   }
 
   addToPanier = (event: MouseEvent<HTMLButtonElement>) => {
 
     const data = this.state;
-    // axios.post(process.env.REACT_APP_API_URL + "/api/panier", { data })
-    //   .then((resp)=> console.log(resp)) //() => 
-    //   .catch(error => console.error(error))
+
 
     Utils.setCookie("book" + data.book.id.toString(), data.book.id.toString() + "_" + data.choiceQuantity, 1);
     this.props.history.push("/panier");

@@ -30,14 +30,14 @@ const LikeService = {
     }
   },
 
-  async retrieve(currentUser: any): Promise<Array<like>| null> {
+  async retrieve(bookId: number): Promise<Array<like>| null> {
 
     
-    if (Utils.isNotNullObject(currentUser)) {
+    if (bookId !== 0) {
       const response = await axios
-      .get(process.env.REACT_APP_API_URL + "/api/like/retrieve?email=" + currentUser.email)
+      .get(process.env.REACT_APP_API_URL + "/api/like/retrieve?bookId=" + bookId)
       .catch((error: any) => console.error(error));
-    
+      
       return response?.data;
     } else {
       return null;
