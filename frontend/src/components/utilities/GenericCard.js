@@ -4,7 +4,7 @@ import Utils from "../../utils/Utils";
 
 class GenericCard extends Component {
 
-  
+
   render() {
     const isHCard = this.props.type === "hcard";
     return (
@@ -14,11 +14,10 @@ class GenericCard extends Component {
             <img src="img/image2.jpg" className="card-img-top" alt="image2" />
             <div className="card-body">
               <h5 className="card-title">{this.props.title}</h5>
-              <p className="card-text">{this.props.description}</p>
-              {/* eslint-disable-next-line */}
-              <a href="#" className="btn btn-primary">
-                En savoir plus
-              </a>
+              <p className="card-text" dangerouslySetInnerHTML={{ __html: Utils.truncate(this.props.description) }}></p>
+              <p className="card-text">
+                <small className="text-muted">En savoir plus.</small>
+              </p>
             </div>
           </div>
         ) : (
@@ -29,8 +28,8 @@ class GenericCard extends Component {
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">{this.props.title}</h5>
-                  <p className="card-text">{Utils.truncate(this.props.description)}</p>
+                  <h4 className="card-title">{this.props.title}</h4>
+                  <p className="card-text" dangerouslySetInnerHTML={{ __html: Utils.truncate(this.props.description) }}></p>
                   <p className="card-text">
                     <small className="text-muted">En savoir plus.</small>
                   </p>

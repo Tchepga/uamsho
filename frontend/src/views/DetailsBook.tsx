@@ -3,7 +3,7 @@ import { Component, Fragment, MouseEvent } from "react";
 import { withRouter } from "react-router";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
-import CardBook from "../components/utilities/CardBook";
+import Card from "../components/utilities/Card";
 import SidebarComments from "../components/utilities/SidebarComments";
 import { book } from "../model/book";
 import { like } from "../model/like";
@@ -35,8 +35,6 @@ class DetailsBook extends Component<any, DetailsBookState> {
   }
 
   async componentDidMount() {
-
-
     this.processData();
   }
 
@@ -166,7 +164,7 @@ class DetailsBook extends Component<any, DetailsBookState> {
             className="col-3 px-0 my-2"
             key={book.id}
           >
-            <CardBook book={book} />
+            <Card book={book} />
           </a>
         ))
       }
@@ -174,7 +172,7 @@ class DetailsBook extends Component<any, DetailsBookState> {
       return (
         <Fragment>
           <div id="details-book">
-            <Menu color="gray" />
+            <Menu />
 
             <div className="container">
               <div className="row mt-5 mb-1">

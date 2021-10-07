@@ -1,8 +1,8 @@
-import React, { ChangeEvent, Component, Fragment, MouseEvent } from "react";
+import { ChangeEvent, Component, Fragment, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Menu from "../components/menu/Menu";
-import CardBook from "../components/utilities/CardBook";
+import Card from "../components/utilities/Card";
 import "./Book.css";
 import axios from "axios";
 import Utils from "../utils/Utils";
@@ -120,7 +120,7 @@ export default class Book extends Component<any, BookState> {
           className="col-4 px-0 my-2"
           key={i}
         >
-          <CardBook addClass={Utils.H_100} book={currentBooks[i]} />
+          <Card addClass={Utils.H_100} book={currentBooks[i]} />
         </Link>
       );
     }

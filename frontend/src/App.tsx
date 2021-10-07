@@ -13,6 +13,9 @@ import { Component } from "react";
 import ResultSearch from "./views/ResultSearch";
 import firebase from "firebase";
 import EditArticle from "./views/EditArticle";
+import Debates from "./views/Debates";
+import DetailsDebate from "./views/DetailsDebate";
+import Inscription from "./components/authentification/Inscription";
 
 export interface AppState {
   user: any;
@@ -53,6 +56,9 @@ class App extends Component<AppState> {
               <Route exact path="/search" component={ResultSearch} />
               <Route exact path="/panier" component={Panier} />
               <Route exact path="/connexion" component={Authentification} />
+              <Route exact path="/debates" component={Debates} />
+              <Route exact path="/debates/:id" component={DetailsDebate} />
+              <Route exact path="/inscription" component={Inscription} />
 
               <Route
                 exact

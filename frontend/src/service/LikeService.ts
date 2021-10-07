@@ -1,7 +1,7 @@
 import axios from "axios";
 import { article } from "../model/article";
 import { book } from "../model/book";
-import { debate } from "../model/debate";
+import debate from "../model/debate";
 import { like } from "../model/like";
 import Utils from "../utils/Utils";
 

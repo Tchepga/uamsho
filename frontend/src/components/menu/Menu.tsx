@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 
 export interface MenuState {
   scopesLabel: Array<string>;
-  panier : number;
+  panier: number;
 }
 
 class Menu extends Component<any, MenuState> {
@@ -18,17 +18,17 @@ class Menu extends Component<any, MenuState> {
 
   state = {
     scopesLabel: ["Livre", "Article", "Débats"],
-    panier : 0
+    panier: 0
   };
 
-  componentDidMount(){
+  componentDidMount() {
     // for( let i=0; i<10; i++){
     //   if(localStorage.getItem("book" + i) !== null || localStorage.getItem("book" + i) !== undefined){
     //     console.log(localStorage.getItem("book" + i))
     //     this.setState({panier : this.state.panier + 1 })
     //   }
     // }
-    
+
   }
   /**
    * search on title by scope
@@ -74,7 +74,7 @@ class Menu extends Component<any, MenuState> {
     ));
 
     return (
-      <div id="Menu" style={{ backgroundColor: this.props.color , backgroundImage: "img/business-world-472556_1920.jpg"}}>
+      <div id="Menu" style={{ backgroundColor: this.props.color, backgroundImage: "img/business-world-472556_1920.jpg" }}>
         <ul className="nav justify-content-end mb-3 ">
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -118,7 +118,7 @@ class Menu extends Component<any, MenuState> {
                   Déconnexion
                 </Link>
               ) : (
-                <Link className="nav-link" aria-current="page" to="/connexion">
+                <Link className="nav-link" aria-current="page" to="/inscription">
                   Créer un compte
                 </Link>
               )
@@ -128,26 +128,23 @@ class Menu extends Component<any, MenuState> {
         <ul className="nav justify-content-center">
           <li className="nav-item">
             <Link className="nav-link" aria-current="page" to="/">
-              {/* <i className="fas fa-book-open fa-lg"></i> */}
               <h3 className="logo"><b>uamsho</b></h3>
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/books">
-              Livres
+              Ibook
             </Link>
           </li>
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link" href="/article">
-              Articles
-            </a>
+            <Link className="nav-link" to="/article">
+              Article
+            </Link>
           </li>
           <li className="nav-item">
-            {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
-              Echanges/Débâts
-            </a>
+            <Link className="nav-link" to="/debates">
+              Débât/Discussion
+            </Link>
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -167,11 +164,11 @@ class Menu extends Component<any, MenuState> {
           <li className="nav-item">
             <a className="nav-link" href="/panier">
               <i className="fas fa-shopping-basket"></i>
-              {this.state.panier >0 && 
-                <span 
-                  className="badge badge-pill badge-danger" 
-                  style={{ transform: "translate(0px, -5px)"}}>
-                    {this.state.panier}
+              {this.state.panier > 0 &&
+                <span
+                  className="badge badge-pill badge-danger"
+                  style={{ transform: "translate(0px, -5px)" }}>
+                  {this.state.panier}
                 </span>}
             </a>
           </li>

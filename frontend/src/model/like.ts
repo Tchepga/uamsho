@@ -1,6 +1,6 @@
 import { article } from "./article";
 import { book } from "./book";
-import { debate } from "./debate";
+import debate from "./debate";
 import { user } from "./user";
 
 export interface like {

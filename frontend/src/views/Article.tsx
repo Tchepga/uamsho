@@ -48,6 +48,10 @@ class Article extends Component<any, ArticleState> {
 
   }
 
+  getAll = (event: MouseEvent<HTMLElement>) => {
+    this.setState({ currentCateg: null })
+  }
+
   getCategories = () => {
     axios.get(process.env.REACT_APP_API_URL+ '/api/categories')
       .then(res => {
@@ -76,11 +80,15 @@ class Article extends Component<any, ArticleState> {
     const {articles, currentCateg, currentPage, categories} = this.state;
     let articlesNode = [];
     let listCategoriesBalises = [];
+    const listClass = "list-group-item cursor-pointer";
 
     if(categories.length > 0 )
       for (let i = 0; i < categories.length; i++) {
         listCategoriesBalises.push(
-          <li key={i} className="list-group-item cursor-pointer" onClick={this.sortByCategories}>
+          <li 
+            key={i} 
+            className={this.state.currentCateg === categories[i].type_category ? listClass + " active" : listClass}
+            onClick={this.sortByCategories}>
             {categories[i].type_category}
           </li>
         );
@@ -118,7 +126,7 @@ class Article extends Component<any, ArticleState> {
             <div className="row mt-5">
               <div className="col-3">
                 <div className="card" style={{ width: "18rem", backgroundColor: "#C38D9E" }}>
-                  <div className="card-header">
+                  <div className="card-header cursor-pointer" onClick={this.getAll}>
                     <i className="far fa-list-alt"></i>
                     <b className="ml-2">Catégories</b>
                   </div>

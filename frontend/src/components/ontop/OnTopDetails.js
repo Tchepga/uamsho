@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import CardBook from "../utilities/CardBook";
+import CardBook from "../utilities/Card";
 
 class OnTopDetails extends Component {
   constructor(props) {

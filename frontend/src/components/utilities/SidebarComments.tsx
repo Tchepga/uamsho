@@ -4,6 +4,8 @@ import { comment } from '../../model/comment';
 import Utils from '../../utils/Utils';
 import '../../scss/custom.css';
 import CommentCard from './CommentCard';
+import { article } from '../../model/article';
+import debate from '../../model/debate';
 
 export interface stateSidebarComments {
     comments: Array<comment>;
@@ -12,9 +14,11 @@ export interface stateSidebarComments {
 export interface propSidebarComments {
     show: Function;
     add: Function;
-    delete : Function;
+    delete: Function;
     visible: boolean;
-    book: book;
+    book?: book;
+    debate?: debate;
+    article?: article;
 }
 class SidebarComments extends Component<propSidebarComments, stateSidebarComments>{
 
@@ -35,15 +39,24 @@ class SidebarComments extends Component<propSidebarComments, stateSidebarComment
 
     render() {
 
-        const comments = this.props.book.comments;
+        let comments: any;
+        let size = 0;
+
+        if (this.props.book !== undefined) {
+            comments = this.props.book.comments;
+            size = Utils.isNotNullObject(this.props.book.comments) ? this.props.book.comments.length : 0;
+        }
+
+        if (this.props.debate !== undefined) {
+            comments = this.props.debate.comments;
+            size = Utils.isNotNullObject(this.props.debate.comments) ? this.props.debate.comments.length : 0;
+        }
 
         let addClass = "";
         if (this.props.visible === true)
             addClass = "side-position-right-v";
         else
             addClass = "side-position-right";
-
-        const size = this.props.book.comments === undefined ? 0 : this.props.book.comments.length;
 
         return (
             <div className={addClass}>
@@ -70,7 +83,7 @@ class SidebarComments extends Component<propSidebarComments, stateSidebarComment
                     {Utils.isNotNullObject(comments) &&
                         comments.map((comment: comment) => (
                             <div className="n-inline border border-light" key={comment.id}>
-                                <CommentCard comment={comment} delete={this.props.delete}/>
+                                <CommentCard comment={comment} delete={this.props.delete} />
                             </div>
                         ))
                     }

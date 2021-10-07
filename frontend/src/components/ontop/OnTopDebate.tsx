@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Component } from 'react';
-import { debate } from '../../model/debate';
+import debate  from '../../model/debate';
 import Utils from '../../utils/Utils';
 export interface OntopState {
     debates: Array<debate>
@@ -46,7 +46,8 @@ class OnTopDebate extends Component<any, OntopState> {
                             <p>
                                 {debate.content}
                             </p>
-                            {debate.lien_debate !== null && (<div>Lien réunion : {debate.illustration} à {debate.date_reunion} </div>)}
+                            {debate.lien_debate !== null && 
+                                (<div>Lien réunion : {debate.lien_debate} De {debate.date_debut_reunion} à {debate.date_fin_reunion} </div>)}
                             <div className="row">
                                 <span className="badge bg-primary ml-3 mt-2">date de création : {debate.date_creation}</span>
                             </div>
