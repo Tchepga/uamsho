@@ -117,7 +117,10 @@ class Discussion(models.Model):
     )
     content = models.TextField()
     ontop = models.BooleanField(default=False)
+
     lien_debate = models.CharField(_("Lien de vision"), null=True, blank=True, max_length=500)
+    date_debut_reunion = models.DateField()
+    date_fin_reunion = models.DateField()
     
     author = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
 

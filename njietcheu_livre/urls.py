@@ -71,6 +71,7 @@ urlpatterns = [
     path('api/debate', DebateViewSet.as_view({'get': 'list'})),
     path('api/debate/<int:pk>', DebateViewSet.as_view({'get': 'retrieve'})),
     path('api/debate/ontop', DebateViewSet.as_view({'get': 'ontop'})),
+    path('api/debate/<int:pk>/similar', DebateViewSet.as_view({'get': 'similary_debate'})),
     path('api/like', LikeViewSet.as_view({'post' : 'create'})),
     path('api/like/retrieve', LikeViewSet.as_view({'get' : 'retrieve'})),
     path('api/like/<int:pk>', LikeViewSet.as_view({'delete' : 'delete'})),

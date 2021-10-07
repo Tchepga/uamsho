@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from core.model.models import (
     Article,
@@ -27,12 +26,21 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ("id","content", "date_creation","owner", "article", "discussion", "book")
+        fields = (
+            "id",
+            "content",
+            "date_creation",
+            "owner",
+            "article",
+            "discussion",
+            "book",
+        )
+
 
 class UtilisateurCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UtilisateurBasicSerializer.Meta.model
-        fields = UtilisateurBasicSerializer.Meta.fields + ( 
+        fields = UtilisateurBasicSerializer.Meta.fields + (
             "address",
             "complement_address",
         )
@@ -70,7 +78,7 @@ class BookSerializer(serializers.ModelSerializer):
     def get_comments(self, obj):
         """get comments of book"""
 
-        return  CommentSerializer(Comment.objects.filter(book=obj), many=True).data
+        return CommentSerializer(Comment.objects.filter(book=obj), many=True).data
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -116,12 +124,14 @@ class DebateSerializer(serializers.ModelSerializer):
         model = Discussion
         fields = (
             "author",
-            "comment",
+            "comments",
             "content",
             "date_creation",
             "id",
             "illustration",
             "lien_debate",
+            "date_debut_reunion",
+            "date_fin_reunion",
             "ontop",
             "subject",
         )
@@ -129,8 +139,14 @@ class DebateSerializer(serializers.ModelSerializer):
         verbose_name = "Debate"
         verbose_name_plural = "Debates"
 
+    def get_comments(self, obj):
+        """get comments of book"""
+
+        return CommentSerializer(Comment.objects.filter(debate=obj), many=True).data
+
+
 class LikeSerializer(serializers.ModelSerializer):
-    
+
     owner = UtilisateurBasicSerializer(read_only=True)
     book = BookSerializer(read_only=True)
     article = ArticleSerializer(read_only=True)
@@ -138,4 +154,4 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ("id","owner", "book","article", "debate")
+        fields = ("id", "owner", "book", "article", "debate")
