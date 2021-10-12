@@ -28,7 +28,7 @@ const BookService = {
     if (bookId !== 0) {
     const response = await axios
       .get(process.env.REACT_APP_API_URL + "/api/book/" + bookId + "/similar")
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
 
       return response?.data;
     }else{

@@ -4,31 +4,36 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
 import { withRouter } from "react-router";
+import Inscription from "../authentification/Inscription";
+import firebase from "../authentification/firebase";
 
 export interface MenuState {
   scopesLabel: Array<string>;
   panier: number;
+  showInscriptionComp: boolean;
+  isAuth : boolean;
 }
 
 class Menu extends Component<any, MenuState> {
 
   private inputSearch: React.RefObject<HTMLInputElement> = React.createRef();
   static defaultProps: { color: string; };
+  static contextType = AuthContext;
 
 
   state = {
     scopesLabel: ["Livre", "Article", "Débats"],
-    panier: 0
+    panier: 0,
+    showInscriptionComp: false,
+    isAuth : false
   };
 
-  componentDidMount() {
-    // for( let i=0; i<10; i++){
-    //   if(localStorage.getItem("book" + i) !== null || localStorage.getItem("book" + i) !== undefined){
-    //     console.log(localStorage.getItem("book" + i))
-    //     this.setState({panier : this.state.panier + 1 })
-    //   }
-    // }
-
+  updateUserData = () => {
+    if(Utils.isNotNullObject(this.context.currentUser)){
+      this.setState({isAuth : true});
+    }else {
+      this.setState({isAuth : true});
+    }
   }
   /**
    * search on title by scope
@@ -114,17 +119,29 @@ class Menu extends Component<any, MenuState> {
           <AuthContext.Consumer>
             {(context) =>
               context.currentUser ? (
-                <Link className="nav-link" aria-current="page" to="/profil">
+                <a
+                  href="/"
+                  className="mr-1 mt-2"
+                  onClick={() => {
+                    firebase.auth().signOut();
+                  }}
+                >
                   Déconnexion
-                </Link>
+                </a>
               ) : (
-                <Link className="nav-link" aria-current="page" to="/inscription">
-                  Créer un compte
-                </Link>
+                <div>
+                  <button
+                    className="btn_as_link mt-2 mr-1"
+                    onClick={() => this.setState({ showInscriptionComp: !this.state.showInscriptionComp })}>
+                    Créer un compte
+                  </button>
+                  {this.state.showInscriptionComp ? <Inscription /> : null}
+                </div>
               )
             }
+
           </AuthContext.Consumer>
-        </ul>
+        </ul >
         <ul className="nav justify-content-center">
           <li className="nav-item">
             <Link className="nav-link" aria-current="page" to="/">
@@ -210,7 +227,7 @@ class Menu extends Component<any, MenuState> {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

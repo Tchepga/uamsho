@@ -77,7 +77,7 @@ class Panier extends Component<any, PanierState> {
 
             this.setState({ items: items, total: sum });
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.error(error));
       }
     });
 

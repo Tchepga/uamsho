@@ -15,8 +15,8 @@ import firebase from "firebase";
 import EditArticle from "./views/EditArticle";
 import Debates from "./views/Debates";
 import DetailsDebate from "./views/DetailsDebate";
-import Inscription from "./components/authentification/Inscription";
-
+import axios from "axios";
+import NotFound from "./components/utilities/NotFound";
 export interface AppState {
   user: any;
 }
@@ -32,11 +32,9 @@ class App extends Component<AppState> {
       .auth()
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        fetch(process.env.REACT_APP_API_URL + "/api/user?email=" + user.email)
-          .then((response) => response.json())
-          .then((data) => {
-            this.setState({ user: data });
-          })
+        axios.get(process.env.REACT_APP_API_URL + "/api/user?email=" + user.email)
+          .then((response) =>
+            this.setState({ user: response.data }))
           .catch((error) => console.error(error));
       }
     });
@@ -58,13 +56,13 @@ class App extends Component<AppState> {
               <Route exact path="/connexion" component={Authentification} />
               <Route exact path="/debates" component={Debates} />
               <Route exact path="/debates/:id" component={DetailsDebate} />
-              <Route exact path="/inscription" component={Inscription} />
+              <Route exact path="/not-found" component={NotFound} />
 
               <Route
                 exact
                 path="/profil"
                 render={() =>
-                  !!this.state.user ? (
+                  !!this.state.user && this.state.user.email !== undefined ? (
                     <Profil />
                   ) : (
                     <Redirect
@@ -82,7 +80,7 @@ class App extends Component<AppState> {
                 exact
                 path="/addArticle"
                 render={() =>
-                  !!this.state.user ? (
+                  !!this.state.user && this.state.user.email !== undefined ? (
                     <EditArticle />
                   ) : (
                     <Redirect

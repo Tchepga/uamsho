@@ -5,7 +5,7 @@ import PassOrder from "../components/profil/PassOrder";
 import CurrentArticle from "../components/profil/CurrentArticle";
 import CurrentDebate from "../components/profil/CurrentDebate";
 import { AuthContext } from "../providers/Provider";
-import firebase from "firebase";
+import firebase from "../components/authentification/firebase";
 import { withRouter } from "react-router";
 import { article } from "../model/article";
 import axios from "axios";
@@ -58,28 +58,30 @@ class Profil extends React.Component<any, ProfilState> {
 
 
     const currentUser = this.context.currentUser;
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/article?email=" + currentUser.email + "&username=" + currentUser.username)
-      .then((res) => {
-        this.setState({ articles: res.data.articles });
-      })
-      .catch((error) => console.log(error));
+    if (currentUser !== null && currentUser.email !== "")
+      axios
+        .get(process.env.REACT_APP_API_URL + "/api/article?email=" + currentUser.email + "&username=" + currentUser.username)
+        .then((res) => {
+          this.setState({ articles: res.data.articles });
+        })
+        .catch((error) => console.error(error));
 
   }
 
   getFavorisArticles = () => {
     const currentUser = this.context.currentUser;
 
-    axios
-      .get(process.env.REACT_APP_API_URL + "/api/article?filter=FAVORIS&email=" + currentUser.email + "&username=" + currentUser.username)
-      .then((res) => {
-        this.setState({ articles: res.data });
-      })
-      .catch((error) => console.log(error));
+    if (currentUser !== null && currentUser.email !== "" ) {
+      axios
+        .get(process.env.REACT_APP_API_URL + "/api/article?filter=FAVORIS&email=" + currentUser.email + "&username=" + currentUser.username)
+        .then((res) => {
+          this.setState({ articles: res.data });
+        })
+        .catch((error) => console.error(error));
+    }
   }
   changeDetails(event: MouseEvent<HTMLButtonElement>) {
     const type = event.currentTarget.value;
-    console.log(type)
 
     this.setState({
       isProfil: false,
@@ -101,9 +103,9 @@ class Profil extends React.Component<any, ProfilState> {
         this.setState({ isArticle: true });
         break;
       case "ARTICLE_FAVORITE":
-          this.getFavorisArticles();
-          this.setState({ isArticleFavorite: true });
-          break;
+        this.getFavorisArticles();
+        this.setState({ isArticleFavorite: true });
+        break;
       case "PROFIL":
       default:
         this.setState({ isProfil: true });
@@ -115,7 +117,7 @@ class Profil extends React.Component<any, ProfilState> {
     return (
       <AuthContext.Consumer>
         {(context) => (context.currentUser !== null &&
-          <div className="default-color">
+          (<div className="default-color">
             <Menu />
             <div className="container mb-2">
               <div className="row mt-5">
@@ -221,7 +223,7 @@ class Profil extends React.Component<any, ProfilState> {
               </div>
             </div>
             <Footer />
-          </div>
+          </div>) 
         )}
       </AuthContext.Consumer>
     );

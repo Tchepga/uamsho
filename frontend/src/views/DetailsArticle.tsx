@@ -47,7 +47,6 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
 
     let success = new CustomLogging("Debug");
     success.setBodyStyle("white", null, "#4caf50");
-    console.log(author)
 
     let likesNode = [];
     let authorBalise = [];

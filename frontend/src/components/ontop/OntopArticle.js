@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Component } from "react";
+import { Component } from "react";
 import GenericCard from "../utilities/GenericCard";
 import "./OntopArticle.css";
 import Utils from "./../../utils/Utils";

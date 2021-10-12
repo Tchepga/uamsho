@@ -59,7 +59,7 @@ export default class Book extends Component<any, BookState> {
       .then((res) => {
         this.setState({ categories: res.data });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }
 
   getBooks = () => {

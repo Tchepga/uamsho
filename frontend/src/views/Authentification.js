@@ -12,6 +12,7 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import Constance from "../components/utilities/Constance";
 import { AuthContext } from "../providers/Provider";
+import Inscription from "../components/authentification/Inscription";
 
 const uiConfig = {
   signInFlow: "popup",
@@ -34,7 +35,8 @@ class Authentification extends Component {
       currentUser: null,
       isAuthenticate: false,
       currentCitation: "« La vraie émancipation de la femme, c’est celle qui responsabilise la femme. »",
-      author: "Thomas Sankara"
+      author: "Thomas Sankara",
+      showInscriptionComp : false
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -125,12 +127,12 @@ class Authentification extends Component {
                       Valider
                     </button>
                   </form>
-                  <a
-                    href="/inscription"
+                  <button
                     className="btn btn-lg btn-warning btn-block mt-1"
-                  >
+                    onClick={() => this.setState({ showInscriptionComp: !this.state.showInscriptionComp })}>
                     Inscrivez-vous
-                  </a>
+                  </button>
+                  {this.state.showInscriptionComp ? <Inscription /> : null}
                   <StyledFirebaseAuth
                     id="googleAuth"
                     uiConfig={uiConfig}

@@ -27,7 +27,7 @@ class CustomLogging {
     log(body : object | any = "") {
         // adds dynamic styling via the template literals
         setTimeout(() => {
-            console.log(
+            console.error(
                 ` %c${this.body.title} %o`,
                 `color: ${this.body.color}; font-weight: bold; font-size: ${this.body.size}; 
                 padding: 0px 0px 0px 5px; margin-right: 5px; border-radius: 10%; background-color: ${this.body.background}; box-shadow: 0px 0px 3px black;`,

@@ -99,7 +99,7 @@ class Article extends Component<any, ArticleState> {
     // process balise of article
     let currentArticles = articles.slice((currentPage-1)*NBRE_ELEMENT_PAGE,  currentPage * NBRE_ELEMENT_PAGE)
     currentArticles = currentCateg === null ? currentArticles : currentArticles.filter((art) => art.category === currentCateg)
-    console.log(currentArticles)
+    
     for (let i = 0; i < currentArticles.length; i++) {
       articlesNode.push(
           <Link to={{

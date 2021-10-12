@@ -54,7 +54,7 @@ class EditArticle extends Component<any, EditArticleState>{
             .then((res) => {
                 this.setState({ categories: res.data });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.error(error));
     }
 
     saveArticle(event: FormEvent<HTMLFormElement>) {

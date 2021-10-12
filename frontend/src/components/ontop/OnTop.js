@@ -49,7 +49,7 @@ export default class OnTop extends Component {
 
         this.setState({ choice: firstChoice });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }
 
   componentDidMount() {

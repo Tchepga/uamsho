@@ -64,9 +64,6 @@ class DetailsBook extends Component<any, DetailsBookState> {
 
               BookService.getBook(this.props.match.params.id)
                 .then((book) => this.setState({ book: book, likes: likes, liked: this.isLiked(likes, user) }));
-            } else {
-              console.log('likes :>> ', likes);
-
             }
           });
       } else {
@@ -112,9 +109,6 @@ class DetailsBook extends Component<any, DetailsBookState> {
               .then((likes) => {
                 if (likes !== null) {
                   this.setState({ likes: likes, liked: this.isLiked(likes, user) });
-                } else {
-                  console.log('likes :>> ', likes);
-
                 }
               }));
           }

@@ -16,7 +16,7 @@ class OnTopDebate extends Component<any, OntopState> {
                 console.log(response.data)
                 this.setState({ debates: response.data as Array<debate> });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.error(error));
     }
 
     render() {

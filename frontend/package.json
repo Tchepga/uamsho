@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@types/ckeditor": "^4.9.10",
     "@types/ckeditor__ckeditor5-core": "^28.0.9",
+    "@types/firebase": "^3.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react-dom": "^17.0.9",
