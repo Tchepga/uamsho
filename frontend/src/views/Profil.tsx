@@ -207,7 +207,7 @@ class Profil extends React.Component<any, ProfilState> {
                 </div>
                 <div className="col-8">
                   {this.state.isProfil && (
-                    <DetailsProfil user={context.currentUser} />
+                    <DetailsProfil user={context.currentUser}  />
                   )}
                   {this.state.isOrders && <PassOrder user={context.currentUser} />}
                   {this.state.isArticle && (

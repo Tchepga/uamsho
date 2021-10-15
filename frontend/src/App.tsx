@@ -7,7 +7,7 @@ import DetailsArticle from "./views/DetailsArticle";
 import Panier from "./components/panier/Panier";
 import Article from "./views/Article";
 import Profil from "./views/Profil";
-import { AuthProvider } from "./providers/Provider";
+import { AuthContext, AuthProvider } from "./providers/Provider";
 import Authentification from "./views/Authentification";
 import { Component } from "react";
 import ResultSearch from "./views/ResultSearch";
@@ -17,15 +17,20 @@ import Debates from "./views/Debates";
 import DetailsDebate from "./views/DetailsDebate";
 import axios from "axios";
 import NotFound from "./components/utilities/NotFound";
+import Utils from "./utils/Utils";
+import { OnLoading } from "./components/utilities/OnLoading";
 export interface AppState {
   user: any;
+  isLoading: boolean;
 }
 
 class App extends Component<AppState> {
 
   state: AppState = {
-    user: {}
+    user: {},
+    isLoading: false
   }
+
 
   componentDidMount() {
     firebase
@@ -58,23 +63,27 @@ class App extends Component<AppState> {
               <Route exact path="/debates/:id" component={DetailsDebate} />
               <Route exact path="/not-found" component={NotFound} />
 
-              <Route
-                exact
-                path="/profil"
-                render={() =>
-                  !!this.state.user && this.state.user.email !== undefined ? (
-                    <Profil />
-                  ) : (
-                    <Redirect
-                      to={{
-                        pathname: "/connexion",
-                        //warningMessage:
-                        //"Vous devez être connecté pour créer un projet.",
-                      }}
-                    />
-                  )
-                }
-              />
+              <AuthContext.Consumer>
+                {(context) => (
+                  <Route
+                    exact
+                    path="/profil"
+                    render={() =>
+                      context.currentUser !== null && context.currentUser.email !== undefined ? (
+                        <Profil />
+                      ) : (
+                        context.isLoading ?
+                          <Redirect
+                            to={{
+                              pathname: "/connexion",
+                              //warningMessage:
+                              //"Vous devez être connecté pour créer un projet.",
+                            }}
+                          /> : <OnLoading />
+                      )
+                    }
+                  />)}
+              </AuthContext.Consumer>
 
               <Route
                 exact

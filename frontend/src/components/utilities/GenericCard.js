@@ -11,10 +11,8 @@ class GenericCard extends Component {
       <Fragment>
         {!isHCard ? (
           <div className="card" style={{ width: "90%" }}>
-            <img src="img/image2.jpg" className="card-img-top" alt="image2" />
             <div className="card-body">
-              <h5 className="card-title">{this.props.title}</h5>
-              <p className="card-text" dangerouslySetInnerHTML={{ __html: Utils.truncate(this.props.description) }}></p>
+              <span className="card-title"><b>{this.props.title}</b></span>
               <p className="card-text">
                 <small className="text-muted">En savoir plus.</small>
               </p>
@@ -22,19 +20,11 @@ class GenericCard extends Component {
           </div>
         ) : (
           <div className="card mb-3 mx-2 mr-1">
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img src="img/image2.jpg" alt="..." className="card-img" />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h4 className="card-title">{this.props.title}</h4>
-                  <p className="card-text" dangerouslySetInnerHTML={{ __html: Utils.truncate(this.props.description) }}></p>
-                  <p className="card-text">
-                    <small className="text-muted">En savoir plus.</small>
-                  </p>
-                </div>
-              </div>
+            <div className="card-body">
+              <span className="card-title"><b>{this.props.title}</b></span>
+              <p className="card-text">
+                <small className="text-muted">En savoir plus.</small>
+              </p>
             </div>
           </div>
         )}

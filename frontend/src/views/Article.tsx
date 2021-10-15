@@ -107,7 +107,7 @@ class Article extends Component<any, ArticleState> {
             //@ts-ignore
             params:{ "id": currentArticles[i].id }
           }}
-           className="col-12 px-0" key={i}>
+           className="col-6 px-0" key={i}>
             <GenericCard
               type="hcard"
               id={currentArticles[i].id}

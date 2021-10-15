@@ -13,7 +13,6 @@ class OnTopDebate extends Component<any, OntopState> {
         axios
             .get(process.env.REACT_APP_API_URL + "/api/debate/ontop")
             .then((response) => {
-                console.log(response.data)
                 this.setState({ debates: response.data as Array<debate> });
             })
             .catch((error) => console.error(error));
@@ -24,7 +23,7 @@ class OnTopDebate extends Component<any, OntopState> {
 
         if (this.state.debates === undefined) {
             debatesBalises.push(
-                <div className="spinner-border text-primary" role="status">
+                <div className="spinner-border text-primary" role="status" key={1}>
                     <span className="visually-hidden">Loading...</span>
                 </div>
             );

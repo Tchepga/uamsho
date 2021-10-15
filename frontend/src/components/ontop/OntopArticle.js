@@ -3,6 +3,7 @@ import { Component } from "react";
 import GenericCard from "../utilities/GenericCard";
 import "./OntopArticle.css";
 import Utils from "./../../utils/Utils";
+import { Link } from "react-router-dom";
 
 class OntopArticle extends Component {
   constructor(props) {
@@ -31,23 +32,27 @@ class OntopArticle extends Component {
       if (i < 3)
         activeItems.push(
           <div key={i} className="px-5 mt-5 col-4">
-            <GenericCard
+            <Link to={"/article/" + bookData[i].id} className="text-dark">
+              <GenericCard
 
-              id={bookData[i].id}
-              title={bookData[i].titre}
-              description={Utils.truncate(bookData[i].description)}
-            />
+                id={bookData[i].id}
+                title={bookData[i].titre}
+                description={Utils.truncate(bookData[i].description)}
+              />
+            </Link>
           </div>
         );
       if (i < 6 && i > 3)
         itemsSecond.push(
           <div key={i} className="px-5 mt-5 col-4">
-            <GenericCard
+            <Link to={"/article/" + bookData[i].id} className="text-dark">
+              <GenericCard
 
-              id={bookData[i].id}
-              title={bookData[i].titre}
-              description={bookData[i].description}
-            />
+                id={bookData[i].id}
+                title={bookData[i].titre}
+                description={bookData[i].description}
+              />
+            </Link>
           </div>
         );
 

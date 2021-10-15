@@ -6,6 +6,10 @@ import { book } from "../model/book";
  */
 const Utils = {
     
+    // type Message Notification
+    ERROR_MESSAGE: 1,
+    SUCCESS_MESSAGE: 2,
+    
     // status request
     CREATED_STATUS: 201,
 

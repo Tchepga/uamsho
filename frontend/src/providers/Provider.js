@@ -8,6 +8,7 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   // const [firebaseUser, setFirebaseCurrentUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLonding, setIsLonding] = useState(false);
 
   useEffect(() => {
     firebase
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
             if (Utils.isNotNullObject(response)) {
               setCurrentUser(response.data)
             }
+            setIsLonding(true);
           })
           .catch((error) => console.error(error));
       }
@@ -26,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser , isLonding}}>
       {children}
     </AuthContext.Provider>
   );
