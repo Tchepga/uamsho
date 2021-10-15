@@ -49,33 +49,42 @@ from functools import partial
 #     except OSError:
 #         # Sur windows, on a une erreur lors de l'acces a /connexion/machin:machin
 #         return serve(request, path="index.html", document_root=settings.STATIC_ROOT)
-    
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(core_routes)),
-    path('api/utils/images/<str:type>', ListImageUils.as_view()),
-    path('api/book/', BookViewSet.as_view({'get': 'list'})),
-    path('api/book/<int:pk>', BookViewSet.as_view({'get': 'retrieve'})),
-    path('api/book/ontop', BookViewSet.as_view({'get': 'ontop'})),
-    path('api/book/<int:pk>/similar', BookViewSet.as_view({'get': 'similary_book'})),
-    path('api/book/<int:pk>/add-comment', BookViewSet.as_view({'post': 'add_comment'})),
-    path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/article/<int:pk>', ArticleViewSet.as_view({'get': 'retrieve'})),
-    path('api/article/ontop', ArticleViewSet.as_view({'get': 'ontop'})),
-    path('api/article', ArticleViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('api/categories', CategoryViewSet.as_view({'get': 'list'})),
-    path('api/user', UserViewset.as_view({'get': 'retrieve_by_email'})),
-    path('api/search', ListSearch.as_view()),
-    path('api/upload/ckeditor-image', upload_ckeditor_image),
-    path('api/debate', DebateViewSet.as_view({'get': 'list'})),
-    path('api/debate/<int:pk>', DebateViewSet.as_view({'get': 'retrieve'})),
-    path('api/debate/ontop', DebateViewSet.as_view({'get': 'ontop'})),
-    path('api/debate/<int:pk>/similar', DebateViewSet.as_view({'get': 'similary_debate'})),
-    path('api/like', LikeViewSet.as_view({'post' : 'create'})),
-    path('api/like/retrieve', LikeViewSet.as_view({'get' : 'retrieve'})),
-    path('api/like/<int:pk>', LikeViewSet.as_view({'delete' : 'delete'})),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to access public static directory
+    path("admin/", admin.site.urls),
+    path("", include(core_routes)),
+    path("api/utils/images/<str:type>", ListImageUils.as_view()),
+    path("api/book/", BookViewSet.as_view({"get": "list"})),
+    path("api/book/<int:pk>", BookViewSet.as_view({"get": "retrieve"})),
+    path("api/book/ontop", BookViewSet.as_view({"get": "ontop"})),
+    path("api/book/<int:pk>/similar", BookViewSet.as_view({"get": "similary_book"})),
+    path("api/book/<int:pk>/add-comment", BookViewSet.as_view({"post": "add_comment"})),
+    path("api/article", ArticleViewSet.as_view({"get": "list", "post": "create"})),
+    path("api/article/<int:pk>", ArticleViewSet.as_view({"get": "retrieve"})),
+    path("api/article/ontop", ArticleViewSet.as_view({"get": "ontop"})),
+    path("api/article", ArticleViewSet.as_view({"get": "list", "post": "create"})),
+    path("api/categories", CategoryViewSet.as_view({"get": "list"})),
+    path(
+        "api/user",
+        UserViewset.as_view(
+            {"get": "retrieve_by_email", "post": "add_user", "patch": "update_user"}
+        ),
+    ),
+    path("api/search", ListSearch.as_view()),
+    path("api/upload/ckeditor-image", upload_ckeditor_image),
+    path("api/debate", DebateViewSet.as_view({"get": "list"})),
+    path("api/debate/<int:pk>", DebateViewSet.as_view({"get": "retrieve"})),
+    path("api/debate/ontop", DebateViewSet.as_view({"get": "ontop"})),
+    path(
+        "api/debate/<int:pk>/similar", DebateViewSet.as_view({"get": "similary_debate"})
+    ),
+    path("api/like", LikeViewSet.as_view({"post": "create"})),
+    path("api/like/retrieve", LikeViewSet.as_view({"get": "retrieve"})),
+    path("api/like/<int:pk>", LikeViewSet.as_view({"delete": "delete"})),
+] + static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+)  # to access public static directory
 
 # if settings.DEBUG:
 #     """En production, les fichiers statiques pourraient être distribués différement .
