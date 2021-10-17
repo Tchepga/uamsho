@@ -5,8 +5,18 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.db import models
-from datetime import datetime
+from django.core.exceptions import ValidationError
 from django.utils import timezone
+
+
+def validate_file_size(value):
+        file_size = value.size
+
+        if file_size > 20965760:
+            raise ValidationError("The maximum file size that can be upload is 20 Mo")
+        else:
+            return value
+
 
 class Utilisateur(User):
     """ Model utilisateur """
@@ -47,10 +57,12 @@ class Book(models.Model):
     # foreign field
     category = models.ForeignKey("core.Category", verbose_name=_("categorie"), on_delete=models.SET_NULL, null=True)
     author = models.CharField(max_length=150, null=False)
-    quantity = models.IntegerField(default=1)
+    ifile = models.FileField(upload_to='static', null=True , validators=[validate_file_size], max_length=500)
 
     def __str__(self):
         return self.title
+    
+    
 
 
 class Likes(models.Model):
@@ -129,9 +141,26 @@ class Discussion(models.Model):
     def __str__(self):
         return self.subject
 
+class Facture(models.Model):
+    """ Facture model"""
 
+    identifiant = models.IntegerField()
+    list_articles = models.ManyToManyField(Book)
+    totalHT = models.IntegerField()
+    tva = models.IntegerField()
+    totalTTC = models.IntegerField()
+    date_creation = models.DateField(default=timezone.now)
 
-   
+    client = models.ForeignKey(Utilisateur, on_delete=models.SET_NULL, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.identifiant = self.id
+
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.identifiant
         
 
 

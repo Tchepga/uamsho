@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers
 from core.model.models import (
     Article,
@@ -5,6 +6,7 @@ from core.model.models import (
     Category,
     Comment,
     Discussion,
+    Facture,
     Likes,
     Utilisateur,
 )
@@ -71,7 +73,6 @@ class BookSerializer(serializers.ModelSerializer):
             "comments",
             "category",
             "author",
-            "quantity",
         )
         read_only_fields = ("id", "pk")
 
@@ -155,3 +156,15 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("id", "owner", "book", "article", "debate")
+
+
+class FactureSerializer(serializers.ModelSerializer):
+
+    client = UtilisateurBasicSerializer(read_only=True)
+    list_articles = BookSerializer(many=True)
+
+    class Meta:
+        model = Facture
+        verbose_name = "Facture"
+        fields=("__all__")
+        verbose_name_plural = "Factures"

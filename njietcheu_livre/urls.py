@@ -15,6 +15,7 @@ Including another URLconf
 """
 from core.views.like import LikeViewSet
 from core.views.debate import DebateViewSet
+from core.views.payment import PaymentViewSets
 from core.views.user import UserViewset
 from core.views.category import CategoryViewSet
 from core.views.article import ArticleViewSet
@@ -82,6 +83,8 @@ urlpatterns = [
     path("api/like", LikeViewSet.as_view({"post": "create"})),
     path("api/like/retrieve", LikeViewSet.as_view({"get": "retrieve"})),
     path("api/like/<int:pk>", LikeViewSet.as_view({"delete": "delete"})),
+    path("api/facture/simul-payment", PaymentViewSets.as_view({"post": "create"})),
+    path("api/facture", PaymentViewSets.as_view({"get": "retrieve"})),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )  # to access public static directory
