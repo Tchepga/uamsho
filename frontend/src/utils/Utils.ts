@@ -5,11 +5,11 @@ import { book } from "../model/book";
  * Utilities function
  */
 const Utils = {
-    
+
     // type Message Notification
     ERROR_MESSAGE: 1,
     SUCCESS_MESSAGE: 2,
-    
+
     // status request
     CREATED_STATUS: 201,
 
@@ -17,7 +17,6 @@ const Utils = {
     SPACE: "\xa0",
 
     H_80: "h-80",
-
     H_100: "h-100",
 
     DEFAULT_FORMAT_DATE: "fr-FR",
@@ -25,24 +24,42 @@ const Utils = {
     defaultBookIllustration: "img/open-book-clipart-03.png",
 
     capitalizeFirstLetter(string: string) {
-
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
-
-    truncate(str: String) {
+    /**
+     * 
+     * @param str truncate on 40 characters
+     * @returns string
+     */
+    truncate(str: String): String {
         return str != null && str.length > 40 ? str.substring(0, 40) + "..." : str;
+    },
+    /**
+     * format number on 8 digits
+     * @param value value to format
+     * @returns 
+     */
+    formatNumber( value : string): string{
+        let stringValue = value.toString();
+        let size = stringValue.length
+        while(size<8){
+            console.log(`size`, size)
+            stringValue = "0" + stringValue
+            size = stringValue.length
+        }
+
+        return stringValue
     },
 
     dateFromString(dateString: string) {
         if (dateString !== null || dateString !== undefined) {
-
             let options: object = { year: 'numeric', month: 'long', day: 'numeric' };
             let date = new Date(dateString);
             return date.toLocaleDateString("fr-FR", options);
         }
     },
 
-    compareBookByPrice(book1: book, book2: book) {
+    compareBookByPrice(book1: book, book2: book): number {
         if (book1 != null && book2 != null) {
             if (book1.price > book2.price) {
                 return 1;
@@ -61,7 +78,7 @@ const Utils = {
         return 0;
     },
 
-    compareEntityByTitle(entity1: book | article, entity2: book | article) {
+    compareEntityByTitle(entity1: book | article, entity2: book | article) : number{
 
         if (entity1 != null && entity2 != null) {
             if (entity1.title > entity2.title) {
@@ -86,7 +103,7 @@ const Utils = {
      * @param url 
      * @returns string url
      */
-    getIllustration(urlIllustration : string) {
+    getIllustration(urlIllustration: string) {
 
         if (urlIllustration !== null) {
             return process.env.REACT_APP_API_URL + urlIllustration
@@ -101,7 +118,7 @@ const Utils = {
      * @returns 
      */
 
-    isNotNullObject(object: object|string) {
+    isNotNullObject(object: object | string) {
 
         if (object === null || object === undefined) {
             return false;
@@ -110,13 +127,23 @@ const Utils = {
         return true;
     },
 
+    /**
+     * save cookie
+     * @param key key value
+     * @param value value to set
+     * @param exdays when is expired
+     */
     setCookie(key: string, value: string, exdays: number) {
         const d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         let expires = "expires=" + d.toUTCString();
         document.cookie = key + "=" + value + ";" + expires + ";path=/";
     },
-
+    /**
+     * get cookie from cookie
+     * @param key key value
+     * @returns 
+     */
     getCookie(key: string) {
         let name = key + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
@@ -138,7 +165,7 @@ const Utils = {
      * get list of book's cookies
      * @returns list of string book
      */
-    getBookCookie(){
+    getBookCookie() {
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
         let bookIds = [];
@@ -159,8 +186,8 @@ const Utils = {
      * delete a book cookie by id
      * @param key key book to delete format 'book[id]'
      */
-    deleteBookCookie(key : string) {
-        document.cookie = key +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    deleteBookCookie(key: string) {
+        document.cookie = key + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
 }

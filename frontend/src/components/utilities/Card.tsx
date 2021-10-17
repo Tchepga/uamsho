@@ -34,23 +34,24 @@ class Card extends Component<CardProps, CardState> {
     }
 
     render() {
-        const {book, debate } = this.props;
+        const { book, debate } = this.props;
         let likesNode = [];
+        const nbreStars = Math.ceil(this.state.likes.length / 10);
 
         if (Utils.isNotNullObject(this.state.likes)) {
-            for (let j = 0; j < this.state.likes.length; j++) {
-                likesNode.push(<i className="fas fa-heart mr-1" key={j}></i>);
+            for (let j = 0; j < nbreStars; j++) {
+                likesNode.push(<i className="fas fa-star mr-1 text-danger" key={j} ></i>);
             }
-        } else {
-            for (let j = 0; j < 5; j++) {
-                likesNode.push(<i className="far fa-heart mr-1" key={j}></i>);
+
+            for (let j = 0; j < 5-nbreStars ; j++) {
+                likesNode.push(<i className="far fa-star mr-1" key={j+5}></i>);
             }
         }
 
         if (book !== undefined) {
             return (
                 <div className={"card mx-2 mb-2" + (this.props.addClass)}
-                    style={{ boxShadow: "0px 0px 2px black" }} >
+                    style={{ boxShadow: "0px 0px 2px black" , minHeight: "20rem"}} >
                     <img src={Utils.getIllustration(book.illustration)} className="card-img-top" alt="..." style={{ height: "150px", width: "100%" }} />
                     <div className="card-body" >
                         <h6 className="card-title text-center mt-1"><b>{book.title}</b></h6>
@@ -62,7 +63,7 @@ class Card extends Component<CardProps, CardState> {
                     </div>
                 </div>
             );
-        }else if(debate !== undefined) {
+        } else if (debate !== undefined) {
             return (
                 <div className={"card mx-2 mb-2" + (this.props.addClass)}
                     style={{ boxShadow: "0px 0px 2px black" }} >

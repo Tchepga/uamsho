@@ -44,7 +44,7 @@ const DispatcherService = {
                 window.location.replace(url404);
             }
 
-            if (error.response.status === 500) {
+            if (error.response.status === 500 || error.response.status === 400) {
                 return Promise.resolve("Une erreur inattendue est survenue. Veuillez contacter l'équipe technique en communicant le(s) " +
                     "information(s) suivante(s):\n Date=" + new Date().toDateString() + "; Heure=" + new Date().toTimeString())
             }

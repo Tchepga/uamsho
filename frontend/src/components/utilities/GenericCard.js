@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Fragment } from "react";
-import Utils from "../../utils/Utils";
 
 class GenericCard extends Component {
 

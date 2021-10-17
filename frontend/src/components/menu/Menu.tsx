@@ -9,7 +9,6 @@ import firebase from "../authentification/firebase";
 
 export interface MenuState {
   scopesLabel: Array<string>;
-  panier: number;
   showInscriptionComp: boolean;
   isAuth : boolean;
 }
@@ -23,7 +22,6 @@ class Menu extends Component<any, MenuState> {
 
   state = {
     scopesLabel: ["Livre", "Article", "Débats"],
-    panier: 0,
     showInscriptionComp: false,
     isAuth : false
   };
@@ -150,7 +148,7 @@ class Menu extends Component<any, MenuState> {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/books">
-              Ibook
+              Ebook
             </Link>
           </li>
           <li className="nav-item">
@@ -181,11 +179,11 @@ class Menu extends Component<any, MenuState> {
           <li className="nav-item">
             <a className="nav-link" href="/panier">
               <i className="fas fa-shopping-basket"></i>
-              {this.state.panier > 0 &&
+              {Utils.getBookCookie().length > 0 &&
                 <span
                   className="badge badge-pill badge-danger"
                   style={{ transform: "translate(0px, -5px)" }}>
-                  {this.state.panier}
+                  {Utils.getBookCookie().length}
                 </span>}
             </a>
           </li>

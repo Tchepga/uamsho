@@ -137,14 +137,14 @@ class DetailsBook extends Component<any, DetailsBookState> {
     if (book != null) {
       // book likes
       let likesNode = [];
-      let likes = this.state.likes;
-      if (likes !== null) {
-        // à gérer après
-        for (let j = 0; j < 5; j++) {
-          likesNode.push(<i className="fas fa-star mr-1" key={j}></i>);
+      const nbreStars = Math.ceil(this.state.likes.length / 10);
+
+      if (Utils.isNotNullObject(this.state.likes)) {
+        for (let j = 0; j < nbreStars; j++) {
+          likesNode.push(<i className="fas fa-star mr-1 text-danger" key={j} ></i>);
         }
-      } else {
-        for (let j = 0; j < 5 - likes; j++) {
+
+        for (let j = 0; j < 5 - nbreStars; j++) {
           likesNode.push(<i className="far fa-star mr-1" key={j}></i>);
         }
       }
@@ -204,25 +204,12 @@ class DetailsBook extends Component<any, DetailsBookState> {
                   <div className="row mt-3">
                     <span className="badge bg-info ml-3">Auteur : {book.author}</span>
                   </div>
-                  <b style={{ color: "#ff1744", fontSize: "30px" }}>{book.price} € TTC</b>
-                  <div className="mb-3 row">
-                    <label htmlFor="quantity" className="col-sm-2 col-form-label">
-                      Quantité
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        type="number"
-                        className="form-control col-2"
-                        id="quantity"
-                        min="0"
-                        value={this.state.choiceQuantity}
-                        onChange={(event) => this.setState({ choiceQuantity: parseInt(event.currentTarget.value) })}
-                      />
-                    </div>
+                  <div className="row m-2">
+                    {book.price !== 0 ? <b style={{ color: "#ff1744", fontSize: "30px" }}>{book.price} € TTC</b> :
+                      <span className="badge" style={{ color: "white", backgroundColor: "green" }}>gratuit</span>}
                   </div>
                   <button type="submit"
                     className="btn btn-dark"
-                    disabled={this.state.book.quantity === 0 || this.state.choiceQuantity === 0}
                     onClick={this.addToPanier}>
                     Ajouter au panier
                   </button>

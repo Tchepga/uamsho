@@ -1,17 +1,21 @@
 import axios from "axios";
-import { ChangeEvent, Component } from "react";
+import { Component, Fragment } from "react";
+import { withRouter } from "react-router";
 import { book } from "../../model/book";
 import { AuthContext } from "../../providers/Provider";
 import Utils from "../../utils/Utils";
 import Footer from "../footer/Footer";
 import Menu from "../menu/Menu";
+import { errorState } from "../utilities/errorState";
+import { WithNotification } from "../utilities/WithNotification";
 
-export interface PanierState {
+export interface PanierState extends errorState {
   currentUser: any,
   items: Array<book>;
   change: string;
   costDelivery: number;
   total: number;
+
 }
 class Panier extends Component<any, PanierState> {
 
@@ -22,37 +26,48 @@ class Panier extends Component<any, PanierState> {
     items: [] as Array<book>,
     change: "€",
     costDelivery: 5, // TOTO à traiter
-    total: 0
+    total: 0,
+    errorMessage: null
   }
 
-  removeBook = (book : book) => {
+  removeBook = (book: book) => {
     let items = this.state.items;
     Utils.deleteBookCookie("book" + book.id.toString())
-    
+
     const indexELement = items.findIndex(item => item.id === book.id);
-   
-    if(indexELement !== 0){
+
+    if (indexELement !== 0) {
       items = items.slice(indexELement);
-      this.setState({ items: items});
-    }else {
-      this.setState({ items: []});
+      this.setState({ items: items });
+    } else {
+      this.setState({ items: [] });
     }
-    
-
   }
-  updateQuantity = (event: ChangeEvent<HTMLInputElement>, id: number) => {
-    let { items } = this.state;
-    let sum = 0;
 
-    const indexELement = items.findIndex(item => item.id === id);
-    let copyItems = [...items];
-    copyItems[indexELement] = { ...copyItems[indexELement], choiceQuantity: parseInt(event.currentTarget.value) };
+  // updateQuantity = (event: ChangeEvent<HTMLInputElement>, id: number) => {
+  //   let { items } = this.state;
+  //   let sum = 0;
 
-    items.forEach((item: book) => sum += item.price * item.choiceQuantity);
+  //   const indexELement = items.findIndex(item => item.id === id);
+  //   let copyItems = [...items];
+  //   copyItems[indexELement] = { ...copyItems[indexELement], choiceQuantity: parseInt(event.currentTarget.value) };
 
-    this.setState({ items: copyItems, total: sum });
+  //   items.forEach((item: book) => sum += item.price);
 
-    Utils.setCookie("book" + id.toString(), id.toString() + "_" + event.currentTarget.value, 1);
+  //   this.setState({ items: copyItems, total: sum });
+
+  //   Utils.setCookie("book" + id.toString(), id.toString() + "_" + event.currentTarget.value, 1);
+  // }
+
+  generateFacture = () => {
+    if (Utils.isNotNullObject(this.context.currentUser)) {
+      this.props.history.push({
+        pathname:"/facturation",
+        params : {items: this.state.items, change: this.state.change}
+      });
+    } else {
+      this.setState({ errorMessage: "Vous devez au préalable vous connecter!" });
+    }
   }
 
   componentDidMount() {
@@ -70,10 +85,8 @@ class Panier extends Component<any, PanierState> {
 
             let items = this.state.items;
             let item: book = res.data;
-            item.choiceQuantity = parseInt(data[1])
+            sum += item.price;
             items.push(item)
-
-            items.forEach((item: book) => sum += item.price * item.choiceQuantity);
 
             this.setState({ items: items, total: sum });
           })
@@ -104,61 +117,54 @@ class Panier extends Component<any, PanierState> {
               {this.state.change}
             </b>
           </div>
-          <input
-            type="number"
-            className="offset-1 col-2 align-self-center"
-            value={book.choiceQuantity}
-            onChange={(event) => this.updateQuantity(event, book.id)} />
-          <i className="col-1 offset-1 fas fa-minus-circle fa-2x align-self-center cursor-pointer" onClick={() => this.removeBook(book)}/>
+          <i className="col-1 offset-3 fas fa-minus-circle fa-2x align-self-center cursor-pointer" onClick={() => this.removeBook(book)} />
         </div>
       </li>
     ));
 
     return (
-      <div className="default-color">
-        <Menu/>
-        <div className="container mt-5 mb-2">
-          <div className="row">
-            <div className="card col-8">
-              <div className="card-header">
-                <b>Panier</b>
+      <Fragment>
+        <Menu />
+        <WithNotification message={this.state.errorMessage} type={Utils.ERROR_MESSAGE}>
+          <div className="container mt-5 mb-2">
+            <div className="row">
+              <div className="card col-8">
+                <div className="card-header">
+                  <b>Panier</b>
+                </div>
+                <ul className="list-group list-group-flush">{itemsBalises.length > 0 ? itemsBalises :
+                  <span className="mt-1">Aucun article présent.</span>}</ul>
               </div>
-              <ul className="list-group list-group-flush">{itemsBalises.length>0 ? itemsBalises: 
-                                                            <span className="mt-1">Aucun article présent.</span>}</ul>
-            </div>
-            <div className="row col-4">
-              <div className="card col-12">
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">
-                    <div className="row">
-                      <span className="col-7">{this.state.items.length} articles</span>
-                      <span className="col-5 text-right">{this.state.total + this.state.change}</span>
-                    </div>
-                    <div className="row">
-                      <span className="col-5">Livraison</span>
-                      <span className="col-7 text-right">{this.state.costDelivery + " " + this.state.change} </span>
-                    </div>
-                  </li>
-                  <li className="list-group-item">
-                    <div className="row">
-                      <span className="col-7">Total TTC</span>
-                      <span className="col-5 text-right">{this.state.total + this.state.costDelivery + this.state.change}</span>
-                    </div>
-                  </li>
-                  <li className="list-group-item align-self-end">
-                    <button type="button" className="btn btn-dark">
-                      Commander
-                    </button>
-                  </li>
-                </ul>
+              <div className="row col-4">
+                <div className="card col-12">
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                      <div className="row">
+                        <span className="col-7">{this.state.items.length} article(s)</span>
+                        <span className="col-5 text-right">{this.state.total + this.state.change}</span>
+                      </div>
+                    </li>
+                    <li className="list-group-item">
+                      <div className="row">
+                        <span className="col-7">Total TTC</span>
+                        <span className="col-5 text-right">{this.state.total + this.state.change}</span>
+                      </div>
+                    </li>
+                    <li className="list-group-item align-self-end">
+                      <button type="button" className="btn btn-dark" onClick={() => this.generateFacture()}>
+                        Commander
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </WithNotification>
         <Footer />
-      </div>
+      </Fragment>
     );
   }
 }
 
-export default Panier;
+export default withRouter(Panier);

@@ -96,7 +96,7 @@ export default class Book extends Component<any, BookState> {
 
       listCategoriesBalises.push(
         <li
-          key={i}
+          key={i+1}
           className={this.state.currentCateg === categories[i].type_category ? listClass + " active" : listClass}
           onClick={this.sortByCategories}
         >
@@ -118,7 +118,7 @@ export default class Book extends Component<any, BookState> {
             params: { id: currentBooks[i].id },
           }}
           className="col-4 px-0 my-2"
-          key={i}
+          key={i+30}
         >
           <Card addClass={Utils.H_100} book={currentBooks[i]} />
         </Link>

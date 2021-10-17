@@ -68,9 +68,6 @@ class OntopArticle extends Component {
           </div>
         );
     }
-    const carouselStyle = {
-      backgroundColor: "white !important",
-    };
 
     return (
       <div className="container">

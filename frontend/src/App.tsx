@@ -17,8 +17,8 @@ import Debates from "./views/Debates";
 import DetailsDebate from "./views/DetailsDebate";
 import axios from "axios";
 import NotFound from "./components/utilities/NotFound";
-import Utils from "./utils/Utils";
 import { OnLoading } from "./components/utilities/OnLoading";
+import Payment from "./views/Payment";
 export interface AppState {
   user: any;
   isLoading: boolean;
@@ -61,6 +61,7 @@ class App extends Component<AppState> {
               <Route exact path="/connexion" component={Authentification} />
               <Route exact path="/debates" component={Debates} />
               <Route exact path="/debates/:id" component={DetailsDebate} />
+              <Route exact path="/facturation" component={Payment} />
               <Route exact path="/not-found" component={NotFound} />
 
               <AuthContext.Consumer>
