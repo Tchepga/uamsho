@@ -24,7 +24,7 @@ class Utilisateur(User):
         verbose_name = 'Utilisateur'
 
     address = models.CharField(max_length=150)
-    complement_address = models.CharField(max_length=15)
+    complement_address = models.CharField(max_length=15, blank=True, null=True)
 
     
 

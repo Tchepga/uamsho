@@ -6,7 +6,21 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from core.serializers import UtilisateurCompleteSerializer
+import re
+from django.db.models import Q
 
+def set_user_from_request(data) -> Utilisateur:
+        
+        user = Utilisateur
+        user.last_name = data.get("nom", None)
+        user.first_name = data.get("prenom", None)
+        user.username = data.get("username", None)
+        user.email = data.get("email", None)
+        user.address = data.get("address", None)
+        user.password = data.get("password", None)
+        user.complement_address = data.get("complementAddress", None)
+
+        return user
 
 class UserViewset(viewsets.ViewSet):
     """viewsets pour utilisateurs. Il est géré par firebase"""
@@ -23,40 +37,46 @@ class UserViewset(viewsets.ViewSet):
                 return Response(serializer.data)
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN)
+    
 
     def add_user(self, request):
         data = request.data
-
-        name = data.get("name", None)
-        prenom = data.get("prenom", None)
-        username = data.get("username", None)
-        email = data.get("email", None)
-        address = data.get("address", None)
-        password = data.get("password", None)
-        complement_address = data.get("complementAddress", None)
+        
+        utilisateur = set_user_from_request(data)
 
         # check email format -> regex and if another one existe
+        email_match = re.search("^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$", utilisateur.email)
+        password_match = re.search("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}", utilisateur.password)
+        
+        if password_match is None or email_match is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data="INVALID_INFORMATION") 
+
+        users = Utilisateur.objects.filter(Q(email=utilisateur.email) | Q(username=utilisateur.username))
+
+        if len(users) != 0:
+            return Response(status=status.HTTP_409_CONFLICT, data="USER_ALREADY_EXISTS")                       
 
         if (
-            name is None
-            or prenom is None
-            or username is None
-            or email is None
-            or address is None
-            or password is None
+            utilisateur.last_name is None
+            or utilisateur.first_name is None
+            or utilisateur.username is None
+            or utilisateur.email is None
+            or utilisateur.address is None
+            or utilisateur.password is None
         ):
+            print(utilisateur)
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data="Malformed required params to create user",
             )
 
         Utilisateur.objects.create(
-            first_name=prenom,
-            last_name=name,
-            username=username,
-            email=email,
-            address=address,
-            complement_address=complement_address,
+            first_name=utilisateur.last_name,
+            last_name=utilisateur.first_name,
+            username=utilisateur.username,
+            email=utilisateur.email,
+            address=utilisateur.address,
+            complement_address=utilisateur.complement_address,
         )
 
         return Response(status=status.HTTP_201_CREATED)
