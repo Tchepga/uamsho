@@ -10,6 +10,9 @@ const Utils = {
     ERROR_MESSAGE: 1,
     SUCCESS_MESSAGE: 2,
 
+    // firebase code error
+    USER_EXISTS : "auth/email-already-in-use",
+    errorUserExistFromDJ : "USER_ALREADY_EXISTS",
     // status request
     CREATED_STATUS: 201,
 
@@ -22,6 +25,7 @@ const Utils = {
     DEFAULT_FORMAT_DATE: "fr-FR",
 
     defaultBookIllustration: "img/open-book-clipart-03.png",
+    defaultArticleIllustration: "img/image2.jpg",
 
     capitalizeFirstLetter(string: string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -189,6 +193,7 @@ const Utils = {
     deleteBookCookie(key: string) {
         document.cookie = key + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+
 
 }
 

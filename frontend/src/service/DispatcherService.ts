@@ -48,6 +48,10 @@ const DispatcherService = {
                 return Promise.resolve("Une erreur inattendue est survenue. Veuillez contacter l'équipe technique en communicant le(s) " +
                     "information(s) suivante(s):\n Date=" + new Date().toDateString() + "; Heure=" + new Date().toTimeString())
             }
+
+            if (error.response.status === 409) {
+                return Promise.resolve(error.response);
+            }
             return Promise.reject(error);
         });
     }

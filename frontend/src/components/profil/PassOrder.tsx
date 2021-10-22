@@ -1,7 +1,5 @@
 import { Component } from "react";
-import { book } from "../../model/book";
 import { facture } from "../../model/facture";
-import LikeService from "../../service/LikeService";
 import PaymentService from "../../service/PaymentService";
 import Utils from "../../utils/Utils";
 

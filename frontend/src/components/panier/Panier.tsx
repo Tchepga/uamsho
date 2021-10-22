@@ -27,7 +27,8 @@ class Panier extends Component<any, PanierState> {
     change: "€",
     costDelivery: 5, // TOTO à traiter
     total: 0,
-    errorMessage: null
+    errorMessage: null,
+    errorType: null
   }
 
   removeBook = (book: book) => {

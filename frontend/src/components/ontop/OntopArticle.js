@@ -33,12 +33,15 @@ class OntopArticle extends Component {
         activeItems.push(
           <div key={i} className="px-5 mt-5 col-4">
             <Link to={"/article/" + bookData[i].id} className="text-dark">
-              <GenericCard
-
-                id={bookData[i].id}
-                title={bookData[i].titre}
-                description={Utils.truncate(bookData[i].description)}
-              />
+              <div className="card mb-3 mx-2 mr-1">
+                <img src={Utils.defaultArticleIllustration} className="card-img-top" alt="..."/>
+                <div className="card-body">
+                  <span className="card-title"><b>{bookData[i].title}</b></span>
+                  <p className="card-text">
+                    <small className="text-muted">En savoir plus.</small>
+                  </p>
+                </div>
+              </div>
             </Link>
           </div>
         );
