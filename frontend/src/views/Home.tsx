@@ -13,8 +13,9 @@ export default class Home extends Component {
   render() {
     return (
       <div className="home">
-        <Menu />
+        <Menu isHome={true}/>
         <Carousel />
+
         <OnTop />
         <OnTopDebate />
         <div id="services" className="row">
@@ -44,6 +45,7 @@ export default class Home extends Component {
           </div>
         </div>
         <OntopArticle />
+
         <Footer />
       </div>
     );

@@ -49,7 +49,7 @@ export default class Carousel extends Component {
                   <img
                     src={process.env.REACT_APP_API_URL + image}
                     className="d-block w-100" alt="no-found" 
-                    style={{height: "auto"}}/>
+                    style={{maxHeight: "700px"}}/>
                 </div>
               ))
             ) : (

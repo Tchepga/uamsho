@@ -17,6 +17,10 @@ body {
   z-index: 10;
 }
 
+#content{
+  background-color: #958b80;
+}
+
 #carousel-header {
   height: 500px;
 }

@@ -75,9 +75,14 @@ class Menu extends Component<any, MenuState> {
         </div>
       </div>
     ));
-
+    let styleMenu ={};
+    if(this.props.isHome){
+      styleMenu = { backgroundColor: this.props.color};
+    }else{
+      styleMenu = { backgroundColor: this.props.color, backgroundImage: `url(img/menu_cr.jpg)` };
+    }
     return (
-      <div id="Menu" style={{ backgroundColor: this.props.color, backgroundImage: "img/business-world-472556_1920.jpg" }}>
+      <div id="Menu" style={styleMenu}>
         <ul className="nav justify-content-end mb-3 ">
           <li className="nav-item">
             {/* eslint-disable-next-line */}
@@ -147,23 +152,23 @@ class Menu extends Component<any, MenuState> {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/books">
+            <Link className="nav-link text-light" to="/books">
               Ebook
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/article">
+            <Link className="nav-link text-light" to="/article">
               Article
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/debates">
+            <Link className="nav-link text-light" to="/debates">
               Débât/Discussion
             </Link>
           </li>
           <li className="nav-item">
             {/* eslint-disable-next-line */}
-            <a className="nav-link" href="#">
+            <a className="nav-link text-light" href="#">
               Contact
             </a>
           </li>
@@ -178,7 +183,7 @@ class Menu extends Component<any, MenuState> {
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/panier">
-              <i className="fas fa-shopping-basket"></i>
+              <i className="fas fa-shopping-basket text-light"></i>
               {Utils.getBookCookie().length > 0 &&
                 <span
                   className="badge badge-pill badge-danger"

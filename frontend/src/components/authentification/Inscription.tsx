@@ -1,6 +1,4 @@
 import firebase from "../authentification/firebase";
-
-
 import React, { FormEvent } from "react";
 import { Modal } from "react-bootstrap";
 import UserService from "../../service/UserService";
@@ -132,10 +130,10 @@ class Inscription extends React.Component<any, InscriptionState> {
 
 
     if (element !== null) {
-      let regexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-      let regexPassword = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}/);
-      let name = element.name;
-      let value = element.value;
+      const regexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+      const regexPassword = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}/);
+      const name = element.name;
+      const value = element.value;
 
       if (name === "email" && regexEmail.test(value)) {
         return true;
