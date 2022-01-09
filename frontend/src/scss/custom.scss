@@ -4,7 +4,13 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
 $base-color-menu: #747f83;
+$marron : #AD9A76;
 
 .active {
     background-color: #747f83 !important;
+}
+
+:root {
+    --base-color-menu: $base-color-menu;
+    --marron : $marron;
 }

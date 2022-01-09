@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Component } from 'react';
 import debate  from '../../model/debate';
 import Utils from '../../utils/Utils';
+import "./OnTopDebate.css"
 export interface OntopState {
     debates: Array<debate>
 }
@@ -30,7 +31,7 @@ class OnTopDebate extends Component<any, OntopState> {
         } else {
             debatesBalises = this.state.debates.map((debate: debate, index: number) => (
                 <div className={"carousel-item" + (index === 0 ? " active" : "")} key={index} >
-                    <div className="row" style={{ backgroundColor: "#b1b9b8" }}>
+                    <div className="row">
                         {debate.illustration !== null && <img
                             className="col-3 mr-2"
                             src={Utils.getIllustration(debate.illustration)}
@@ -67,8 +68,8 @@ class OnTopDebate extends Component<any, OntopState> {
                 </div>));
         }
         return (
-            <div id="ontop-debate" className="default-color py-4">
-                <div className="container carousel slide" data-ride="carousel">
+            <div id="ontop-debate" className="p-5">
+                <div className="container carousel slide py-4 default-color" data-ride="carousel">
                     <div className="carousel-inner">
                         {debatesBalises}
                     </div>
