@@ -103,7 +103,7 @@ class Menu extends Component<any, MenuState> {
                   <Link className="nav-link" aria-current="page" to="/profil">
                     <i
                       style={{ marginRight: "7px" }}
-                      className="far fa-user"
+                      className="far fa-user" 
                     ></i>
                     {context.currentUser.first_name}
                   </Link>
