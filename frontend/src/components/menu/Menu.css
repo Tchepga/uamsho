@@ -1,5 +1,5 @@
-#Menu a{
-   color:rgb(28, 34, 30);
+#Menu a, #Menu button{
+   color: white;
    margin-bottom: 30px;
 }
 

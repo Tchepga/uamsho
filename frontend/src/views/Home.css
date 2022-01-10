@@ -26,7 +26,7 @@ body {
 }
 
 #services {
-  background-color: #E27D60;
+  background-color: var(--ck-color-shadow-inner);
   height: 200px;
   width: 101%;
     /*align-items: center;

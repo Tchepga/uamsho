@@ -10,7 +10,7 @@ import firebase from "../authentification/firebase";
 export interface MenuState {
   scopesLabel: Array<string>;
   showInscriptionComp: boolean;
-  isAuth : boolean;
+  isAuth: boolean;
 }
 
 class Menu extends Component<any, MenuState> {
@@ -23,14 +23,14 @@ class Menu extends Component<any, MenuState> {
   state = {
     scopesLabel: ["Livre", "Article", "Débats"],
     showInscriptionComp: false,
-    isAuth : false
+    isAuth: false
   };
 
   updateUserData = () => {
-    if(Utils.isNotNullObject(this.context.currentUser)){
-      this.setState({isAuth : true});
-    }else {
-      this.setState({isAuth : true});
+    if (Utils.isNotNullObject(this.context.currentUser)) {
+      this.setState({ isAuth: true });
+    } else {
+      this.setState({ isAuth: true });
     }
   }
   /**
@@ -75,10 +75,10 @@ class Menu extends Component<any, MenuState> {
         </div>
       </div>
     ));
-    let styleMenu ={};
-    if(this.props.isHome){
-      styleMenu = { backgroundColor: this.props.color};
-    }else{
+    let styleMenu = {};
+    if (this.props.isHome) {
+      styleMenu = { backgroundColor: this.props.color };
+    } else {
       styleMenu = { backgroundColor: this.props.color, backgroundImage: `url(img/menu_cr.jpg)` };
     }
     return (
@@ -103,7 +103,7 @@ class Menu extends Component<any, MenuState> {
                   <Link className="nav-link" aria-current="page" to="/profil">
                     <i
                       style={{ marginRight: "7px" }}
-                      className="far fa-user" 
+                      className="far fa-user"
                     ></i>
                     {context.currentUser.first_name}
                   </Link>
@@ -119,27 +119,30 @@ class Menu extends Component<any, MenuState> {
               }
             </AuthContext.Consumer>
           </li>
+
           <AuthContext.Consumer>
             {(context) =>
               context.currentUser ? (
-                <a
-                  href="/"
-                  className="mr-1 mt-2"
-                  onClick={() => {
-                    firebase.auth().signOut();
-                  }}
-                >
-                  Déconnexion
-                </a>
+                <li>
+                  <a
+                    href="/"
+                    className="mr-1 mt-2"
+                    onClick={() => {
+                      firebase.auth().signOut();
+                    }}
+                  >
+                    Déconnexion
+                  </a>
+                </li>
               ) : (
-                <div>
+                <li>
                   <button
                     className="btn_as_link mt-2 mr-1"
                     onClick={() => this.setState({ showInscriptionComp: !this.state.showInscriptionComp })}>
                     Créer un compte
                   </button>
                   {this.state.showInscriptionComp ? <Inscription /> : null}
-                </div>
+                </li>
               )
             }
 
