@@ -1,3 +1,4 @@
-export enum TranslationEN {
-    HOME = "Home"
+export const TranslationEN = {
+    HOME : "Home",
+    SUGGESTION : "Ours suggestions"
 }

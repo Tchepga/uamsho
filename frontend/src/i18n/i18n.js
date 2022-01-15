@@ -1,34 +1,32 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { Language } from "./enums/Language";
-import translationEN from './src/i18n/en.json';
-import translationFR from './src/i18n/fr.json';
- 
-let defaultLanguage = Language.FR;
- 
-// the translations
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import { Language } from './Language';
+import { TranslationFR } from './fr';
+import { TranslationEN } from './en';
+
+const fallbackLng = ['fr'];
+
+
 const resources = {
   en: {
-    translation: translationEN
+    translation:  TranslationEN //new json object hereTranslationEN
   },
   fr: {
-    translation: translationFR
+    translation: TranslationFR
   }
-};
- 
+}
+
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: defaultLanguage,
- 
-    keySeparator: ".",  // to support nested translations
- 
+    fallbackLng, // if user computer language is not on the list of available languages, than we will be using the fallback language specified earlier
+    debug: true,
+    whitelist: Object.values(Language),
+
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false
+    },
   });
- 
-  export default i18n;
+
+export default i18n;
