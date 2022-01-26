@@ -119,7 +119,7 @@ class Menu extends Component<any, MenuState> {
                 <li className="nav-item">
                   {/* eslint-disable-next-line */}
                   <a className="nav-link" href="#">
-                    Commander
+                  {t("ORDER")}
                   </a>
                 </li>
                 <li className="nav-item">
@@ -139,7 +139,7 @@ class Menu extends Component<any, MenuState> {
                           aria-current="page"
                           to="/connexion"
                         >
-                          Connexion
+                          {t("CONNEXION")}
                         </Link>
                       )
                     }
@@ -157,7 +157,7 @@ class Menu extends Component<any, MenuState> {
                             firebase.auth().signOut();
                           }}
                         >
-                          Déconnexion
+                          {t("DECONNEXION")}
                         </a>
                       </li>
                     ) : (
@@ -165,7 +165,7 @@ class Menu extends Component<any, MenuState> {
                         <button
                           className="btn_as_link mt-2 mr-1"
                           onClick={() => this.setState({ showInscriptionComp: !this.state.showInscriptionComp })}>
-                          Créer un compte
+                          {t("C_ACCOUNT")}
                         </button>
                         {this.state.showInscriptionComp ? <Inscription /> : null}
                       </li>
@@ -193,7 +193,7 @@ class Menu extends Component<any, MenuState> {
               </li>
               <li className="nav-item">
                 <Link className="nav-link text-light" to="/debates">
-                  Débât/Discussion
+                  {t('DEBATE')}
                 </Link>
               </li>
               <li className="nav-item">

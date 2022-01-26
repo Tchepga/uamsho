@@ -20,4 +20,8 @@
    background-color: var(--primary);
 }
 
+li button {
+   background-color: coral;
+}
+
 

@@ -6,6 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+:root {
+  --main-color : #e1a91b;
+  --red-lighter: #b46e6b;
+}
 #newsletter {
   position: relative;
   bottom: -800px;
@@ -26,7 +31,7 @@ body {
 }
 
 #services {
-  background-color: var(--ck-color-shadow-inner);
+  background-color: var(--red-lighter);
   height: 200px;
   width: 101%;
     /*align-items: center;
