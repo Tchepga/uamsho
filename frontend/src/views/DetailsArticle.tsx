@@ -52,11 +52,12 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
       Array.from(element.querySelectorAll(`figure[class="media"]`))
         .forEach(node => {
           const url = node.querySelector("oembed")?.getAttribute("url");
-          console.log('url :>> ', url);
-          const id = url?.substring(url?.indexOf("=") + 1, url.length);
-          console.log('id :>> ', id);
-          const width = window.screen.width > 480 ? 400 : 250;
-          node.innerHTML = `<iframe width="${width}" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen />`;
+          
+          if ( url?.includes("youtube") ) {
+            const id = url?.substring(url?.indexOf("=") + 1, url.length);
+            const width = window.screen.width > 480 ? 400 : 250;
+            node.innerHTML = `<iframe width="${width}" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen />`;
+          }
       });
       //Array.from(element.querySelectorAll("table thead tr td")).forEach(node => node.setAttribute("scope", "col"));
       
