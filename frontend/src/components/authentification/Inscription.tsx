@@ -92,7 +92,7 @@ class Inscription extends React.Component<any, InscriptionState> {
                   currentUser?.delete().then(() =>
                     this.setState({ errorMessage: "Il existe déjà un utilisateur avec ce mail!", errorType: Utils.ERROR_MESSAGE })
                   )
-                  .catch((error : any) => console.log("firebase-error >>", error));
+                  .catch((error : any) => console.error("firebase-error >>", error));
                 }
               })
               .catch((error: any) => console.error(error));

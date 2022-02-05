@@ -67,8 +67,9 @@ class Menu extends Component<any, MenuState> {
     
     const lang = event.currentTarget.innerText.toLowerCase();
     if (Array.from(Object.values(Language)).find(item => item === lang) ) {
-      this.context.setLang(lang);
+      localStorage.setItem("LANG", lang);
       i18next.changeLanguage(lang);
+      this.forceUpdate();
     }
   };
 
@@ -88,8 +89,7 @@ class Menu extends Component<any, MenuState> {
     ));
 
     const langMarkup = Object.values(Language).map((lang, index) => {
-
-      const className = lang === this.context.lang ? "active" : "";
+      const className = lang === localStorage.getItem("LANG") ? "active" : "";
       return <button key={index}
         className={"mt-3 " + className}
         onClick={this.activeLanguage}>

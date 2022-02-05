@@ -16,6 +16,8 @@ export interface DetailsArticleState extends componentState {
 
 class DetailsArticle extends Component<any, DetailsArticleState> {
 
+  private content: React.RefObject<HTMLDivElement> = React.createRef();
+  
   state: DetailsArticleState = {
     article: {} as article,
     loading: false
@@ -38,6 +40,29 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
       .catch((error) => {
         console.error(error)
       });
+  }
+
+  process () {
+
+    if ( this.content.current ) {
+      let element = this.content.current;
+      element.innerHTML = this.state.article.description;
+      element.querySelector("table")?.classList.add("table", "table-striped");
+
+      Array.from(element.querySelectorAll(`figure[class="media"]`))
+        .forEach(node => {
+          const url = node.querySelector("oembed")?.getAttribute("url");
+          console.log('url :>> ', url);
+          const id = url?.substring(url?.indexOf("=") + 1, url.length);
+          console.log('id :>> ', id);
+          const width = window.screen.width > 480 ? 400 : 250;
+          node.innerHTML = `<iframe width="${width}" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen />`;
+      });
+      //Array.from(element.querySelectorAll("table thead tr td")).forEach(node => node.setAttribute("scope", "col"));
+      
+    }
+
+    console.log('content :>> ', this.content.current);
   }
 
   render() {
@@ -66,16 +91,20 @@ class DetailsArticle extends Component<any, DetailsArticleState> {
     if (author !== null && author !== undefined)
       authorBalise.push(<h6 key={author.id}>Auteur : <b>{author.first_name} {author.last_name}</b></h6>);
 
+    // 
+    this.process();
+
     return (
       <Fragment>
         <Menu color="gray" />
         <div className="container">
           <div className="row mt-5">
-            <div className="col-9 mb-5">
+            <div className="col-9 mb-5 pt-3" id="content-article">
               <h2 className="row" >
                 <b className="col-12 text-center" >{article.title}</b>
               </h2>
-              <p dangerouslySetInnerHTML={{__html: article.description}}/>
+              <div  ref={this.content} >
+              </div>
             </div>
             <div className="col-3">
               <div className="card pl-1">

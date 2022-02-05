@@ -9,7 +9,8 @@ export const AuthProvider = ({ children }) => {
   // const [firebaseUser, setFirebaseCurrentUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [lang, setLang] = useState("fr");
+  const localLang = localStorage.getItem("LANG") ?? "fr";
+  const [lang, setLang] = useState(localLang);
   useEffect(() => {
     firebase
       .auth()
