@@ -28,18 +28,19 @@ from core.views.pages import urlpatterns as core_routes
 from django.conf import settings
 from django.conf.urls.static import static
 
-# from django.http import HttpResponse
-# from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
-# from django.contrib.auth.decorators import login_required
-# from django.http import Http404
-# from django.views.static import serve
-# from django.conf import settings
-# from django.urls import path
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.views.static import serve
+from django.conf import settings
+from django.urls import path
 from functools import partial
+from django.conf.urls.static import static
 
-# def catch_all(request, path="index.html"):
-#     """Renvoie index.html en cas de 404, uniquement pour DEBUG=True ou TESTING=True.
+def catch_all(request, path="index.html"):
+    """Renvoie index.html en cas de 404, uniquement pour DEBUG=True ou TESTING=True.
 
 #     On ne connaît pas les routes du front. En prod, c'est apache qui envoie l'index.
 #     """

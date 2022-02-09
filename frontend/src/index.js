@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
+import DispatcherService from './service/DispatcherService';
+import './i18n/i18n';
+
+axios.defaults.baseURL = process.env.REACT_APP_API_UR;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+DispatcherService.interceptResponse();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+   <React.StrictMode>
+    <App />,
+   </React.StrictMode>,
   document.getElementById('root')
 );
 

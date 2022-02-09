@@ -21,27 +21,27 @@ from django.template import loader
 # urlpatterns = router.urls
 
 def index(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 def authentification(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 def profil(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 def corbeille(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 def details_livre(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 def profil(request):
-    template = loader.get_template('static/index.html')
+    template = loader.get_template('staticfiles/index.html')
     return HttpResponse(template.render(request=request))
 
 

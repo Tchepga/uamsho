@@ -1,14 +1,14 @@
-#ontoparticle {
+/*#ontoparticle {
     position: relative;
     bottom: -780px;
     overflow: hidden;
 }
 
 .horizontal-scroll ul {
-    /* position: relative;
+    / position: relative;
     width: 300%;
     display: inline-flex;
-    animation: 200s slidy infinite; */
+    animation: 200s slidy infinite; /
     list-style-type: none;
     position: relative;
     display: inline-flex;
@@ -47,4 +47,8 @@
     100% {
         left: -140%;
     }
+}*/
+
+#multi-item-example .carousel-inner , .carousel-item {
+    /* background-color: #41B3A3 !important; */
 }

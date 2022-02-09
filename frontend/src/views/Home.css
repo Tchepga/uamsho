@@ -6,18 +6,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+:root {
+  --main-color : #e1a91b;
+  --red-lighter: #b46e6b;
+}
 #newsletter {
   position: relative;
   bottom: -800px;
 }
 
-.home footer {
- position: relative;
- bottom: -800px;
-}
+
 
 .home {
   z-index: 10;
+}
+
+#content{
+  background-color: #958b80;
 }
 
 #carousel-header {
@@ -25,19 +31,16 @@ body {
 }
 
 #services {
-  background-color: whitesmoke;
+  background-color: var(--red-lighter);
   height: 200px;
-  position: relative;
-  bottom: -750px;
-
-  /* display: flex;
-    align-items: center;
+  width: 101%;
+    /*align-items: center;
     justify-content: center; */
 }
 
 #services div div {
   height: 70px;
-  background-color: bisque;
+  background-color: rgb(143, 140, 138);
   border-radius: 50%;
   width: 70px;
   margin: auto;
